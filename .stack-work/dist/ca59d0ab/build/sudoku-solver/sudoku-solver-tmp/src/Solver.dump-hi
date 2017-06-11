@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-11 19:02:18.6453391 UTC
+2017-06-11 19:12:30.8660132 UTC
 
 interface main@main:Solver 8002
-  interface hash: 574fa33c562161a1540d37794c320afb
-  ABI hash: 5256ce873d7a4f4b9c4585a2063fbf56
+  interface hash: 707c65745f79a3c886e6fec5ab50b66d
+  ABI hash: b7429c5c12526acb72cf9de498464ca8
   export-list hash: f722429b494959b6203b42580214adb6
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 9d5d0e5951e43ac5c54d51d3e1285ccf
@@ -24,9 +24,9 @@ family instance modules: base-4.9.1.0:Control.Applicative
                          base-4.9.1.0:GHC.TypeLits
 import  -/  base-4.9.1.0:GHC.Err 20faef8829fd13c027d0ee2213637534
 import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
-import  -/  Sudoku 0611684b2cb4ef3794c14c6f6bb22f43
-  exports: b2d726bc6b1b2176a5c512de799f59ad
-  Board 778e491527a94ed628301653dbd85691
+import  -/  Sudoku 5464bb7a73ad110b21b5ce4816f33dd5
+  exports: 4927a747c70e5915fdbca8fb1f1413c7
+  Board b2edfcb9b3260afcc6206c87fe477bb0
 fc34009f402ef05eda146bbf36a21bc2
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
@@ -41,7 +41,7 @@ fc34009f402ef05eda146bbf36a21bc2
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
-288250dfec5081d7162bb69f7c64e1df
+113a467455b52aa28015ec92e55cb119
   solve :: Sudoku.Board -> Sudoku.Board
   {- Strictness: x -}
 vectorised variables:

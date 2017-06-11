@@ -36,7 +36,7 @@ boardParser = do board <- rowParser `sepBy1` semi lexer
                                     board
 
                  if rowLen && length board == n
-                   then return $ Board sqrt_n Row board
+                   then return $ Board sqrt_n board
                    else if sqrt_n * sqrt_n /= n
                    then unexpected "The size of the specified board does not have an integer square root."
                    else unexpected "The specified board is not square."

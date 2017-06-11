@@ -1,9 +1,9 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-11 19:02:19.1365617 UTC
+2017-06-11 19:12:31.436417 UTC
 
 interface main@main:Main 8002
-  interface hash: 5a4ffd32033b8bea6577dca40d78c14a
+  interface hash: 355459556903027e1446fd8da415ac32
   ABI hash: 771034056999a8e5817749041f7154c3
   export-list hash: 282cd616894cec92ad71676fc026e5f9
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
@@ -54,13 +54,13 @@ import  -/  base-4.9.1.0:GHC.Show eca5834daba3b6a2bbbe64ab52056707
 import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
 import  -/  base-4.9.1.0:System.IO 5daf3f384209c11d9566e3409af8ec5d
 import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
-import  -/  Parser 6f9a727a0c2ad7f190d54b2e4e11acaf
+import  -/  Parser 9933a2b2b07ba27bbb61ca9f6b164ce3
   exports: 096659446a30807355c2d6663d391959
-  parseBoard 6021b558a7cd889d2ad46c8cf1ec3068
-import  -/  Solver 5256ce873d7a4f4b9c4585a2063fbf56
+  parseBoard d010bbd7590e52e8481cb61e651a3e11
+import  -/  Solver b7429c5c12526acb72cf9de498464ca8
   exports: f722429b494959b6203b42580214adb6
-import  -/  Sudoku 0611684b2cb4ef3794c14c6f6bb22f43
-  exports: b2d726bc6b1b2176a5c512de799f59ad
+import  -/  Sudoku 5464bb7a73ad110b21b5ce4816f33dd5
+  exports: 4927a747c70e5915fdbca8fb1f1413c7
 d6831ef04cb9301b090dfae6f7bb7ec7
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
