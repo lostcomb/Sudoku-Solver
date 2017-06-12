@@ -87,8 +87,8 @@ getBoxes (Board n rows) = boxes
 
 -- This function returns True if the specified set does not contain any
 -- duplicates.
-validSet :: Set -> Bool
-validSet s = unique [] s'
+uniqueSet :: Set -> Bool -- MAY NOT NEED!
+uniqueSet s = unique [] s'
   where s' = filter (/=Empty) s
         unique :: (Eq a) => [a] -> [a] -> Bool
         unique _       []   = True
@@ -96,13 +96,35 @@ validSet s = unique [] s'
           | x `elem` working = False
           | otherwise        = unique (x:working) xs
 
--- Need a set of functions that return True if the specified row/col/box
--- is correct with respect to the board. These rows/cols/boxes can contain
--- empty entries. These functions will be used to prune the search tree.
+-- This function returns the possible values for the specified entry.
+-- If the specified entry already has a value, said value is the only
+-- value returned.
+validEntries :: Board -> Int -> Int -> [Entry]
+validEntries board row_i col_i
+  | isFull entry = [entry]
+  | otherwise    =           possibleValues size row
+                 `intersect` possibleValues size col
+                 `intersect` possibleValues size box
+  where size   = boardSize board
+        b_size = boxSize board
+        entry  = (getRows board !! row_i) !! col_i
+        row    = getRows    board !! row_i
+        col    = getColumns board !! col_i
+        box    = getBoxes   board !! box_i
+        box_i  = (row_i `div` b_size) * b_size + (col_i `div` b_size)
 
--- Need a function that returns all possible values for a particular location.
--- This should take into account values in current box, values in current row
--- and values in current column. May want to re-think using lists here.
+-- This function returns the possible entries for a given set.
+possibleValues :: Int -> Set -> [Entry]
+possibleValues n set = filter ((flip notElem) set) (map Full [1,2..n])
+
+-- This function returns the coordinates of all empty entries in the Sudoku
+-- board.
+emptyEntries :: Board -> [(Int, Int)]
+emptyEntries (Board _ rows) = coordinates 0 indices
+  where indices = map (findIndices (==Empty)) rows
+        coordinates _   [] = []
+        coordinates row is =  map (\col -> (row, col)) (head is)
+                           ++ coordinates (row + 1) (tail is)
 
 -- This function updates the entry at the specified (0-index) position
 -- in the board. If the specified position is off the board, this function
@@ -134,6 +156,15 @@ uniformBoard n e = Board n rows
   where n2   = n * n
         row  = replicate n2 e
         rows = replicate n2 row
+
+-- This function returns a square board of size n^2 with entries in ascending
+-- order.
+nonUniformBoard :: Int -> Board
+nonUniformBoard n = Board n (map (map Full) (rows n2 is))
+  where is = [1,2..]
+        n2 = n * n
+        rows 0 _  = []
+        rows x is = (take n2 is) : rows (x - 1) (drop n2 is)
 
 -- This function updates the element at the specified index of the list.
 -- If the specified position is <= 0, the element is appended to the head
