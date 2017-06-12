@@ -1,17 +1,19 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-12 12:52:36.9951344 UTC
+2017-06-12 22:07:23.1229007 UTC
 
 interface main@main:Solver 8002
-  interface hash: c63eddf3e2f51cae40bcafeec0c130f8
-  ABI hash: 91463558d1ccd5560d8a3217371ce2fc
-  export-list hash: f722429b494959b6203b42580214adb6
+  interface hash: 32ee220d4a5f7a2b939cfff0e07ea72c
+  ABI hash: 4a19ece9b5bad0203c614d613a8ae096
+  export-list hash: 2b3ae3b510735d58b1af2da9f997cb3a
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 9d5d0e5951e43ac5c54d51d3e1285ccf
   sig of: Nothing
   used TH splices: False
   where
 exports:
+  Solver.findSolution
+  Solver.generateNextLevel
   Solver.solve
 module dependencies: Sudoku
 package dependencies: base-4.9.1.0* ghc-prim-0.5.0.0
@@ -22,11 +24,18 @@ family instance modules: base-4.9.1.0:Control.Applicative
                          base-4.9.1.0:Data.Monoid base-4.9.1.0:Data.Type.Equality
                          base-4.9.1.0:GHC.Generics base-4.9.1.0:GHC.IO.Exception
                          base-4.9.1.0:GHC.TypeLits
-import  -/  base-4.9.1.0:GHC.Err 20faef8829fd13c027d0ee2213637534
+import  -/  base-4.9.1.0:Data.Foldable 254e836c2d813d34e47feb29bb8d40ed
+import  -/  base-4.9.1.0:Data.List 7349774f430841349c90dfd1144aea97
+import  -/  base-4.9.1.0:Data.OldList c9282ee91951bdcbd918d2960562c007
+import  -/  base-4.9.1.0:GHC.Base 4caea1123ecf4b46e27cbccd6d279377
 import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
-import  -/  Sudoku 279dc7c488d4becf956e087683369730
-  exports: 9ad2ff98f45890a46b1505b10fc6a90d
-  Board 34dfbc3c9f14d1c23e8504f129620edc
+import  -/  Sudoku eb6464a3157ff8483f52438e3800ef99
+  exports: 79fcaaf52c39012888be358e6a29850f
+  Board bcf6e97b562b4d4344081794ebcbd5fa
+  complete 751c57ac753421e0d2061ab96920d165
+  emptyEntries 6610e489d365d7f7c4c1b35258ffa603
+  updateEntry d5e13642e6156511b8d6de7d957fb6d1
+  validEntries fda8e8d818a6dbc1d8b3cface03f51c9
 fc34009f402ef05eda146bbf36a21bc2
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
@@ -41,9 +50,30 @@ fc34009f402ef05eda146bbf36a21bc2
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
-eafb9c3a352f3c5a9d0c3f025ddc6283
-  solve :: Sudoku.Board -> Sudoku.Board
-  {- Strictness: x -}
+0533adc08dc9fe673174732ef0040b8b
+  findSolution :: [Sudoku.Board] -> GHC.Base.Maybe Sudoku.Board
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U> -}
+00d7214576c70836d45d7d01ac63210a
+  generateNextLevel :: [Sudoku.Board] -> [Sudoku.Board]
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: (\ (x :: [Sudoku.Board]) ->
+                 Solver.generateNextLevel_go x) -}
+2fef9a13ac864f766095e2a0ce7db5e4
+  generateNextLevel_go :: [Sudoku.Board] -> [Sudoku.Board]
+  {- Arity: 1, Strictness: <S,1*U> -}
+613e49282ea68e7d7bbcf952a89ddf06
+  solve :: Sudoku.Board -> GHC.Base.Maybe Sudoku.Board
+  {- Arity: 1, Strictness: <L,U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (board :: Sudoku.Board) ->
+                 Solver.solve_solve'
+                   (GHC.Types.:
+                      @ Sudoku.Board
+                      board
+                      (GHC.Types.[] @ Sudoku.Board))) -}
+d32334586e1fef85559971f553eea2ca
+  solve_solve' :: [Sudoku.Board] -> GHC.Base.Maybe Sudoku.Board
+  {- Arity: 1, Strictness: <S,1*U> -}
 vectorised variables:
 vectorised tycons:
 vectorised reused tycons:

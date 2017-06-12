@@ -2,16 +2,31 @@ module Solver where
 
 import Sudoku
 
+import Data.List
+
 {-
   This module solves the given Sudoku board.
 -}
 
 solve :: Board -> Maybe Board
-solve = undefined
+solve board = solve' [board]
+  where solve' [] = Nothing
+        solve' xs = case findSolution xs of
+          Just board -> Just board
+          Nothing    -> solve' (nub . generateNextLevel $ xs)
 
--- Need to build up a tree of boards, each time checking for solution and duplicates.
+generateNextLevel :: [Board] -> [Board]
+generateNextLevel boards = concat . map nextLevel $ boards
+  where nextLevel board = concat
+                        . map (\(row, col) -> map (updateEntry  board row col)
+                                                  (validEntries board row col))
+                        $ emptyEntries board
 
--- Iterate: 1. Build new level of search tree.
---          2. Prune all boards that are not valid.
+findSolution :: [Board] -> Maybe Board
+findSolution [] = Nothing
+findSolution (x:xs)
+  | complete x = Just x
+  | otherwise  = findSolution xs
+
 --          Repeat until solution is found - may be cool to
 --          keep outputting solutions until no more can be found. (like Prolog)

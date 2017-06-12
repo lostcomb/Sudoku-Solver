@@ -19,8 +19,6 @@ main = do
       (Left  error) -> do
         putStrLn error
       (Right board) -> do
-        --solution <- solve board
-        --case solution of
-        --  Just solved -> putStrLn . show $ solved
-        --  Nothing     -> putStrLn "No solution found."
-        putStrLn . show $ board
+        case solve board of
+          Just solution -> putStrLn . show $ solution
+          Nothing       -> putStrLn "No solution found."
