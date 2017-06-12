@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-11 19:12:31.1392065 UTC
+2017-06-12 12:52:37.3897814 UTC
 
 interface main@main:Parser 8002
-  interface hash: dd7a2a5a70e241acdf488700200c5ac7
-  ABI hash: 9933a2b2b07ba27bbb61ca9f6b164ce3
+  interface hash: aed2a5edc3b7ca767741f3c27d2af9a3
+  ABI hash: 49d1c384c7bf0f07a39f90d10f493cc0
   export-list hash: 096659446a30807355c2d6663d391959
   orphan hash: 667c739a8929f4877419676bfd240c3d
   flag hash: 9d5d0e5951e43ac5c54d51d3e1285ccf
@@ -64,10 +64,10 @@ import  -/  base-4.9.1.0:GHC.Real b88ae4a48c079652623073a5bbf5c9b0
 import  -/  base-4.9.1.0:GHC.Show eca5834daba3b6a2bbbe64ab52056707
 import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
 import  -/  ghc-prim-0.5.0.0:GHC.Classes 16d48e012d23eaef9bca91ccdd572c02
-import  -/  Sudoku 5464bb7a73ad110b21b5ce4816f33dd5
-  exports: 4927a747c70e5915fdbca8fb1f1413c7
-  Board d113ea42cf9a6d2ae7804a9414253fb7
-  Board b2edfcb9b3260afcc6206c87fe477bb0
+import  -/  Sudoku 279dc7c488d4becf956e087683369730
+  exports: 9ad2ff98f45890a46b1505b10fc6a90d
+  Board a08be5e246caed628934daa34d701889
+  Board 34dfbc3c9f14d1c23e8504f129620edc
   Empty 331bfd4cf3f215e5f807c4958d47b189
   Entry d45dc2175a1280da9d0afb3ab06fea8e
   Full ae694642246141bebb0765c1578701a2
@@ -133,7 +133,7 @@ f0a0f59f5f25fe61cacd5ca0b1e46baa
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
-b901755d7ffdc05821a035040110a931
+eb01b0d1a039fdec22b60def477eae46
   $wboardParser ::
     [[Sudoku.Entry]]
     -> forall b.
@@ -148,7 +148,7 @@ b901755d7ffdc05821a035040110a931
   {- Arity: 4,
      Strictness: <S,U><L,U(U,U,U)><L,1*C1(C1(C1(U)))><L,1*C1(U)>,
      Inline: [0] -}
-72ea231851c319aeda358bbf289398d7
+6495141753b1c3bd5a9aa55a655e33a7
   boardParser :: Text.Parsec.String.Parser Sudoku.Board
   {- Arity: 5,
      Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
@@ -160,7 +160,7 @@ b901755d7ffdc05821a035040110a931
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <Sudoku.Board>_R)) -}
-5e9d52f46ba90b5124003c743a57f02e
+70eb2290e0828efb92bfac0f911e4e0f
   boardParser1 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (Sudoku.Board
@@ -606,7 +606,7 @@ c4016a87c15ee026f4ea97d46fa55d97
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <GHC.Types.Int>_R)) -}
-d010bbd7590e52e8481cb61e651a3e11
+6c6ffb880102ff29d64ac754c827807b
   parseBoard ::
     GHC.Base.String -> Data.Either.Either GHC.Base.String Sudoku.Board
   {- Arity: 1, Strictness: <L,U>,
@@ -639,7 +639,7 @@ d010bbd7590e52e8481cb61e651a3e11
                         (Text.Parsec.Error.$fShowParseError_$cshow e)
                    Data.Either.Right r
                    -> Data.Either.Right @ GHC.Base.String @ Sudoku.Board r }) -}
-2d96c31ed5afe434169ce152431a88ab
+7e94eb7551354e1156fcbfb60f719066
   parseBoard1 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (Sudoku.Board
@@ -721,7 +721,7 @@ d010bbd7590e52e8481cb61e651a3e11
                    @ ()
                    (Parser.$s$fStream[]mtok @ GHC.Types.Char)
                    GHC.Show.$fShowChar) -}
-aac6f2807d160b65d37bd25a9cab8885
+c54d1704197eee6e4c332f37161360f7
   parseBoard3 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ((() -> Sudoku.Board)
@@ -778,7 +778,7 @@ aac6f2807d160b65d37bd25a9cab8885
                    cerr
                    (\ (x :: Sudoku.Board) -> eok (\ (ds :: ()) -> x))
                    eerr) -}
-b22d8656289ecaa1cee310e2285bcc30
+f44c65c8c0cdefcc869b72f7c846a6bc
   parseBoard4 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ((Sudoku.Board -> Sudoku.Board)
