@@ -26,8 +26,10 @@ genFullLevel boards = concat . map (concat . nextLevel) $ boards
 -- game tree whereby only the entry with the fewest possibilities
 -- is used to create the next state.
 genMinLevel :: [Board] -> [Board]
-genMinLevel boards = minimumBy (\a b -> compare (length a) (length b)) boards'
-  where boards' = concat . map nextLevel $ boards
+genMinLevel boards = concat
+                   . map (minimumBy (\a b -> compare (length a) (length b)))
+                   $ boards'
+  where boards' = map nextLevel $ boards
 
 -- This function returns the next level of the game tree for the
 -- specified Sudoku board.
