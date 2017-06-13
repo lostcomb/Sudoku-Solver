@@ -1,9 +1,9 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-12 22:08:02.1268824 UTC
+2017-06-13 14:48:49.6321144 UTC
 
 interface main@main:Main 8002
-  interface hash: 66a9124469fa1922bf34e7fd0458a9c2
+  interface hash: fa06311b9bf9afbdfdb83b734533504e
   ABI hash: 771034056999a8e5817749041f7154c3
   export-list hash: 282cd616894cec92ad71676fc026e5f9
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
@@ -57,8 +57,8 @@ import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
 import  -/  Parser 3ef8c83dbac9a75f697ce73b0b980a61
   exports: 11d67cf9dcbcb1f72ef18d5880d49afb
   parseBoard 3791ebd4d4f4d63ebb15fb33de9b527d
-import  -/  Solver 4a19ece9b5bad0203c614d613a8ae096
-  exports: 2b3ae3b510735d58b1af2da9f997cb3a
+import  -/  Solver 0ce651329fe1a443112c250d2d27a374
+  exports: c7110509af20cfb465b8272db30634f0
   solve 613e49282ea68e7d7bbcf952a89ddf06
 import  -/  Sudoku eb6464a3157ff8483f52438e3800ef99
   exports: 79fcaaf52c39012888be358e6a29850f

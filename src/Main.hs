@@ -21,4 +21,4 @@ main = do
       (Right board) -> do
         case solve board of
           Just solution -> putStrLn . show $ solution
-          Nothing       -> putStrLn "No solution found."
+          Nothing       -> putStrLn "No solution."
