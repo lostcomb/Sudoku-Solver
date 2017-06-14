@@ -7,4 +7,8 @@ find the solution.
 
 ## Extension
 
-Solve the Sudoku using a set of linear equations.
+Solve the Sudoku using a set of linear equations. Method outlined [here](https://uk.mathworks.com/help/optim/ug/solve-sudoku-puzzles-via-integer-programming.html).
+
+## Licence
+
+Please refer to the `LICENCE` file.

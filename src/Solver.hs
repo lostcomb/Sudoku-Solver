@@ -10,7 +10,7 @@ import Data.List
 
 -- This function returns a solution to the specified
 -- board or Nothing if one does not exist.
-solve :: Board -> Maybe Board -- CHANGE TO [Board] -> Maybe (Board, [Board]) - this will allow the function to be used to find all possible answers.
+solve :: Board -> Maybe Board
 solve board = solve' [board]
   where solve' [] = Nothing
         solve' xs = case findSolution xs of
