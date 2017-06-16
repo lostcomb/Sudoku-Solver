@@ -2,7 +2,7 @@ name:                sudoku-solver
 version:             0.1.0.0
 -- synopsis:
 -- description:
-homepage:            https://github.com/githubuser/sudoku-solver#readme
+homepage:            https://bitbucket.org/Lostcomb/sudoku-solver/src
 license:             BSD3
 license-file:        LICENSE
 author:              Julian Loscombe
