@@ -1,13 +1,13 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-18 17:36:47.2748675 UTC
+2017-06-18 17:45:34.0520803 UTC
 
 interface main@main:Main 8002
-  interface hash: 01ce5c064c43d215eb83b7638d97c6ac
+  interface hash: 3d549cf15ecd2c445af97cd434035ca0
   ABI hash: 8dd863c3ee16e2af1b31b0f1a4c7b9b1
   export-list hash: a88d184548355605832a811733f3b8f6
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
-  flag hash: 17cb8e2e7cd41a1ed9a9c86681d59997
+  flag hash: dfb50c2b24fb21f661fd3989a6dc602c
   sig of: Nothing
   used TH splices: False
   where
@@ -70,6 +70,8 @@ import  -/  Solver 8ccc8b8c5c52b344cf156569330db417
 import  -/  Sudoku eb6464a3157ff8483f52438e3800ef99
   exports: 79fcaaf52c39012888be358e6a29850f
   Board bcf6e97b562b4d4344081794ebcbd5fa
+addDependentFile "C:\Users\Julian\AppData\Local\Programs\stack\x86_64-windows\ghc-8.0.2\lib\include\ghcversion.h"
+addDependentFile ".stack-work\dist\ca59d0ab\build\autogen\cabal_macros.h"
 d6831ef04cb9301b090dfae6f7bb7ec7
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
