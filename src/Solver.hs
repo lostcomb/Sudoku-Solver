@@ -13,24 +13,22 @@ import Data.List
 -- the working list of boards, minus the solution, to allow
 -- alternative solutions to be found.
 solve :: [Board] -> Maybe (Board, [Board])
-solve [] = Nothing
-solve xs = case findSolution xs [] of
+solve []     = Nothing
+solve agenda = case solution agenda of
   Just board -> Just board
-  Nothing    -> solve (nub . genMinLevel $ xs)
+  Nothing    -> solve (nub . nextStepDF $ agenda)
 
--- This function generates the next level of the full game
--- tree.
-genFullLevel :: [Board] -> [Board]
-genFullLevel boards = concat . map (concat . nextLevel) $ boards
+-- This function returns the specified agenda with the next level of
+-- the head of the agenda applied. This implements depth-first search.
+nextStepDF :: [Board] -> [Board]
+nextStepDF (x:xs) = x' ++ xs
+  where x' = minimumLength . nextLevel $ x
 
--- This function generates the next level of a specialised
--- game tree whereby only the entry with the fewest possibilities
--- is used to create the next state.
-genMinLevel :: [Board] -> [Board]
-genMinLevel boards = concat
-                   . map (minimumBy (\a b -> compare (length a) (length b)))
-                   $ boards'
-  where boards' = map nextLevel $ boards
+-- This function returns the specified agenda with the next level of
+-- the head of the agenda applied. This implements breadth-first search.
+nextStepBF :: [Board] -> [Board]
+nextStepBF (x:xs) = xs ++ x'
+  where x' = minimumLength . nextLevel $ x
 
 -- This function returns the next level of the game tree for the
 -- specified Sudoku board.
@@ -39,12 +37,16 @@ nextLevel board = map (\(row, col) -> map (updateEntry  board row col)
                                           (validEntries board row col))
                 $ emptyEntries board
 
--- This function returns Nothing if the specified list of boards
--- does not contain a solution, or Just the solution if it does.
--- It also returns the list of boards, minus the solution, if a
--- solution is found.
-findSolution :: [Board] -> [Board] -> Maybe (Board, [Board])
-findSolution [] _ = Nothing
-findSolution (x:xs) ys
-  | complete x = Just (x, ys ++ xs)
-  | otherwise  = findSolution xs (x:ys)
+-- This function returns Nothing if the head of the agenda is not
+-- a solution. It returns the head of the list and the tail of the
+-- list if the head of the list is a solution.
+solution :: [Board] -> Maybe (Board, [Board])
+solution [] = Nothing
+solution (x:xs)
+  | complete x = Just (x, xs)
+  | otherwise  = Nothing
+
+-- This function returns the element of the specified list with minimum
+-- length.
+minimumLength :: (Foldable t) => [t a] -> t a
+minimumLength = minimumBy (\a b -> compare (length a) (length b))
