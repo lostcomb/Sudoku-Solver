@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-13 15:01:18.7094764 UTC
+2017-06-18 16:46:32.5987073 UTC
 
 interface main@main:Solver 8002
-  interface hash: 879a6b1f2bcaa7d3bf001f96a42ea10e
-  ABI hash: 12b1af9fcf5fcf9a177d8b4d6f3e01c6
+  interface hash: fe49bdecfbe796aa42413e82fd689ed0
+  ABI hash: da34ab8ae9e7dad26b26ea66a719cfca
   export-list hash: c7110509af20cfb465b8272db30634f0
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 9d5d0e5951e43ac5c54d51d3e1285ccf
@@ -114,9 +114,11 @@ fc34009f402ef05eda146bbf36a21bc2
                          @ [GHC.Types.Int]
                          Sudoku.emptyEntries1
                          ww1))) -}
-0533adc08dc9fe673174732ef0040b8b
-  findSolution :: [Sudoku.Board] -> GHC.Base.Maybe Sudoku.Board
-  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U> -}
+4c36088315238152ff1081c81c2be53c
+  findSolution ::
+    [Sudoku.Board]
+    -> [Sudoku.Board] -> GHC.Base.Maybe (Sudoku.Board, [Sudoku.Board])
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><L,U> -}
 ed877f35e56704099147285ea13e41ed
   genFullLevel :: [Sudoku.Board] -> [Sudoku.Board]
   {- Arity: 1, Strictness: <S,1*U>,
@@ -139,18 +141,9 @@ bc47eb8061c85857d512b92eed3446b9
                 (\ (w :: Sudoku.Board) ->
                  case w of ww { Sudoku.Board ww1 ww2 ->
                  Solver.$wnextLevel ww1 ww2 }) -}
-613e49282ea68e7d7bbcf952a89ddf06
-  solve :: Sudoku.Board -> GHC.Base.Maybe Sudoku.Board
-  {- Arity: 1, Strictness: <L,U>,
-     Unfolding: InlineRule (1, True, False)
-                (\ (board :: Sudoku.Board) ->
-                 Solver.solve_solve'
-                   (GHC.Types.:
-                      @ Sudoku.Board
-                      board
-                      (GHC.Types.[] @ Sudoku.Board))) -}
-d32334586e1fef85559971f553eea2ca
-  solve_solve' :: [Sudoku.Board] -> GHC.Base.Maybe Sudoku.Board
+fafaa16a536dadb85aec00c149ff0b3a
+  solve ::
+    [Sudoku.Board] -> GHC.Base.Maybe (Sudoku.Board, [Sudoku.Board])
   {- Arity: 1, Strictness: <S,1*U> -}
 vectorised variables:
 vectorised tycons:

@@ -1,17 +1,20 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-13 14:48:49.6321144 UTC
+2017-06-18 17:18:20.9917322 UTC
 
 interface main@main:Main 8002
-  interface hash: fa06311b9bf9afbdfdb83b734533504e
-  ABI hash: 771034056999a8e5817749041f7154c3
-  export-list hash: 282cd616894cec92ad71676fc026e5f9
+  interface hash: c6ca1e4385f25358a938271ac61e034f
+  ABI hash: 8dd863c3ee16e2af1b31b0f1a4c7b9b1
+  export-list hash: a88d184548355605832a811733f3b8f6
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 17cb8e2e7cd41a1ed9a9c86681d59997
   sig of: Nothing
   used TH splices: False
   where
 exports:
+  Main.c_getch
+  Main.displaySolutions
+  Main.getChar'
   Main.main
 module dependencies: Parser Solver Sudoku
 package dependencies: array-0.5.1.1@array-0.5.1.1 base-4.9.1.0*
@@ -46,22 +49,27 @@ family instance modules: base-4.9.1.0:Control.Applicative
                          text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text
                          text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text.Lazy
 import  -/  base-4.9.1.0:Control.Monad f915f187cea611986ebb12dbc69279ab
+import  -/  base-4.9.1.0:Data.Char c49b58282af11503cc838e1052cf6b83
 import  -/  base-4.9.1.0:Data.Either 186ef9adf6b47e24f39efe9b2e18e352
+import  -/  base-4.9.1.0:Foreign.C.Types 219f99bd057b4eb85c4aa1976e712a7d
 import  -/  base-4.9.1.0:GHC.Base 4caea1123ecf4b46e27cbccd6d279377
+import  -/  base-4.9.1.0:GHC.Char dc348eccabc798659394eb810444f8d4
+import  -/  base-4.9.1.0:GHC.Enum 3beb5abd88e2173130728ffba8194381
 import  -/  base-4.9.1.0:GHC.IO.Handle cb8bbcf28331624bf008e1abd21fcddd
 import  -/  base-4.9.1.0:GHC.IO.Handle.FD 13bd8641d665b1ca96fbeeb8bdfa3638
 import  -/  base-4.9.1.0:GHC.Show eca5834daba3b6a2bbbe64ab52056707
 import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
 import  -/  base-4.9.1.0:System.IO 5daf3f384209c11d9566e3409af8ec5d
 import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
-import  -/  Parser 3ef8c83dbac9a75f697ce73b0b980a61
-  exports: 11d67cf9dcbcb1f72ef18d5880d49afb
-  parseBoard 3791ebd4d4f4d63ebb15fb33de9b527d
-import  -/  Solver 0ce651329fe1a443112c250d2d27a374
+import  -/  Parser e5eff5f98fdf43a8337915eddb9ccf11
+  exports: 31df3bf21d6990f0cc3782711f7687a7
+  parseBoard a308ba45e25ba9a0dfd9dd0eeca6f158
+import  -/  Solver da34ab8ae9e7dad26b26ea66a719cfca
   exports: c7110509af20cfb465b8272db30634f0
-  solve 613e49282ea68e7d7bbcf952a89ddf06
+  solve fafaa16a536dadb85aec00c149ff0b3a
 import  -/  Sudoku eb6464a3157ff8483f52438e3800ef99
   exports: 79fcaaf52c39012888be358e6a29850f
+  Board bcf6e97b562b4d4344081794ebcbd5fa
 d6831ef04cb9301b090dfae6f7bb7ec7
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
@@ -74,6 +82,60 @@ d6831ef04cb9301b090dfae6f7bb7ec7
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
+778ef16b41170bc806bf811bd94faf7f
+  c_getch :: GHC.Types.IO Foreign.C.Types.CInt
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,U>,
+     Unfolding: InlineRule (0, False, False)
+                (\ (ds :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                 case {__pkg_ccall main@main getch GHC.Prim.State#
+                                                     GHC.Prim.RealWorld
+                                                   -> (# GHC.Prim.State# GHC.Prim.RealWorld,
+                                                         GHC.Prim.Int# #)}
+                        ds of wild { (#,#) ds1 ds2 ->
+                 (# ds1, GHC.Int.I32# (GHC.Prim.narrow32Int# ds2) #) })
+                  `cast`
+                (Sym (GHC.Types.N:IO[0] (Foreign.C.Types.N:CInt[0]))) -}
+c429e621f1636b7b95d3c882f7ba5390
+  displaySolutions :: [Sudoku.Board] -> GHC.Types.IO ()
+  {- Arity: 2, Strictness: <S,1*U><S,U>,
+     Unfolding: InlineRule (0, True, True)
+                Main.displaySolutions1
+                  `cast`
+                (<[Sudoku.Board]>_R ->_R Sym (GHC.Types.N:IO[0] <()>_R)) -}
+babd390a4363ea6487bca43ec157bdee
+  displaySolutions1 ::
+    [Sudoku.Board]
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 2, Strictness: <S,1*U><S,U> -}
+bc5a4872a788cee1646c9340bb800d30
+  getChar' :: GHC.Types.IO GHC.Types.Char
+  {- Arity: 1, Strictness: <S,U>,
+     Unfolding: InlineRule (0, True, True)
+                Main.getChar'1
+                  `cast`
+                (Sym (GHC.Types.N:IO[0] <GHC.Types.Char>_R)) -}
+62ca37576748db7fe0ef661488e58222
+  getChar'1 ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Types.Char #)
+  {- Arity: 1, Strictness: <S,U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (eta :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                 case {__pkg_ccall main@main getch GHC.Prim.State#
+                                                     GHC.Prim.RealWorld
+                                                   -> (# GHC.Prim.State# GHC.Prim.RealWorld,
+                                                         GHC.Prim.Int# #)}
+                        eta of wild { (#,#) ds ds1 ->
+                 let {
+                   ipv1 :: GHC.Prim.Int# = GHC.Prim.narrow32Int# ds1
+                 } in
+                 (# ds,
+                    case GHC.Prim.tagToEnum#
+                           @ GHC.Types.Bool
+                           (GHC.Prim.leWord# (GHC.Prim.int2Word# ipv1) 1114111##) of wild1 {
+                      GHC.Types.False -> GHC.Char.chr2 ipv1
+                      GHC.Types.True -> GHC.Types.C# (GHC.Prim.chr# ipv1) } #) }) -}
 34ffb424bccf54a6edc22e34a15b3d15
   main :: GHC.Types.IO ()
   {- Arity: 1, Strictness: <S,U>,

@@ -9,13 +9,14 @@ import Data.List
 -}
 
 -- This function returns a solution to the specified
--- board or Nothing if one does not exist.
-solve :: Board -> Maybe Board
-solve board = solve' [board]
-  where solve' [] = Nothing
-        solve' xs = case findSolution xs of
-          Just board -> Just board
-          Nothing    -> solve' (nub . genMinLevel $ xs)
+-- board or Nothing if one does not exist. It also returns
+-- the working list of boards, minus the solution, to allow
+-- alternative solutions to be found.
+solve :: [Board] -> Maybe (Board, [Board])
+solve [] = Nothing
+solve xs = case findSolution xs [] of
+  Just board -> Just board
+  Nothing    -> solve (nub . genMinLevel $ xs)
 
 -- This function generates the next level of the full game
 -- tree.
@@ -40,8 +41,10 @@ nextLevel board = map (\(row, col) -> map (updateEntry  board row col)
 
 -- This function returns Nothing if the specified list of boards
 -- does not contain a solution, or Just the solution if it does.
-findSolution :: [Board] -> Maybe Board
-findSolution [] = Nothing
-findSolution (x:xs)
-  | complete x = Just x
-  | otherwise  = findSolution xs
+-- It also returns the list of boards, minus the solution, if a
+-- solution is found.
+findSolution :: [Board] -> [Board] -> Maybe (Board, [Board])
+findSolution [] _ = Nothing
+findSolution (x:xs) ys
+  | complete x = Just (x, ys ++ xs)
+  | otherwise  = findSolution xs (x:ys)
