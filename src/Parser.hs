@@ -14,7 +14,11 @@ import Control.Applicative (pure, (<$), (<$>), (<*), (<*>), (*>))
 
   The format for the board is as follows:
 
-    board :- {{entry ','}^n-1 entry ';'}^n-1 ({entry ','}^n-1 entry)
+    board :- partial_board | full_board
+    partial_board :- integer 'x' integer ';' [entries]
+    entries :- loc_entry | loc_entry ',' entries
+    loc_entry :- '(' integer ',' integer ',' entry ')'
+    full_board :- {{entry ','}^n-1 entry ';'}^n-1 ({entry ','}^n-1 entry)
     entry :- full | empty
     full :- '1' | '2' | '3' | ... | n
     empty :- '.'
@@ -34,7 +38,41 @@ parseBoard str = case parse (whiteSpace lexer *> boardParser <* eof) "" str of
 -- (so that the board can be split into boxes) and check that each entry is
 -- and integer in the range 1 - size of the board, or empty (.).
 boardParser :: Parser Board
-boardParser
+boardParser =   partial_boardParser
+            <|> full_boardParser
+            <?> invalidFormat
+
+-- Parse a board that is described by locations where entries occur.
+-- This is useful when the board does not contain many full entries.
+partial_boardParser :: Parser Board
+partial_boardParser
+  = do size <- intParser
+       let box_s = floor . sqrt . fromIntegral $ size
+       semi lexer
+       entries <- loc_entryParser `sepBy` comma lexer
+       if box_s * box_s /= size
+         then unexpected invalidSqrtError
+         else return $ foldr (\(row, col, entry) acc
+                               -> updateEntry acc row col entry)
+                             (uniformBoard box_s Sudoku.Empty)
+                             entries
+
+-- Parse a tuple containing the row and column indices and the entry.
+loc_entryParser :: Parser (Int, Int, Entry)
+loc_entryParser = parens lexer $ (,,) <$> intParser
+                                      <*  comma lexer
+                                      <*> intParser
+                                      <*  comma lexer
+                                      <*> entryParser
+
+-- Parse an Int using the Integer parser.
+intParser :: Parser Int
+intParser = fromIntegral <$> integer lexer
+
+-- Parse a board that is described by each entry in turn.
+-- This is useful when the board contains a lot of full entries.
+full_boardParser :: Parser Board
+full_boardParser
   = do board <- rowParser `sepBy1` semi lexer
        let n       = length (head board)
            sqrt_n  = floor . sqrt . fromIntegral $ n
@@ -66,6 +104,10 @@ fullParser = Full . fromIntegral <$> integer lexer
 -- Parse an entry that is empty.
 emptyParser :: Parser Entry
 emptyParser = Sudoku.Empty <$ dot lexer
+
+-- Error message for an invalid entry format.
+invalidFormat :: String
+invalidFormat = "Invalid entry format, either specify the whole board, or the size and locations of each entry."
 
 -- Error message for an invalid entry.
 invalidEntryError :: String
