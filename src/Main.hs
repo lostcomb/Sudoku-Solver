@@ -37,23 +37,16 @@ displaySolutions boards = case solve boards of
   Nothing                  -> putStrLn "No solution."
 
 
--- This is a work around for the Prelude defined getChar function.
--- This returns the char without the enter key needing to be pressed
--- by the user.
+-- This is a work around for the Prelude defined getChar function on
+-- Windows. The Prelude defined function does not return the character
+-- until the enter key is pressed. This function returns it immediately.
 getChar' :: IO Char
-
 #ifdef mingw32_HOST_OS
 getChar' = liftM (chr.fromEnum) c_getch
-
 -- Import the getch function on Windows.
 foreign import ccall unsafe "conio.h getch"
   c_getch :: IO CInt
-
 #else
-getChar' = liftM (chr.fromEnum) c_getchar
-
--- Import the getchar function on POSIX systems.
-foreign import ccall unsafe "stdio.h getchar"
-  c_getchar :: IO CInt
+getChar' = getChar
 #endif
 

@@ -38,7 +38,7 @@ parseBoard str = case parse (whiteSpace lexer *> boardParser <* eof) "" str of
 -- (so that the board can be split into boxes) and check that each entry is
 -- and integer in the range 1 - size of the board, or empty (.).
 boardParser :: Parser Board
-boardParser =   partial_boardParser
+boardParser =   try partial_boardParser
             <|> full_boardParser
             <?> invalidFormat
 
@@ -80,12 +80,13 @@ full_boardParser
            bounded = and . map (and . map (lte n)) $ board
            lte :: Int -> Entry -> Bool
            lte n Sudoku.Empty = True
-           lte n (Full i)     = i <= n
+           lte n (Full i)     = i <= n && i > 0
 
-       if rowLen && length board == n then return $ Board sqrt_n board
-       else if sqrt_n * sqrt_n /= n   then unexpected invalidSqrtError
-       else if not bounded            then unexpected invalidEntryError
-       else                                unexpected invalidSizeError
+
+       if sqrt_n * sqrt_n /= n             then unexpected invalidSqrtError
+       else if not bounded                 then unexpected invalidEntryError
+       else if rowLen && length board == n then return $ Board sqrt_n board
+       else                                     unexpected invalidSizeError
 
 -- Parse a row of the Sudoku board.
 rowParser :: Parser [Entry]
