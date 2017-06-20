@@ -3,11 +3,13 @@ module Parser where
 import Sudoku
 
 import Text.Parsec
+import Text.Parsec.Pos
 import Text.Parsec.Token
 import Text.Parsec.Error
 import Text.Parsec.String (Parser)
 import Text.Parsec.Language (emptyDef)
 import Control.Applicative (pure, (<$), (<$>), (<*), (<*>), (*>))
+import System.Console.ANSI
 
 {-
   This module provides the parser for initial board sudoku board states.
@@ -25,21 +27,46 @@ import Control.Applicative (pure, (<$), (<$>), (<*), (<*>), (*>))
 -}
 
 -- Lexer for the grammar.
-lexer = makeTokenParser emptyDef
+lexer = makeTokenParser (emptyDef { reservedNames = [ "exit" ] })
 
 -- Parse a description of a Sudoku board.
-parseBoard :: String -> Either String Board
+parseBoard :: String -> Either [IO ()] (Maybe Board)
 parseBoard str = case parse (whiteSpace lexer *> boardParser <* eof) "" str of
-  (Left  e) -> Left $ show e
+  (Left  e) -> let col          = sourceColumn . errorPos $ e
+                   (start, end) = splitAt (col - 1) str
+                   unexpected   = extractUnexpected e
+               in  Left [ putStr start
+                        , setSGR [SetColor Foreground Dull  Black]
+                        , setSGR [SetColor Background Vivid Red  ]
+                        , putStr unexpected
+                        , setSGR [Reset                          ]
+                        , putStrLn (drop (length unexpected) end)
+                        , putStrLn (show e)
+                        ]
   (Right r) -> Right r
+
+-- This function extracts the SysUnExpect string from the specified
+-- parse error.
+extractUnexpected :: ParseError -> String
+extractUnexpected e
+  | null unexpectedMsgs = ""
+  | otherwise           = unQuote . messageString . head $ unexpectedMsgs
+  where msgs = errorMessages e
+        unexpectedMsgs = filter ((SysUnExpect "") ==) msgs
+
+-- This function removes surrounding quotes from the specified string.
+unQuote :: String -> String
+unQuote ('"':xs) = init xs
+unQuote x        = x
 
 -- Parse a description of a Sudoku board and perform some validation
 -- to check that the board is square, it's size has an integer square root
 -- (so that the board can be split into boxes) and check that each entry is
 -- and integer in the range 1 - size of the board, or empty (.).
-boardParser :: Parser Board
-boardParser =   try partial_boardParser
-            <|> full_boardParser
+boardParser :: Parser (Maybe Board)
+boardParser =   (Just    <$> try partial_boardParser)
+            <|> (Just    <$> full_boardParser       )
+            <|> (Nothing <$  reserved lexer "exit"  )
             <?> invalidFormat
 
 -- Parse a board that is described by locations where entries occur.
@@ -51,7 +78,7 @@ partial_boardParser
        semi lexer
        entries <- loc_entryParser `sepBy` comma lexer
        if box_s * box_s /= size
-         then unexpected invalidSqrtError
+         then fail invalidSqrtError
          else return $ foldr (\(row, col, entry) acc
                                -> updateEntry acc row col entry)
                              (uniformBoard box_s Sudoku.Empty)
@@ -83,10 +110,10 @@ full_boardParser
            lte n (Full i)     = i <= n && i > 0
 
 
-       if sqrt_n * sqrt_n /= n             then unexpected invalidSqrtError
-       else if not bounded                 then unexpected invalidEntryError
+       if sqrt_n * sqrt_n /= n             then fail invalidSqrtError
+       else if not bounded                 then fail invalidEntryError
        else if rowLen && length board == n then return $ Board sqrt_n board
-       else                                     unexpected invalidSizeError
+       else                                     fail invalidSizeError
 
 -- Parse a row of the Sudoku board.
 rowParser :: Parser [Entry]
@@ -108,11 +135,11 @@ emptyParser = Sudoku.Empty <$ dot lexer
 
 -- Error message for an invalid entry format.
 invalidFormat :: String
-invalidFormat = "Invalid entry format, either specify the whole board, or the size and locations of each entry."
+invalidFormat = "either 'exit', a full board description or a partial board description."
 
 -- Error message for an invalid entry.
 invalidEntryError :: String
-invalidEntryError = "Invalid entry - entries should be of the form '1', '2', ...,n or '.'."
+invalidEntryError = "a valid entry. Entries can be empty ('.'), or full ('1','2',...). Full entries must be less than or equal to the size of the board."
 
 -- Error message for a board of an invalid size.
 invalidSqrtError :: String

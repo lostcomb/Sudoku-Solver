@@ -27,5 +27,5 @@ Preprocessing library parsec-3.1.11...
 [24 of 25] Compiling Text.Parsec.Perm ( Text\Parsec\Perm.hs, .stack-work\dist\ca59d0ab\build\Text\Parsec\Perm.o )
 [25 of 25] Compiling Text.ParserCombinators.Parsec.Perm ( Text\ParserCombinators\Parsec\Perm.hs, .stack-work\dist\ca59d0ab\build\Text\ParserCombinators\Parsec\Perm.o )
 Installing library in
-C:\Users\Julian\AppData\Roaming\stack\snapshots\995f70a3\lib\x86_64-windows-ghc-8.0.2\parsec-3.1.11-113irVHGgd88sRnywByDNw
+C:\sr\snapshots\995f70a3\lib\x86_64-windows-ghc-8.0.2\parsec-3.1.11-113irVHGgd88sRnywByDNw
 Registering parsec-3.1.11...

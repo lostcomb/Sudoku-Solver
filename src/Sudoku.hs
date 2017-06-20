@@ -48,7 +48,8 @@ boxSize (Board n _) = n
 
 -- Pretty print the Sudoku board.
 instance Show Board where
-  show (Board n rows) = unlines
+  show (Board n rows) = init
+                      . unlines
                       . concat
                       . map (\box -> [lineStr] ++ box ++ [lineStr])
                       . map (intersperse lineStr)

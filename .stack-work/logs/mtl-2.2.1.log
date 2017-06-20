@@ -24,5 +24,5 @@ Preprocessing library mtl-2.2.1...
 [21 of 22] Compiling Control.Monad.Cont.Class ( Control\Monad\Cont\Class.hs, .stack-work\dist\ca59d0ab\build\Control\Monad\Cont\Class.o )
 [22 of 22] Compiling Control.Monad.Cont ( Control\Monad\Cont.hs, .stack-work\dist\ca59d0ab\build\Control\Monad\Cont.o )
 Installing library in
-C:\Users\Julian\AppData\Roaming\stack\snapshots\995f70a3\lib\x86_64-windows-ghc-8.0.2\mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6
+C:\sr\snapshots\995f70a3\lib\x86_64-windows-ghc-8.0.2\mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6
 Registering mtl-2.2.1...

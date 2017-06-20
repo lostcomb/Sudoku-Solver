@@ -86,5 +86,5 @@ Data\Text\Internal\Builder.hs:324:1: warning: [-Winline-rule-shadowing]
 [43 of 44] Compiling Data.Text.Lazy.Read ( Data\Text\Lazy\Read.hs, .stack-work\dist\ca59d0ab\build\Data\Text\Lazy\Read.o )
 [44 of 44] Compiling Data.Text.Read   ( Data\Text\Read.hs, .stack-work\dist\ca59d0ab\build\Data\Text\Read.o )
 Installing library in
-C:\Users\Julian\AppData\Roaming\stack\snapshots\995f70a3\lib\x86_64-windows-ghc-8.0.2\text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR
+C:\sr\snapshots\995f70a3\lib\x86_64-windows-ghc-8.0.2\text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR
 Registering text-1.2.2.1...
