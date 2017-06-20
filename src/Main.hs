@@ -15,7 +15,7 @@ import System.Console.ANSI
 -- Main loop; asks for new Sudoku boards to solve.
 main :: IO ()
 main = do
-  putStrLn "Sudoku Solver (c) Julian Loscombe."
+  putStrLn "Sudoku Solver (c) Julian Loscombe 2017."
   forever $ do
     putStr prompt
     hFlush stdout
@@ -35,10 +35,8 @@ main = do
 displaySolutions :: [Board] -> IO ()
 displaySolutions boards = case solve boards of
   Just (solution, boards') -> do
-    setSGR [SetColor Foreground Dull Green]
     putStr . show $ solution
     hFlush stdout
-    setSGR [Reset]
     c <- getChar'
     case c of
       ';'       -> do putStrLn " ;"
@@ -46,7 +44,7 @@ displaySolutions boards = case solve boards of
       otherwise -> do putStrLn ""
   Nothing                  -> do
     setSGR [SetColor Foreground Dull Red]
-    putStrLn "No solution."
+    putStrLn "EoS."
     setSGR [Reset]
 
 -- This defines the console prompt.

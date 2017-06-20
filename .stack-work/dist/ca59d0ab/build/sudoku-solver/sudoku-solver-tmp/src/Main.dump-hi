@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-20 21:44:56.0189227 UTC
+2017-06-20 21:49:48.474233 UTC
 
 interface main@main:Main 8002
-  interface hash: 251b34deaccbcd914cb55e03751e77a0
-  ABI hash: c9c4cd60f7fdd79ef55310228a8cf3fa
+  interface hash: 8aec1880ee17b9593020e728cf8d4a37
+  ABI hash: 2a97a42427f7fd8ac4a63c02d3715add
   export-list hash: 3f2f169d92065124ad5362e28b0dc14c
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: dfb50c2b24fb21f661fd3989a6dc602c
@@ -147,12 +147,12 @@ bc5a4872a788cee1646c9340bb800d30
                            (GHC.Prim.leWord# (GHC.Prim.int2Word# ipv1) 1114111##) of wild1 {
                       GHC.Types.False -> GHC.Char.chr2 ipv1
                       GHC.Types.True -> GHC.Types.C# (GHC.Prim.chr# ipv1) } #) }) -}
-34ffb424bccf54a6edc22e34a15b3d15
+1d4c4a558bfdff804e20b13eb91af802
   main :: GHC.Types.IO ()
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Main.main1 `cast` (Sym (GHC.Types.N:IO[0] <()>_R)) -}
-6cd83dfe7942e647ede381f97b6b4539
+797db98595cf4d1c17f32fdfd763e6a1
   main1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
@@ -169,11 +169,11 @@ ee6c40491fc3d7de79463334122afe56
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
   {- Arity: 1, Strictness: <S,U> -}
-52c64c5571a57d79f0cf5548bbeb2ee4
+24d6ae5025882583e615420db8730522
   main3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
-                   "Sudoku Solver (c) Julian Loscombe."#) -}
-9fc91f5e9f7ea9130937b49530088e8f
+                   "Sudoku Solver (c) Julian Loscombe 2017."#) -}
+5a5f4112f95dfa07494cc81042478095
   main4 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
