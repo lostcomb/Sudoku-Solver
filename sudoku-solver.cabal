@@ -17,7 +17,10 @@ executable sudoku-solver
   hs-source-dirs:      src
   main-is:             Main.hs
   default-language:    Haskell2010
-  build-depends:       base >= 4.7 && < 5, parsec, ansi-terminal
+  build-depends:       base >= 4.7 && < 5,
+                       parsec,
+                       ansi-terminal,
+                       wx
   other-modules:       Parser,
                        Solver,
                        Sudoku

@@ -1,7 +1,0 @@
-[1 of 2] Compiling Main             ( C:\Users\Julian\AppData\Local\Temp\stack2052\wxc-0.92.3.0\Setup.hs, C:\Users\Julian\AppData\Local\Temp\stack2052\wxc-0.92.3.0\.stack-work\dist\ca59d0ab\setup\Main.o )
-[2 of 2] Compiling StackSetupShim   ( C:\Users\Julian\AppData\Roaming\stack\setup-exe-src\setup-shim-Z6RU0evB.hs, C:\Users\Julian\AppData\Local\Temp\stack2052\wxc-0.92.3.0\.stack-work\dist\ca59d0ab\setup\StackSetupShim.o )
-Linking C:\Users\Julian\AppData\Local\Temp\stack2052\wxc-0.92.3.0\.stack-work\dist\ca59d0ab\setup\setup.exe ...
-Error: MSYS environment wx-config script not found, please install wx-config before installing wxc
-sh: wx-config: No such file or directory
-
-ExitFailure 127

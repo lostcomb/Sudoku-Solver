@@ -8,9 +8,12 @@ rules a person would use when solving the puzzles.
 
 ## Compilation
 
-To compile, run: `stack build`.
+To compile, run: `cabal install` or `cabal build`.
 
-To execute, run: `stack exec sudoku-solver`.
+To execute, run: `cabal run sudoku-solver`.
+
+To execute using the command-line instead of a GUI, run:
+`cabal run sudoku-solver -- -c`.
 
 ## Mathematical Solutions
 

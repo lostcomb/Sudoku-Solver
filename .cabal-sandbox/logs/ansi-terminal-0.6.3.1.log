@@ -1,0 +1,29 @@
+Registering ansi-terminal-0.6.3.1...
+\Dropbox\Projects\sudoku-solver\.cabal-sandbox\x86_64-windows-ghc-8.0.2\ansi-terminal-0.6.3.1-HyG7yk8a5bBEOA2WuaT7T0
+NSI\Windows\Foreign.hs, dist\dist-sandbox-fd15c6e0\build\System\Console\ANSI\Windows\Foreign.o )
+
+System\Console\ANSI\Windows\Foreign.hs:68:1: warning: [-Wunused-imports]
+    The import of `Data.Typeable' is redundant
+      except perhaps to import instances from `Data.Typeable'
+    To import instances alone, use: import Data.Typeable()
+[2 of 9] Compiling System.Console.ANSI.Windows.Detect ( System\Console\ANSI\Windows\Detect.hs, dist\dist-sandbox-fd15c6e0\build\System\Console\ANSI\Windows\Detect.o )
+[3 of 9] Compiling System.Console.ANSI.Types ( System\Console\ANSI\Types.hs, dist\dist-sandbox-fd15c6e0\build\System\Console\ANSI\Types.o )
+[4 of 9] Compiling System.Console.ANSI.Windows.Emulator.Codes ( System\Console\ANSI\Windows\Emulator\Codes.hs, dist\dist-sandbox-fd15c6e0\build\System\Console\ANSI\Windows\Emulator\Codes.o )
+[5 of 9] Compiling System.Console.ANSI.Codes ( System\Console\ANSI\Codes.hs, dist\dist-sandbox-fd15c6e0\build\System\Console\ANSI\Codes.o )
+[6 of 9] Compiling System.Console.ANSI.Unix ( System\Console\ANSI\Unix.hs, dist\dist-sandbox-fd15c6e0\build\System\Console\ANSI\Unix.o )
+[7 of 9] Compiling System.Console.ANSI.Windows.Emulator ( System\Console\ANSI\Windows\Emulator.hs, dist\dist-sandbox-fd15c6e0\build\System\Console\ANSI\Windows\Emulator.o )
+
+System\Console\ANSI\Windows\Emulator.hs:82:5: warning: [-Wunused-do-bind]
+    A do-notation statement discarded a result of type `DWORD'
+    Suppress this warning by saying
+      `_ <- fillConsoleOutputCharacter
+              handle clearChar fill_length fill_cursor_pos'
+
+System\Console\ANSI\Windows\Emulator.hs:83:5: warning: [-Wunused-do-bind]
+    A do-notation statement discarded a result of type `DWORD'
+    Suppress this warning by saying
+      `_ <- fillConsoleOutputAttribute
+              handle clearAttribute fill_length fill_cursor_pos'
+[8 of 9] Compiling System.Console.ANSI.Windows ( System\Console\ANSI\Windows.hs, dist\dist-sandbox-fd15c6e0\build\System\Console\ANSI\Windows.o )
+[9 of 9] Compiling System.Console.ANSI ( System\Console\ANSI.hs, dist\dist-sandbox-fd15c6e0\build\System\Console\ANSI.o )
+cabal: Leaving directory 'C:\Users\Julian\AppData\Local\Temp\cabal-tmp-8724\ansi-terminal-0.6.3.1'

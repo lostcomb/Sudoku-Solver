@@ -1,0 +1,6 @@
+Installing executable(s) in
+C:\Users\Julian\Dropbox\Projects\sudoku-solver\.cabal-sandbox\bin
+1.0.0...
+[5 of 5] Compiling Main             ( src\Main.hs, dist\dist-sandbox-fd15c6e0\build\sudoku-solver\sudoku-solver-tmp\Main.o )
+Linking dist/dist-sandbox-fd15c6e0\build\sudoku-solver\sudoku-solver.exe ...
+cabal: Leaving directory '.'

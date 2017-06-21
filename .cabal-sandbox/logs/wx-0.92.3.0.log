@@ -1,0 +1,19 @@
+Registering wx-0.92.3.0...
+ers\Julian\Dropbox\Projects\sudoku-solver\.cabal-sandbox\x86_64-windows-ghc-8.0.2\wx-0.92.3.0-7wJuE3qqzgx12G04yKbmai
+sandbox-fd15c6e0\build\Graphics\UI\WX\Types.o )
+[ 2 of 16] Compiling Graphics.UI.WX.Attributes ( src\Graphics\UI\WX\Attributes.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Attributes.o )
+[ 3 of 16] Compiling Graphics.UI.WX.Layout ( src\Graphics\UI\WX\Layout.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Layout.o )
+[ 4 of 16] Compiling Graphics.UI.WX.Classes ( src\Graphics\UI\WX\Classes.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Classes.o )
+[ 5 of 16] Compiling Graphics.UI.WX.Events ( src\Graphics\UI\WX\Events.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Events.o )
+[ 6 of 16] Compiling Graphics.UI.WX.Media ( src\Graphics\UI\WX\Media.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Media.o )
+[ 7 of 16] Compiling Graphics.UI.WX.Menu ( src\Graphics\UI\WX\Menu.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Menu.o )
+[ 8 of 16] Compiling Graphics.UI.WX.Timer ( src\Graphics\UI\WX\Timer.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Timer.o )
+[ 9 of 16] Compiling Graphics.UI.WX.Variable ( src\Graphics\UI\WX\Variable.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Variable.o )
+[10 of 16] Compiling Graphics.UI.WX.Window ( src\Graphics\UI\WX\Window.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Window.o )
+[11 of 16] Compiling Graphics.UI.WX.Controls ( src\Graphics\UI\WX\Controls.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Controls.o )
+[12 of 16] Compiling Graphics.UI.WX.Draw ( src\Graphics\UI\WX\Draw.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Draw.o )
+[13 of 16] Compiling Graphics.UI.WX.TopLevelWindow ( src\Graphics\UI\WX\TopLevelWindow.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\TopLevelWindow.o )
+[14 of 16] Compiling Graphics.UI.WX.Frame ( src\Graphics\UI\WX\Frame.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Frame.o )
+[15 of 16] Compiling Graphics.UI.WX.Dialogs ( src\Graphics\UI\WX\Dialogs.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX\Dialogs.o )
+[16 of 16] Compiling Graphics.UI.WX   ( src\Graphics\UI\WX.hs, dist\dist-sandbox-fd15c6e0\build\Graphics\UI\WX.o )
+cabal: Leaving directory 'C:\Users\Julian\AppData\Local\Temp\cabal-tmp-8724\wx-0.92.3.0'

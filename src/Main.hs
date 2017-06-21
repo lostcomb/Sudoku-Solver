@@ -4,17 +4,29 @@ module Main where
 import Sudoku
 import Parser
 import Solver
+import Display
 
 import Data.Char
 import System.IO
 import System.Exit
 import Control.Monad
+import Graphics.UI.WX
 import Foreign.C.Types
+import System.Environment
 import System.Console.ANSI
 
--- Main loop; asks for new Sudoku boards to solve.
+-- Uses the command-line arguments to decide whether
+-- to use the command-line or a GUI for I/O.
 main :: IO ()
 main = do
+  args <- getArgs
+  case args of
+    ("-c"):_ -> interpreterLoop
+    _        -> start ui
+
+-- Main loop; asks for new Sudoku boards to solve.
+interpreterLoop :: IO ()
+interpreterLoop = do
   putStrLn "Sudoku Solver (c) Julian Loscombe 2017."
   forever $ do
     putStr prompt
