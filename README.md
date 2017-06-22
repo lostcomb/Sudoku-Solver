@@ -6,14 +6,16 @@ This program treats Sudoku as a board game and builds up a game tree to
 find the solution. The game tree search is optimised using some of the
 rules a person would use when solving the puzzles.
 
+Extra constraints can also be given. These can be either:
+* regions that should have unique values (the same constraints as
+applied to the rows, columns and boxes).
+* regions whose sum should equal a specified value.
+
 ## Compilation
 
-To compile, run: `cabal install` or `cabal build`.
+To compile, run: `stack build`.
 
-To execute, run: `cabal run sudoku-solver`.
-
-To execute using the command-line instead of a GUI, run:
-`cabal run sudoku-solver -- -c`.
+To execute, run: `stack exec sudoku-solver`.
 
 ## Mathematical Solutions
 

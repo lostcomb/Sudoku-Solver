@@ -1,9 +1,0 @@
-Registering strict-0.3.2...
-rs\Julian\Dropbox\Projects\sudoku-solver\.cabal-sandbox\x86_64-windows-ghc-8.0.2\strict-0.3.2-BBOmnAYVsBNJUoZDQOsWvM
-vidual extensions instead
-[1 of 5] Compiling System.IO.Strict ( System\IO\Strict.hs, dist\dist-sandbox-fd15c6e0\build\System\IO\Strict.o )
-[2 of 5] Compiling Data.Strict.Tuple ( Data\Strict\Tuple.hs, dist\dist-sandbox-fd15c6e0\build\Data\Strict\Tuple.o )
-[3 of 5] Compiling Data.Strict.Maybe ( Data\Strict\Maybe.hs, dist\dist-sandbox-fd15c6e0\build\Data\Strict\Maybe.o )
-[4 of 5] Compiling Data.Strict.Either ( Data\Strict\Either.hs, dist\dist-sandbox-fd15c6e0\build\Data\Strict\Either.o )
-[5 of 5] Compiling Data.Strict      ( Data\Strict.hs, dist\dist-sandbox-fd15c6e0\build\Data\Strict.o )
-cabal: Leaving directory 'C:\Users\Julian\AppData\Local\Temp\cabal-tmp-8727\strict-0.3.2'

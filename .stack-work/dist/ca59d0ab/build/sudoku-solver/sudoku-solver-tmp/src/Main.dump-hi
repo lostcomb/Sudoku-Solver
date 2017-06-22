@@ -1,0 +1,195 @@
+
+==================== FINAL INTERFACE ====================
+2017-06-22 14:47:32.9443473 UTC
+
+interface main@main:Main 8002
+  interface hash: 9cbe7de8c2d0323b335086358df67f40
+  ABI hash: 2a97a42427f7fd8ac4a63c02d3715add
+  export-list hash: 3f2f169d92065124ad5362e28b0dc14c
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: dfb50c2b24fb21f661fd3989a6dc602c
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  Main.c_getch
+  Main.displaySolutions
+  Main.getChar'
+  Main.main
+  Main.prompt
+module dependencies: Parser Solver Sudoku
+package dependencies: Win32-2.3.1.1@Win32-2.3.1.1
+                      ansi-terminal-0.6.3.1@ansi-terminal-0.6.3.1-CdiTOvx5ZEQ2RerUYIP05k
+                      array-0.5.1.1@array-0.5.1.1 base-4.9.1.0
+                      base-compat-0.9.3@base-compat-0.9.3-m1TEyTenyr5nJN40TpHVj
+                      binary-0.8.3.0@binary-0.8.3.0
+                      bytestring-0.10.8.1@bytestring-0.10.8.1
+                      containers-0.5.7.1@containers-0.5.7.1
+                      deepseq-1.4.2.0@deepseq-1.4.2.0 ghc-prim-0.5.0.0
+                      integer-gmp-1.0.0.1 mtl-2.2.1@mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6
+                      parsec-3.1.11@parsec-3.1.11-113irVHGgd88sRnywByDNw
+                      text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR
+                      transformers-0.5.2.0@transformers-0.5.2.0
+orphans: base-4.9.1.0:GHC.Base base-4.9.1.0:GHC.Float
+         binary-0.8.3.0@binary-0.8.3.0:Data.Binary.Generic
+         bytestring-0.10.8.1@bytestring-0.10.8.1:Data.ByteString.Builder
+         text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text
+         text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text.Lazy
+         text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text.Show
+         transformers-0.5.2.0@transformers-0.5.2.0:Control.Monad.Trans.Error
+family instance modules: base-4.9.1.0:Control.Applicative
+                         base-4.9.1.0:Data.Complex base-4.9.1.0:Data.Either
+                         base-4.9.1.0:Data.Functor.Const base-4.9.1.0:Data.Functor.Identity
+                         base-4.9.1.0:Data.List.NonEmpty base-4.9.1.0:Data.Monoid
+                         base-4.9.1.0:Data.Semigroup base-4.9.1.0:Data.Type.Equality
+                         base-4.9.1.0:Data.Version base-4.9.1.0:Data.Void
+                         base-4.9.1.0:GHC.Exts base-4.9.1.0:GHC.Generics
+                         base-4.9.1.0:GHC.IO.Exception base-4.9.1.0:GHC.TypeLits
+                         containers-0.5.7.1@containers-0.5.7.1:Data.IntMap.Base
+                         containers-0.5.7.1@containers-0.5.7.1:Data.IntSet.Base
+                         containers-0.5.7.1@containers-0.5.7.1:Data.Map.Base
+                         containers-0.5.7.1@containers-0.5.7.1:Data.Sequence
+                         containers-0.5.7.1@containers-0.5.7.1:Data.Set.Base
+                         text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text
+                         text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text.Lazy
+import  -/  ansi-terminal-0.6.3.1@ansi-terminal-0.6.3.1-CdiTOvx5ZEQ2RerUYIP05k:System.Console.ANSI b786a4109b9fb8de05c5adb5035fae20
+import  -/  ansi-terminal-0.6.3.1@ansi-terminal-0.6.3.1-CdiTOvx5ZEQ2RerUYIP05k:System.Console.ANSI.Types 91eb16a9fa2802ce904da36fcb7fc448
+import  -/  ansi-terminal-0.6.3.1@ansi-terminal-0.6.3.1-CdiTOvx5ZEQ2RerUYIP05k:System.Console.ANSI.Windows a0db5b8fe09afb96e0926a48376a40b7
+import  -/  base-4.9.1.0:Control.Monad f915f187cea611986ebb12dbc69279ab
+import  -/  base-4.9.1.0:Data.Char c49b58282af11503cc838e1052cf6b83
+import  -/  base-4.9.1.0:Data.Either 186ef9adf6b47e24f39efe9b2e18e352
+import  -/  base-4.9.1.0:Data.Foldable 254e836c2d813d34e47feb29bb8d40ed
+import  -/  base-4.9.1.0:Foreign.C.Types 219f99bd057b4eb85c4aa1976e712a7d
+import  -/  base-4.9.1.0:GHC.Base 4caea1123ecf4b46e27cbccd6d279377
+import  -/  base-4.9.1.0:GHC.Char dc348eccabc798659394eb810444f8d4
+import  -/  base-4.9.1.0:GHC.Enum 3beb5abd88e2173130728ffba8194381
+import  -/  base-4.9.1.0:GHC.IO.Handle cb8bbcf28331624bf008e1abd21fcddd
+import  -/  base-4.9.1.0:GHC.IO.Handle.FD 13bd8641d665b1ca96fbeeb8bdfa3638
+import  -/  base-4.9.1.0:GHC.Show eca5834daba3b6a2bbbe64ab52056707
+import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
+import  -/  base-4.9.1.0:System.Environment 438c0b0bc0f94461b9c946d062a7eab9
+import  -/  base-4.9.1.0:System.Exit c7285b50307ae5b742cc92ebeb7b2666
+import  -/  base-4.9.1.0:System.IO 5daf3f384209c11d9566e3409af8ec5d
+import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
+import  -/  Parser ecc0c1f705f9c4b55e154e0b644939fb
+  exports: c313370948daf672363b5f72e2f1e113
+  parseBoard 13a974f93570a3a351ab363e48455f98
+import  -/  Solver 8ccc8b8c5c52b344cf156569330db417
+  exports: e00029da8439596fa29a3c8250e4570c
+  solve fafaa16a536dadb85aec00c149ff0b3a
+import  -/  Sudoku eb6464a3157ff8483f52438e3800ef99
+  exports: 79fcaaf52c39012888be358e6a29850f
+  Board bcf6e97b562b4d4344081794ebcbd5fa
+addDependentFile "C:\Users\Julian\AppData\Local\Programs\stack\x86_64-windows\ghc-8.0.2\lib\include\ghcversion.h"
+addDependentFile ".stack-work\dist\ca59d0ab\build\autogen\cabal_macros.h"
+d6831ef04cb9301b090dfae6f7bb7ec7
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module Main.$trModule2 Main.$trModule1) -}
+847d9fc3b8e6f0b424199f36b4999bb2
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "Main"#) -}
+24ef6042833e75ffd7aa98b83ecca98d
+  $trModule2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS "main"#) -}
+778ef16b41170bc806bf811bd94faf7f
+  c_getch :: GHC.Types.IO Foreign.C.Types.CInt
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,U>,
+     Unfolding: InlineRule (0, False, False)
+                (\ (ds :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                 case {__pkg_ccall main@main getch GHC.Prim.State#
+                                                     GHC.Prim.RealWorld
+                                                   -> (# GHC.Prim.State# GHC.Prim.RealWorld,
+                                                         GHC.Prim.Int# #)}
+                        ds of wild { (#,#) ds1 ds2 ->
+                 (# ds1, GHC.Int.I32# (GHC.Prim.narrow32Int# ds2) #) })
+                  `cast`
+                (Sym (GHC.Types.N:IO[0] (Foreign.C.Types.N:CInt[0]))) -}
+c429e621f1636b7b95d3c882f7ba5390
+  displaySolutions :: [Sudoku.Board] -> GHC.Types.IO ()
+  {- Arity: 2, Strictness: <S,1*U><S,U>,
+     Unfolding: InlineRule (0, True, True)
+                Main.displaySolutions1
+                  `cast`
+                (<[Sudoku.Board]>_R ->_R Sym (GHC.Types.N:IO[0] <()>_R)) -}
+babd390a4363ea6487bca43ec157bdee
+  displaySolutions1 ::
+    [Sudoku.Board]
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 2, Strictness: <S,1*U><S,U> -}
+bc5a4872a788cee1646c9340bb800d30
+  getChar' :: GHC.Types.IO GHC.Types.Char
+  {- Arity: 1, Strictness: <S,U>,
+     Unfolding: InlineRule (0, True, True)
+                Main.getChar'1
+                  `cast`
+                (Sym (GHC.Types.N:IO[0] <GHC.Types.Char>_R)) -}
+62ca37576748db7fe0ef661488e58222
+  getChar'1 ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Types.Char #)
+  {- Arity: 1, Strictness: <S,U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (eta :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                 case {__pkg_ccall main@main getch GHC.Prim.State#
+                                                     GHC.Prim.RealWorld
+                                                   -> (# GHC.Prim.State# GHC.Prim.RealWorld,
+                                                         GHC.Prim.Int# #)}
+                        eta of wild { (#,#) ds ds1 ->
+                 let {
+                   ipv1 :: GHC.Prim.Int# = GHC.Prim.narrow32Int# ds1
+                 } in
+                 (# ds,
+                    case GHC.Prim.tagToEnum#
+                           @ GHC.Types.Bool
+                           (GHC.Prim.leWord# (GHC.Prim.int2Word# ipv1) 1114111##) of wild1 {
+                      GHC.Types.False -> GHC.Char.chr2 ipv1
+                      GHC.Types.True -> GHC.Types.C# (GHC.Prim.chr# ipv1) } #) }) -}
+1d4c4a558bfdff804e20b13eb91af802
+  main :: GHC.Types.IO ()
+  {- Arity: 1, Strictness: <S,U>,
+     Unfolding: InlineRule (0, True, True)
+                Main.main1 `cast` (Sym (GHC.Types.N:IO[0] <()>_R)) -}
+797db98595cf4d1c17f32fdfd763e6a1
+  main1 ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 1, Strictness: <S,U>,
+     Unfolding: (\ (s :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                 case GHC.IO.Handle.Text.hPutStr2
+                        GHC.IO.Handle.FD.stdout
+                        Main.main3
+                        GHC.Types.True
+                        s of ds1 { (#,#) ipv ipv1 ->
+                 Main.main2 ipv }) -}
+ee6c40491fc3d7de79463334122afe56
+  main2 ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 1, Strictness: <S,U> -}
+24d6ae5025882583e615420db8730522
+  main3 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   "Sudoku Solver (c) Julian Loscombe 2017."#) -}
+5a5f4112f95dfa07494cc81042478095
+  main4 ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 1,
+     Unfolding: (GHC.TopHandler.runMainIO1
+                   @ ()
+                   Main.main1 `cast` (Sym (GHC.Types.N:IO[0] <()>_R))) -}
+37fdf85fffd96b02961585b66bc72f3f
+  prompt :: GHC.Base.String
+  {- Unfolding: (GHC.CString.unpackCString# "*>"#) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+
