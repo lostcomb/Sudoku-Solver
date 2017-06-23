@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-22 14:47:32.9443473 UTC
+2017-06-23 15:23:44.1977653 UTC
 
 interface main@main:Main 8002
-  interface hash: 9cbe7de8c2d0323b335086358df67f40
-  ABI hash: 2a97a42427f7fd8ac4a63c02d3715add
+  interface hash: afc10bb7086ad69f752ad16a1130883f
+  ABI hash: 3f48496f896c7676f004b0d381771b50
   export-list hash: 3f2f169d92065124ad5362e28b0dc14c
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: dfb50c2b24fb21f661fd3989a6dc602c
@@ -71,15 +71,15 @@ import  -/  base-4.9.1.0:System.Environment 438c0b0bc0f94461b9c946d062a7eab9
 import  -/  base-4.9.1.0:System.Exit c7285b50307ae5b742cc92ebeb7b2666
 import  -/  base-4.9.1.0:System.IO 5daf3f384209c11d9566e3409af8ec5d
 import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
-import  -/  Parser ecc0c1f705f9c4b55e154e0b644939fb
-  exports: c313370948daf672363b5f72e2f1e113
-  parseBoard 13a974f93570a3a351ab363e48455f98
-import  -/  Solver 8ccc8b8c5c52b344cf156569330db417
+import  -/  Parser b248c1436982a0739c3c45e23429fad8
+  exports: 9d0412e26f7b0e734668ebe1b69bff2d
+  parseBoard 6fcb644820cb2b9570ca1d7ce2edc689
+import  -/  Solver 4e74f1f628ccd0f9dc63c25f85d43e1f
   exports: e00029da8439596fa29a3c8250e4570c
-  solve fafaa16a536dadb85aec00c149ff0b3a
-import  -/  Sudoku eb6464a3157ff8483f52438e3800ef99
-  exports: 79fcaaf52c39012888be358e6a29850f
-  Board bcf6e97b562b4d4344081794ebcbd5fa
+  solve 73f852d91f4db7e433086881d81ca9df
+import  -/  Sudoku cbdeed1130064e2ee058cf35e212c94d
+  exports: bc4f6f0102caebd68ec88d40af7b5792
+  Board 0c55e2eef340310bbd77e171b8476532
 addDependentFile "C:\Users\Julian\AppData\Local\Programs\stack\x86_64-windows\ghc-8.0.2\lib\include\ghcversion.h"
 addDependentFile ".stack-work\dist\ca59d0ab\build\autogen\cabal_macros.h"
 d6831ef04cb9301b090dfae6f7bb7ec7
@@ -107,14 +107,14 @@ d6831ef04cb9301b090dfae6f7bb7ec7
                  (# ds1, GHC.Int.I32# (GHC.Prim.narrow32Int# ds2) #) })
                   `cast`
                 (Sym (GHC.Types.N:IO[0] (Foreign.C.Types.N:CInt[0]))) -}
-c429e621f1636b7b95d3c882f7ba5390
+e9dab76edcf4498cd77bbe52156ac457
   displaySolutions :: [Sudoku.Board] -> GHC.Types.IO ()
   {- Arity: 2, Strictness: <S,1*U><S,U>,
      Unfolding: InlineRule (0, True, True)
                 Main.displaySolutions1
                   `cast`
                 (<[Sudoku.Board]>_R ->_R Sym (GHC.Types.N:IO[0] <()>_R)) -}
-babd390a4363ea6487bca43ec157bdee
+d65a833c333aeb21b551e4ec3713f7ae
   displaySolutions1 ::
     [Sudoku.Board]
     -> GHC.Prim.State# GHC.Prim.RealWorld

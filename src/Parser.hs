@@ -16,14 +16,21 @@ import System.Console.ANSI
 
   The format for the board is as follows:
 
-    board :- partial_board | full_board
+    board         :- (partial_board | full_board) constraint*
+
     partial_board :- integer 'x' integer ';' [entries]
-    entries :- loc_entry | loc_entry ',' entries
-    loc_entry :- '(' integer ',' integer ',' entry ')'
-    full_board :- {{entry ','}^n-1 entry ';'}^n-1 ({entry ','}^n-1 entry)
-    entry :- full | empty
-    full :- '1' | '2' | '3' | ... | n
-    empty :- '.'
+    entries       :- loc_entry | loc_entry ',' entries
+    loc_entry     :- '(' integer ',' integer ',' entry ')'
+    full_board    :- {{entry ','}^n-1 entry ';'}^n-1 ({entry ','}^n-1 entry)
+    entry         :- full | empty
+    full          :- '1' | '2' | '3' | ... | n
+    empty         :- '.'
+
+    constraint    :- sum | unique
+    sum           :- '-' 's' integer ';' indices
+    unique        :- '-' 'u' indices
+    indices       :- index | index ',' indices
+    index         :- '(' integer ',' integer ')'
 -}
 
 -- Lexer for the grammar.
@@ -31,7 +38,7 @@ lexer = makeTokenParser (emptyDef { reservedNames = [ "exit" ] })
 
 -- Parse a description of a Sudoku board.
 parseBoard :: String -> Either [IO ()] (Maybe Board)
-parseBoard str = case parse (whiteSpace lexer *> boardParser <* eof) "" str of
+parseBoard str = case parse (whiteSpace lexer *> boardParser' <* eof) "" str of
   (Left  e) -> let col          = sourceColumn . errorPos $ e
                    (start, end) = splitAt (col - 1) str
                    unexpected   = extractUnexpected e
@@ -58,6 +65,16 @@ extractUnexpected e
 unQuote :: String -> String
 unQuote ('"':xs) = init xs
 unQuote x        = x
+
+-- Parse a description of a Sudoku board with some constraints
+-- to be applied to the solutions.
+boardParser' :: Parser (Maybe Board)
+boardParser' = do
+  b <- boardParser
+  case b of
+    Just (Board n rows _) ->  (Just . Board n rows)
+                          <$> many constraintParser
+    Nothing               ->  return Nothing
 
 -- Parse a description of a Sudoku board and perform some validation
 -- to check that the board is square, it's size has an integer square root
@@ -112,7 +129,7 @@ full_boardParser
 
        if sqrt_n * sqrt_n /= n             then fail invalidSqrtError
        else if not bounded                 then fail invalidEntryError
-       else if rowLen && length board == n then return $ Board sqrt_n board
+       else if rowLen && length board == n then return $ Board sqrt_n board []
        else                                     fail invalidSizeError
 
 -- Parse a row of the Sudoku board.
@@ -133,9 +150,41 @@ fullParser = Full . fromIntegral <$> integer lexer
 emptyParser :: Parser Entry
 emptyParser = Sudoku.Empty <$ dot lexer
 
+-- Parse a constraint.
+constraintParser :: Parser Constraint
+constraintParser =   sumConstraintParser
+                 <|> uniqueConstraintParser
+                 <?> invalidConstraintFormat
+
+-- Parse a summation constraint.
+sumConstraintParser :: Parser Constraint
+sumConstraintParser = Sum <$  symbol lexer "-s"
+                          <*> intParser
+                          <*  semi lexer
+                          <*> indicesParser
+
+-- Parse a uniqueness constraint.
+uniqueConstraintParser :: Parser Constraint
+uniqueConstraintParser = Unique <$  symbol lexer "-u"
+                                <*> indicesParser
+
+-- Parse a list of constraint indices.
+indicesParser :: Parser [(Int, Int)]
+indicesParser = indexParser `sepBy1` comma lexer
+
+-- Parse an index entry of a constraint.
+indexParser :: Parser (Int, Int)
+indexParser = parens lexer $ (,) <$> intParser
+                                 <*  comma lexer
+                                 <*> intParser
+
 -- Error message for an invalid entry format.
 invalidFormat :: String
 invalidFormat = "either 'exit', a full board description or a partial board description."
+
+-- Error message for an invalid constraint entry format.
+invalidConstraintFormat :: String
+invalidConstraintFormat = "either a sum constraint or a uniqueness constraint."
 
 -- Error message for an invalid entry.
 invalidEntryError :: String

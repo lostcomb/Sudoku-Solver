@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-22 14:47:32.3250815 UTC
+2017-06-23 15:23:43.5170499 UTC
 
 interface main@main:Parser 8002
-  interface hash: 7ee578a54883ca6bcdd838ce2b57348b
-  ABI hash: ecc0c1f705f9c4b55e154e0b644939fb
-  export-list hash: c313370948daf672363b5f72e2f1e113
+  interface hash: ba7f366af8b1be2c49ca46ee3f30cdb5
+  ABI hash: b248c1436982a0739c3c45e23429fad8
+  export-list hash: 9d0412e26f7b0e734668ebe1b69bff2d
   orphan hash: 667c739a8929f4877419676bfd240c3d
   flag hash: 9d5d0e5951e43ac5c54d51d3e1285ccf
   sig of: Nothing
@@ -13,12 +13,17 @@ interface main@main:Parser 8002
   where
 exports:
   Parser.boardParser
+  Parser.boardParser'
+  Parser.constraintParser
   Parser.emptyParser
   Parser.entryParser
   Parser.extractUnexpected
   Parser.fullParser
   Parser.full_boardParser
+  Parser.indexParser
+  Parser.indicesParser
   Parser.intParser
+  Parser.invalidConstraintFormat
   Parser.invalidEntryError
   Parser.invalidFormat
   Parser.invalidSizeError
@@ -28,7 +33,9 @@ exports:
   Parser.parseBoard
   Parser.partial_boardParser
   Parser.rowParser
+  Parser.sumConstraintParser
   Parser.unQuote
+  Parser.uniqueConstraintParser
 module dependencies: Sudoku
 package dependencies: Win32-2.3.1.1@Win32-2.3.1.1
                       ansi-terminal-0.6.3.1@ansi-terminal-0.6.3.1-CdiTOvx5ZEQ2RerUYIP05k
@@ -81,15 +88,18 @@ import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
 import  -/  base-4.9.1.0:System.IO 5daf3f384209c11d9566e3409af8ec5d
 import  -/  ghc-prim-0.5.0.0:GHC.Classes 16d48e012d23eaef9bca91ccdd572c02
 import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
-import  -/  Sudoku eb6464a3157ff8483f52438e3800ef99
-  exports: 79fcaaf52c39012888be358e6a29850f
-  Board d8a62a1a28f17e21ad6ed6bad9f6781a
-  Board bcf6e97b562b4d4344081794ebcbd5fa
-  Empty 331bfd4cf3f215e5f807c4958d47b189
-  Entry d45dc2175a1280da9d0afb3ab06fea8e
-  Full ae694642246141bebb0765c1578701a2
-  uniformBoard 78091803701cb6b7cf5f3bd601f5b1bc
-  updateEntry d5e13642e6156511b8d6de7d957fb6d1
+import  -/  Sudoku cbdeed1130064e2ee058cf35e212c94d
+  exports: bc4f6f0102caebd68ec88d40af7b5792
+  Board 66494d6e86ea9a43944fa2d6ccb304d2
+  Board 0c55e2eef340310bbd77e171b8476532
+  Constraint 00812975d45cc4583efc04bbf7551402
+  Empty efced0b9d28780fec5322a7f20896a8f
+  Entry f0f5133c2a513737f90527c34f9a37ca
+  Full b83bb2cdc57481bc6deffacf012718ba
+  Sum 8bf55303572ecf1347df30ddde798bca
+  Unique c2a15fb700c6c9043fa7b425fe267cc0
+  uniformBoard a0dfcbf1665a6c421b4f736ddf03e1fa
+  updateEntry 2cc45edfa5a8953c848741d518a7d440
 import  -/  parsec-3.1.11@parsec-3.1.11-113irVHGgd88sRnywByDNw:Text.Parsec b63ffbcfd32da83683c00215f9c65dae
 import  -/  parsec-3.1.11@parsec-3.1.11-113irVHGgd88sRnywByDNw:Text.Parsec.Combinator 9187c2dacfeafa8e3a07683875a35e9e
 import  -/  parsec-3.1.11@parsec-3.1.11-113irVHGgd88sRnywByDNw:Text.Parsec.Error 282c1e138452e02ca1f3066486c0ee09
@@ -197,7 +207,7 @@ f0a0f59f5f25fe61cacd5ca0b1e46baa
                                 case ds4 of ds5 {
                                   DEFAULT -> wild2
                                   '"'# -> GHC.List.init @ GHC.Types.Char xs } } } } }) -}
-a6be31fdb0cc6ac0996b5a57dee122f3
+49dfd32c4ad4edf058f81763e61e9713
   $wfull_boardParser ::
     [[Sudoku.Entry]]
     -> forall b.
@@ -216,7 +226,7 @@ a6be31fdb0cc6ac0996b5a57dee122f3
   $wunsafeDrop :: GHC.Prim.Int# -> [a1] -> [a1]
   {- Arity: 2, HasNoCafRefs, Strictness: <L,1*U><S,1*U>,
      Inline: [0] -}
-4ce7edd77a66105c700681c667a264a6
+098f2f32314976562553ec8fca1bf049
   boardParser ::
     Text.Parsec.String.Parser (GHC.Base.Maybe Sudoku.Board)
   {- Arity: 5, Strictness: <L,U><L,U><L,U><L,C(C1(C1(U)))><L,C(U)>,
@@ -228,7 +238,38 @@ a6be31fdb0cc6ac0996b5a57dee122f3
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <GHC.Base.Maybe Sudoku.Board>_R)) -}
-d8e83e597558f59477354af4057dcdb4
+010a58528b889660ae26fec7bffea210
+  boardParser' ::
+    Text.Parsec.String.Parser (GHC.Base.Maybe Sudoku.Board)
+  {- Arity: 5,
+     Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,C(U)>,
+     Unfolding: InlineRule (0, True, True)
+                Parser.boardParser'1
+                  `cast`
+                (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                          <[GHC.Types.Char]>_R
+                          <()>_R
+                          <Data.Functor.Identity.Identity>_R
+                          <GHC.Base.Maybe Sudoku.Board>_R)) -}
+9b0b1cdf158d0ea32fc9b3053f16a2a0
+  boardParser'1 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> (GHC.Base.Maybe Sudoku.Board
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (GHC.Base.Maybe Sudoku.Board
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,C(U)> -}
+ed8aeec1bdd33fee2bb95226b430689e
   boardParser1 ::
     Text.Parsec.Prim.State GHC.Base.String ()
     -> (GHC.Base.Maybe Sudoku.Board
@@ -282,7 +323,7 @@ d8e83e597558f59477354af4057dcdb4
                    eta2
                    eta3
                    eta4) -}
-7c7e8630a2577775bbf0e9a10cd6e889
+7d3a44bf45cfe1dffd1fff6c11d030c9
   boardParser2 ::
     Text.Parsec.Prim.State GHC.Base.String ()
     -> (GHC.Base.Maybe Sudoku.Board
@@ -300,7 +341,453 @@ d8e83e597558f59477354af4057dcdb4
     -> Data.Functor.Identity.Identity b
   {- Arity: 5,
      Strictness: <L,U><L,C(U)><L,U><L,C(C1(C1(U)))><L,C(U)> -}
-77b370b7b7fba48916984af3ffdbf087
+8d0669f2c912a4e9a66c9b35d99595c5
+  constraintParser :: Text.Parsec.String.Parser Sudoku.Constraint
+  {- Arity: 5, Strictness: <L,U><L,U><L,U><L,C(C1(C1(U)))><L,C(U)>,
+     Unfolding: InlineRule (0, True, True)
+                Parser.constraintParser1
+                  `cast`
+                (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                          <GHC.Base.String>_R
+                          <()>_R
+                          <Data.Functor.Identity.Identity>_R
+                          <Sudoku.Constraint>_R)) -}
+68c3b5098d40822bb38cf94e135472c8
+  constraintParser1 ::
+    Text.Parsec.Prim.State GHC.Base.String ()
+    -> (Sudoku.Constraint
+        -> Text.Parsec.Prim.State GHC.Base.String ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Sudoku.Constraint
+        -> Text.Parsec.Prim.State GHC.Base.String ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> Data.Functor.Identity.Identity b
+  {- Arity: 5, Strictness: <L,U><L,U><L,U><L,C(C1(C1(U)))><L,C(U)>,
+     Unfolding: InlineRule (5, True, False)
+                (\ @ b
+                   (eta :: Text.Parsec.Prim.State GHC.Base.String ())
+                   (eta1 :: Sudoku.Constraint
+                            -> Text.Parsec.Prim.State GHC.Base.String ()
+                            -> Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b)
+                   (eta2 :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b)
+                   (eta3 :: Sudoku.Constraint
+                            -> Text.Parsec.Prim.State GHC.Base.String ()
+                            -> Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b)
+                   (eta4 :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b) ->
+                 Text.Parsec.Prim.<?>2
+                   @ GHC.Base.String
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   @ Sudoku.Constraint
+                   Parser.constraintParser2
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <GHC.Base.String>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <Sudoku.Constraint>_R))
+                   (GHC.Types.:
+                      @ GHC.Base.String
+                      Parser.invalidConstraintFormat
+                      (GHC.Types.[] @ GHC.Base.String))
+                   @ b
+                   eta
+                   eta1
+                   eta2
+                   eta3
+                   eta4) -}
+dd4a064abab61edd46055ea9e54e496a
+  constraintParser10 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> ((GHC.Base.String
+         -> [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> ((GHC.Base.String
+         -> [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Unfolding: (\ @ b1
+                   (s1 :: Text.Parsec.Prim.State [GHC.Types.Char] ())[OneShot]
+                   (cok :: (GHC.Base.String
+                            -> [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1)[OneShot]
+                   (cerr :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)[OneShot]
+                   (eok :: (GHC.Base.String
+                            -> [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1)[OneShot]
+                   (eerr :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)[OneShot] ->
+                 Text.Parsec.Prim.$fAlternativeParsecT2
+                   @ [GHC.Types.Char]
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   @ GHC.Types.Int
+                   @ ([(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+                   Parser.constraintParser11
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <[GHC.Types.Char]>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <GHC.Types.Int
+                              -> [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint>_R))
+                   Parser.indexParser2
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <[GHC.Types.Char]>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <GHC.Types.Int>_R))
+                   @ b1
+                   s1
+                   (\ (x :: [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint) ->
+                    cok (\ (ds :: GHC.Base.String) -> x))
+                   cerr
+                   (\ (x :: [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint) ->
+                    eok (\ (ds :: GHC.Base.String) -> x))
+                   eerr) -}
+fcb756f1da4091877413926a26027c52
+  constraintParser11 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> ((GHC.Types.Int
+         -> [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> ((GHC.Types.Int
+         -> [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5, Strictness: <L,U><L,C(U)><L,U><L,C(U)><L,U>,
+     Unfolding: InlineRule (5, True, False)
+                (\ @ b1
+                   (eta2 :: Text.Parsec.Prim.State [GHC.Types.Char] ())
+                   (eta3 :: (GHC.Types.Int
+                             -> [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+                            -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                            -> Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)
+                   (eta4 :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)
+                   (eta5 :: (GHC.Types.Int
+                             -> [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+                            -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                            -> Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)
+                   (eta6 :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1) ->
+                 Parser.constraintParser12
+                   `cast`
+                 (Text.Parsec.Prim.N:ParsecT[0]
+                      <[GHC.Types.Char]>_R
+                      <()>_R
+                      <Data.Functor.Identity.Identity>_R
+                      <GHC.Base.String>_R)
+                   @ b1
+                   eta2
+                   (\ (x :: GHC.Base.String) -> eta3 Sudoku.Sum)
+                   eta4
+                   (\ (x :: GHC.Base.String) -> eta5 Sudoku.Sum)
+                   eta6) -}
+4106958715f1c0e7cc41fdb4b085f3b1
+  constraintParser12 ::
+    Text.Parsec.Prim.ParsecT
+      GHC.Base.String () Data.Functor.Identity.Identity GHC.Base.String
+  {- Unfolding: (case Parser.lexer
+                        @ () of wild { Text.Parsec.Token.TokenParser ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ds29 ->
+                 ds14 Parser.constraintParser13 }) -}
+2119ade5a7278e7759cc491774d866c3
+  constraintParser13 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "-s"#) -}
+b8eeeb8622fd2c3fcea4781be9dba6f6
+  constraintParser2 ::
+    Text.Parsec.Prim.State GHC.Base.String ()
+    -> (Sudoku.Constraint
+        -> Text.Parsec.Prim.State GHC.Base.String ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Sudoku.Constraint
+        -> Text.Parsec.Prim.State GHC.Base.String ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> Data.Functor.Identity.Identity b
+  {- Arity: 5,
+     Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,C(U)>,
+     Unfolding: (\ @ b
+                   (s1 :: Text.Parsec.Prim.State GHC.Base.String ())
+                   (cok :: Sudoku.Constraint
+                           -> Text.Parsec.Prim.State GHC.Base.String ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b)
+                   (cerr :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b)
+                   (eok :: Sudoku.Constraint
+                           -> Text.Parsec.Prim.State GHC.Base.String ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b)
+                   (eerr :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b) ->
+                 Text.Parsec.Prim.$fAlternativeParsecT2
+                   @ [GHC.Types.Char]
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   @ [(GHC.Types.Int, GHC.Types.Int)]
+                   @ Sudoku.Constraint
+                   Parser.constraintParser8
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <[GHC.Types.Char]>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <[(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint>_R))
+                   Parser.constraintParser6
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <GHC.Base.String>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <[(GHC.Types.Int, GHC.Types.Int)]>_R))
+                   @ b
+                   s1
+                   cok
+                   cerr
+                   eok
+                   (\ (err :: Text.Parsec.Error.ParseError) ->
+                    Text.Parsec.Prim.$fAlternativeParsecT2
+                      @ [GHC.Types.Char]
+                      @ ()
+                      @ Data.Functor.Identity.Identity
+                      @ [(GHC.Types.Int, GHC.Types.Int)]
+                      @ Sudoku.Constraint
+                      Parser.constraintParser3
+                        `cast`
+                      (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                                <[GHC.Types.Char]>_R
+                                <()>_R
+                                <Data.Functor.Identity.Identity>_R
+                                <[(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint>_R))
+                      Parser.constraintParser6
+                        `cast`
+                      (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                                <GHC.Base.String>_R
+                                <()>_R
+                                <Data.Functor.Identity.Identity>_R
+                                <[(GHC.Types.Int, GHC.Types.Int)]>_R))
+                      @ b
+                      s1
+                      cok
+                      cerr
+                      (\ (y :: Sudoku.Constraint)
+                         (s' :: Text.Parsec.Prim.State GHC.Base.String ())[OneShot]
+                         (err' :: Text.Parsec.Error.ParseError)[OneShot] ->
+                       eok y s' (Text.Parsec.Error.mergeError err err'))
+                      (\ (err' :: Text.Parsec.Error.ParseError) ->
+                       eerr (Text.Parsec.Error.mergeError err err')))) -}
+b9b4938ebe6b64caf70ba57362951383
+  constraintParser3 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> (([(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (([(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5, Strictness: <L,U><L,C(U)><L,U><L,C(U)><L,U>,
+     Unfolding: InlineRule (5, True, False)
+                (\ @ b1
+                   (eta2 :: Text.Parsec.Prim.State [GHC.Types.Char] ())
+                   (eta3 :: ([(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+                            -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                            -> Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)
+                   (eta4 :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)
+                   (eta5 :: ([(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+                            -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                            -> Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)
+                   (eta6 :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1) ->
+                 Parser.constraintParser4
+                   `cast`
+                 (Text.Parsec.Prim.N:ParsecT[0]
+                      <[GHC.Types.Char]>_R
+                      <()>_R
+                      <Data.Functor.Identity.Identity>_R
+                      <GHC.Base.String>_R)
+                   @ b1
+                   eta2
+                   (\ (x :: GHC.Base.String) -> eta3 Sudoku.Unique)
+                   eta4
+                   (\ (x :: GHC.Base.String) -> eta5 Sudoku.Unique)
+                   eta6) -}
+b13d7fe265b1bfd1b6e7f5f021d960ff
+  constraintParser4 ::
+    Text.Parsec.Prim.ParsecT
+      GHC.Base.String () Data.Functor.Identity.Identity GHC.Base.String
+  {- Unfolding: (case Parser.lexer
+                        @ () of wild { Text.Parsec.Token.TokenParser ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ds29 ->
+                 ds14 Parser.constraintParser5 }) -}
+3fdda0aaaa1d6bd7f3dd2fa14d4058a4
+  constraintParser5 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# "-u"#) -}
+2f6aca1cde8f6bd0663b302ff65cf236
+  constraintParser6 ::
+    Text.Parsec.Prim.State GHC.Base.String ()
+    -> ([(GHC.Types.Int, GHC.Types.Int)]
+        -> Text.Parsec.Prim.State GHC.Base.String ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> ([(GHC.Types.Int, GHC.Types.Int)]
+        -> Text.Parsec.Prim.State GHC.Base.String ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b)
+    -> Data.Functor.Identity.Identity b
+  {- Arity: 5,
+     Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
+     Unfolding: InlineRule (5, True, False)
+                (\ @ b
+                   (w3 :: Text.Parsec.Prim.State GHC.Base.String ())
+                   (w4 :: [(GHC.Types.Int, GHC.Types.Int)]
+                          -> Text.Parsec.Prim.State GHC.Base.String ()
+                          -> Text.Parsec.Error.ParseError
+                          -> Data.Functor.Identity.Identity b)
+                   (w5 :: Text.Parsec.Error.ParseError
+                          -> Data.Functor.Identity.Identity b)
+                   (w6 :: [(GHC.Types.Int, GHC.Types.Int)]
+                          -> Text.Parsec.Prim.State GHC.Base.String ()
+                          -> Text.Parsec.Error.ParseError
+                          -> Data.Functor.Identity.Identity b)
+                   (w7 :: Text.Parsec.Error.ParseError
+                          -> Data.Functor.Identity.Identity b) ->
+                 Text.Parsec.Combinator.$wsepBy1
+                   @ GHC.Base.String
+                   @ Data.Functor.Identity.Identity
+                   @ GHC.Types.Char
+                   @ ()
+                   @ (GHC.Types.Int, GHC.Types.Int)
+                   @ GHC.Base.String
+                   Parser.indexParser
+                   Parser.constraintParser7
+                   @ b
+                   w3
+                   w4
+                   w5
+                   w6
+                   w7) -}
+93c61b484b9e4afc389759e0559e5fb7
+  constraintParser7 ::
+    Text.Parsec.Prim.ParsecT
+      GHC.Base.String () Data.Functor.Identity.Identity GHC.Base.String
+  {- Unfolding: (case Parser.lexer
+                        @ () of wild { Text.Parsec.Token.TokenParser ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ds29 ->
+                 ds23 }) -}
+71f2b73767005255a8c6a524d5e48607
+  constraintParser8 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> (([(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (([(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
+     Unfolding: (\ @ b1
+                   (eta2 :: Text.Parsec.Prim.State [GHC.Types.Char] ())
+                   (eta3 :: ([(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+                            -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                            -> Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)
+                   (eta4 :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)
+                   (eta5 :: ([(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+                            -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                            -> Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)
+                   (eta6 :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1) ->
+                 Text.Parsec.Prim.$fAlternativeParsecT2
+                   @ [GHC.Types.Char]
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   @ GHC.Base.String
+                   @ ([(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint)
+                   Parser.constraintParser10
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <[GHC.Types.Char]>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <GHC.Base.String
+                              -> [(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint>_R))
+                   Parser.constraintParser9
+                   @ b1
+                   eta2
+                   eta3
+                   eta4
+                   eta5
+                   eta6) -}
+36aae127e890452efd8a3930508e7b4e
+  constraintParser9 ::
+    Text.Parsec.Prim.ParsecT
+      GHC.Base.String () Data.Functor.Identity.Identity GHC.Base.String
+  {- Unfolding: (case Parser.lexer
+                        @ () of wild { Text.Parsec.Token.TokenParser ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ds29 ->
+                 ds22 }) -}
+5b64fc9e2f7156d656768a61c27a4547
   emptyParser :: Text.Parsec.String.Parser Sudoku.Entry
   {- Arity: 5, Strictness: <L,U><L,C(U)><L,U><L,C(U)><L,U>,
      Unfolding: InlineRule (0, True, True)
@@ -311,7 +798,7 @@ d8e83e597558f59477354af4057dcdb4
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <Sudoku.Entry>_R)) -}
-92ef9a644206e020bd43d158aa07a263
+fea91de11eed7d7e462486c9a12f7f3d
   emptyParser1 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (Sudoku.Entry
@@ -345,13 +832,13 @@ d8e83e597558f59477354af4057dcdb4
                  case Parser.lexer
                         @ () of wild { Text.Parsec.Token.TokenParser ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ds29 ->
                  let {
-                   lvl4 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                   lvl5 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
                            -> Text.Parsec.Error.ParseError
                            -> Data.Functor.Identity.Identity b1
                    = eta5 Sudoku.Empty
                  } in
                  let {
-                   lvl5 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                   lvl6 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
                            -> Text.Parsec.Error.ParseError
                            -> Data.Functor.Identity.Identity b1
                    = eta3 Sudoku.Empty
@@ -365,11 +852,11 @@ d8e83e597558f59477354af4057dcdb4
                       <GHC.Base.String>_R)
                    @ b1
                    eta2
-                   (\ (x :: GHC.Base.String) -> lvl5)
+                   (\ (x :: GHC.Base.String) -> lvl6)
                    eta4
-                   (\ (x :: GHC.Base.String) -> lvl4)
+                   (\ (x :: GHC.Base.String) -> lvl5)
                    eta6 }) -}
-6b0a74a5904d6abb4cc92343ce656628
+c05423ad630e038ad34b6517e79a1299
   entryParser :: Text.Parsec.String.Parser Sudoku.Entry
   {- Arity: 5, Strictness: <L,U><L,U><L,U><L,C(C1(C1(U)))><L,C(U)>,
      Unfolding: InlineRule (0, True, True)
@@ -380,7 +867,7 @@ d8e83e597558f59477354af4057dcdb4
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <Sudoku.Entry>_R)) -}
-c415a4ddf145ccef3290a4599d3053ae
+d22df3066f9ed8f66920395a013b3f5e
   entryParser1 ::
     Text.Parsec.Prim.State GHC.Base.String ()
     -> (Sudoku.Entry
@@ -434,7 +921,7 @@ c415a4ddf145ccef3290a4599d3053ae
                    eta2
                    eta3
                    eta4) -}
-5279f9c0a4dd7feaa480cc3e9984c748
+63f568ae20dc1a4b498b5ffe27836d45
   entryParser2 ::
     Text.Parsec.Prim.State GHC.Base.String ()
     -> (Sudoku.Entry
@@ -466,17 +953,17 @@ c415a4ddf145ccef3290a4599d3053ae
                    (eerr :: Text.Parsec.Error.ParseError
                             -> Data.Functor.Identity.Identity b) ->
                  let {
-                   lvl4 :: Text.Parsec.Prim.State GHC.Base.String ()
+                   lvl5 :: Text.Parsec.Prim.State GHC.Base.String ()
                            -> Text.Parsec.Error.ParseError -> Data.Functor.Identity.Identity b
                    = cok Sudoku.Empty
                  } in
                  let {
-                   lvl5 :: GHC.Base.String
+                   lvl6 :: GHC.Base.String
                            -> Text.Parsec.Prim.State GHC.Base.String ()
                            -> Text.Parsec.Error.ParseError
                            -> Data.Functor.Identity.Identity b
                      {- Arity: 1 -}
-                   = \ (x :: GHC.Base.String) -> lvl4
+                   = \ (x :: GHC.Base.String) -> lvl5
                  } in
                  Parser.entryParser3
                    @ b
@@ -496,7 +983,7 @@ c415a4ddf145ccef3290a4599d3053ae
                          <GHC.Base.String>_R)
                       @ b
                       s1
-                      lvl5
+                      lvl6
                       cerr
                       (\ (x :: GHC.Base.String)
                          (s' :: Text.Parsec.Prim.State GHC.Base.String ())
@@ -504,7 +991,7 @@ c415a4ddf145ccef3290a4599d3053ae
                        eok Sudoku.Empty s' (Text.Parsec.Error.mergeError err err'))
                       (\ (err' :: Text.Parsec.Error.ParseError) ->
                        eerr (Text.Parsec.Error.mergeError err err')) })) -}
-2636e6aac6f2b6edc559f2a8fe35362c
+b0991a5a6af62ae2846c7d4d07b7f69d
   entryParser3 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (Sudoku.Entry
@@ -570,7 +1057,7 @@ fc42888011fa83384a407c14e404f650
                    Text.Parsec.Error.UnExpect ds1 -> GHC.Types.False
                    Text.Parsec.Error.Expect ds1 -> GHC.Types.False
                    Text.Parsec.Error.Message ds1 -> GHC.Types.False }) -}
-88cc50bd5a54d516681916e314e79601
+155d60e1cff1056cb268b438c5e6a31a
   fullParser :: Text.Parsec.String.Parser Sudoku.Entry
   {- Arity: 5, Strictness: <L,U><L,C(U)><L,U><L,C(U)><L,U>,
      Unfolding: InlineRule (0, True, True)
@@ -581,7 +1068,7 @@ fc42888011fa83384a407c14e404f650
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <Sudoku.Entry>_R)) -}
-63f36ce980ae42dce6cc86e3a6004163
+e02bd74da2f6bd26f8f841acd9e3f872
   full_boardParser :: Text.Parsec.String.Parser Sudoku.Board
   {- Arity: 5,
      Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
@@ -593,7 +1080,7 @@ fc42888011fa83384a407c14e404f650
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <Sudoku.Board>_R)) -}
-e59734928304cade23bb749e73bf276a
+39ca0d61c3bf621a05718ceb1b4ee83a
   full_boardParser1 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (Sudoku.Board
@@ -632,14 +1119,14 @@ e59734928304cade23bb749e73bf276a
                    @ ()
                    @ [Sudoku.Entry]
                    @ GHC.Base.String
-                   Parser.full_boardParser3
+                   Parser.full_boardParser2
                      `cast`
                    (Sym (Text.Parsec.Prim.N:ParsecT[0]
                              <GHC.Base.String>_R
                              <()>_R
                              <Data.Functor.Identity.Identity>_R
                              <[Sudoku.Entry]>_R))
-                   Parser.full_boardParser2
+                   Parser.constraintParser9
                    @ b1
                    s1
                    (\ (x :: [[Sudoku.Entry]])
@@ -670,15 +1157,8 @@ e59734928304cade23bb749e73bf276a
                       (\ (err' :: Text.Parsec.Error.ParseError)[OneShot] ->
                        eerr (Text.Parsec.Error.mergeError err err')))
                    eerr) -}
-08b98cc0c2e4d61a0ceaf6d382331213
+d20fcaa3fba38b7fba07404b19034998
   full_boardParser2 ::
-    Text.Parsec.Prim.ParsecT
-      GHC.Base.String () Data.Functor.Identity.Identity GHC.Base.String
-  {- Unfolding: (case Parser.lexer
-                        @ () of wild { Text.Parsec.Token.TokenParser ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ds29 ->
-                 ds22 }) -}
-4fabbdb87a26a4866aa162d5f040f913
-  full_boardParser3 ::
     Text.Parsec.Prim.State GHC.Base.String ()
     -> ([Sudoku.Entry]
         -> Text.Parsec.Prim.State GHC.Base.String ()
@@ -724,33 +1204,66 @@ e59734928304cade23bb749e73bf276a
                              <()>_R
                              <Data.Functor.Identity.Identity>_R
                              <Sudoku.Entry>_R))
-                   Parser.full_boardParser4
+                   Parser.constraintParser7
                    @ b
                    w3
                    w4
                    w5
                    w6
                    w7) -}
-04eaff82ac18378314ba9a9127745f11
-  full_boardParser4 ::
-    Text.Parsec.Prim.ParsecT
-      GHC.Base.String () Data.Functor.Identity.Identity GHC.Base.String
+e7946098b701614d8e9c8e1bf4f3c168
+  indexParser ::
+    Text.Parsec.String.Parser (GHC.Types.Int, GHC.Types.Int)
   {- Unfolding: (case Parser.lexer
-                        @ () of wild { Text.Parsec.Token.TokenParser ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ds29 ->
-                 ds23 }) -}
-a06681f931942d0e97275af2ded84594
-  intParser :: Text.Parsec.String.Parser GHC.Types.Int
-  {- Arity: 5, Strictness: <L,U><L,C(U)><L,U><L,C(U)><L,U>,
-     Unfolding: InlineRule (0, True, True)
-                Parser.intParser1
-                  `cast`
-                (Sym (Text.Parsec.Prim.N:ParsecT[0]
-                          <[GHC.Types.Char]>_R
-                          <()>_R
-                          <Data.Functor.Identity.Identity>_R
-                          <GHC.Types.Int>_R)) -}
-cd64a459da9167c056087dad573607c9
-  intParser1 ::
+                        @ () of wild { Text.Parsec.Token.TokenParser ds ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ->
+                 ds16
+                   @ (GHC.Types.Int, GHC.Types.Int)
+                   Parser.indexParser1
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <[GHC.Types.Char]>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <(GHC.Types.Int, GHC.Types.Int)>_R)) }) -}
+b00f8adc6b8a7523d567314ae282b4bf
+  indexParser1 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> ((GHC.Types.Int, GHC.Types.Int)
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> ((GHC.Types.Int, GHC.Types.Int)
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Unfolding: (Text.Parsec.Prim.$fAlternativeParsecT2
+                   @ [GHC.Types.Char]
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   @ GHC.Types.Int
+                   @ (GHC.Types.Int, GHC.Types.Int)
+                   Parser.indexParser3
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <[GHC.Types.Char]>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int)>_R))
+                   Parser.indexParser2
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <[GHC.Types.Char]>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <GHC.Types.Int>_R))) -}
+df7009e84f9ec52318c220e58d6cabbb
+  indexParser2 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (GHC.Types.Int
         -> Text.Parsec.Prim.State [GHC.Types.Char] ()
@@ -797,6 +1310,150 @@ cd64a459da9167c056087dad573607c9
                    (\ (x :: GHC.Integer.Type.Integer) ->
                     eta3 (GHC.Num.$fNumInt_$cfromInteger x))
                    eta4 }) -}
+86ae6635cc061e43a7dc8ebda3a7c602
+  indexParser3 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> ((GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int))
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> ((GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int))
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Unfolding: (\ @ b1
+                   (eta2 :: Text.Parsec.Prim.State [GHC.Types.Char] ())
+                   (eta3 :: (GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int))
+                            -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                            -> Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)[OneShot]
+                   (eta4 :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)[OneShot]
+                   (eta5 :: (GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int))
+                            -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                            -> Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)[OneShot]
+                   (eta6 :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)[OneShot] ->
+                 Text.Parsec.Prim.$fAlternativeParsecT2
+                   @ [GHC.Types.Char]
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   @ GHC.Base.String
+                   @ (GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int))
+                   Parser.indexParser4
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <[GHC.Types.Char]>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <GHC.Base.String
+                              -> GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int)>_R))
+                   Parser.constraintParser7
+                   @ b1
+                   eta2
+                   eta3
+                   eta4
+                   eta5
+                   eta6) -}
+920ddb1e39dc95e25ffaac38088a1b8a
+  indexParser4 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> ((GHC.Base.String
+         -> GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int))
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> ((GHC.Base.String
+         -> GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int))
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Unfolding: (\ @ b1
+                   (s1 :: Text.Parsec.Prim.State [GHC.Types.Char] ())[OneShot]
+                   (cok :: (GHC.Base.String
+                            -> GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int))
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1)[OneShot]
+                   (cerr :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)[OneShot]
+                   (eok :: (GHC.Base.String
+                            -> GHC.Types.Int -> (GHC.Types.Int, GHC.Types.Int))
+                           -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+                           -> Text.Parsec.Error.ParseError
+                           -> Data.Functor.Identity.Identity b1)[OneShot]
+                   (eerr :: Text.Parsec.Error.ParseError
+                            -> Data.Functor.Identity.Identity b1)[OneShot] ->
+                 case Parser.lexer
+                        @ () of wild { Text.Parsec.Token.TokenParser ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ds29 ->
+                 ds8
+                   `cast`
+                 (Text.Parsec.Prim.N:ParsecT[0]
+                      <[GHC.Types.Char]>_R
+                      <()>_R
+                      <Data.Functor.Identity.Identity>_R
+                      <GHC.Integer.Type.Integer>_R)
+                   @ b1
+                   s1
+                   (\ (x :: GHC.Integer.Type.Integer) ->
+                    let {
+                      x1 :: GHC.Types.Int
+                      = case GHC.Integer.Type.integerToInt x of wild1 { DEFAULT ->
+                        GHC.Types.I# wild1 }
+                    } in
+                    cok
+                      (\ (ds :: GHC.Base.String) (eta :: GHC.Types.Int) -> (x1, eta)))
+                   cerr
+                   (\ (x :: GHC.Integer.Type.Integer) ->
+                    let {
+                      x1 :: GHC.Types.Int
+                      = case GHC.Integer.Type.integerToInt x of wild1 { DEFAULT ->
+                        GHC.Types.I# wild1 }
+                    } in
+                    eok
+                      (\ (ds :: GHC.Base.String) (eta :: GHC.Types.Int) -> (x1, eta)))
+                   eerr }) -}
+e3c8a0ea8afb30cfdc814127d1ffeae3
+  indicesParser ::
+    Text.Parsec.String.Parser [(GHC.Types.Int, GHC.Types.Int)]
+  {- Arity: 5,
+     Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
+     Unfolding: InlineRule (0, True, True)
+                Parser.constraintParser6
+                  `cast`
+                (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                          <GHC.Base.String>_R
+                          <()>_R
+                          <Data.Functor.Identity.Identity>_R
+                          <[(GHC.Types.Int, GHC.Types.Int)]>_R)) -}
+311c7c7c78df866b73693f499651ae1d
+  intParser :: Text.Parsec.String.Parser GHC.Types.Int
+  {- Arity: 5, Strictness: <L,U><L,C(U)><L,U><L,C(U)><L,U>,
+     Unfolding: InlineRule (0, True, True)
+                Parser.indexParser2
+                  `cast`
+                (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                          <[GHC.Types.Char]>_R
+                          <()>_R
+                          <Data.Functor.Identity.Identity>_R
+                          <GHC.Types.Int>_R)) -}
+db5c6430497d42812c7e8f7efeddcdc4
+  invalidConstraintFormat :: GHC.Base.String
+  {- Unfolding: (GHC.CString.unpackCString#
+                   "either a sum constraint or a uniqueness constraint."#) -}
 e9f92149cee76547909d6266e0cdba3e
   invalidEntryError :: GHC.Base.String
   {- Unfolding: (GHC.CString.unpackCString#
@@ -877,7 +1534,7 @@ c1c6ec5ea6d61a5dbb2e38244afbdbe0
 b7c8e1574f6cacb940a79d20240457ba
   lexer3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "exit"#) -}
-0efa2c64786e41494e4fb0ec4f23eeec
+265e81fc4f277e0830a8628324b12351
   loc_entryParser ::
     Text.Parsec.String.Parser
       (GHC.Types.Int, GHC.Types.Int, Sudoku.Entry)
@@ -892,7 +1549,7 @@ b7c8e1574f6cacb940a79d20240457ba
                              <()>_R
                              <Data.Functor.Identity.Identity>_R
                              <(GHC.Types.Int, GHC.Types.Int, Sudoku.Entry)>_R)) }) -}
-c326c822484fe6dce0e85cd34de6a0d3
+09317e228dc82af40effc114280261f1
   loc_entryParser1 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ((GHC.Types.Int, GHC.Types.Int, Sudoku.Entry)
@@ -929,7 +1586,7 @@ c326c822484fe6dce0e85cd34de6a0d3
                              <()>_R
                              <Data.Functor.Identity.Identity>_R
                              <Sudoku.Entry>_R))) -}
-ab71d334519f58a5ecc51176fd08c90c
+3c5313ac0837ed44105011b814142c49
   loc_entryParser2 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ((Sudoku.Entry -> (GHC.Types.Int, GHC.Types.Int, Sudoku.Entry))
@@ -977,14 +1634,14 @@ ab71d334519f58a5ecc51176fd08c90c
                              <GHC.Base.String
                               -> Sudoku.Entry
                               -> (GHC.Types.Int, GHC.Types.Int, Sudoku.Entry)>_R))
-                   Parser.full_boardParser4
+                   Parser.constraintParser7
                    @ b1
                    eta2
                    eta3
                    eta4
                    eta5
                    eta6) -}
-c3f43d7312cd389a07ad675ebeed6b57
+45d404385e093a2df2f0da3d62532f14
   loc_entryParser3 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ((GHC.Base.String
@@ -1034,7 +1691,7 @@ c3f43d7312cd389a07ad675ebeed6b57
                              <GHC.Types.Int
                               -> Sudoku.Entry
                               -> (GHC.Types.Int, GHC.Types.Int, Sudoku.Entry)>_R))
-                   Parser.intParser1
+                   Parser.indexParser2
                      `cast`
                    (Sym (Text.Parsec.Prim.N:ParsecT[0]
                              <[GHC.Types.Char]>_R
@@ -1051,7 +1708,7 @@ c3f43d7312cd389a07ad675ebeed6b57
                             -> (GHC.Types.Int, GHC.Types.Int, Sudoku.Entry)) ->
                     eok (\ (ds :: GHC.Base.String) -> x))
                    eerr) -}
-b128f164d31bbd4873cf7b9e75ed7263
+99e62fbb18059b9a9bce922d21ce2b35
   loc_entryParser4 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ((GHC.Types.Int
@@ -1104,14 +1761,14 @@ b128f164d31bbd4873cf7b9e75ed7263
                               -> GHC.Types.Int
                               -> Sudoku.Entry
                               -> (GHC.Types.Int, GHC.Types.Int, Sudoku.Entry)>_R))
-                   Parser.full_boardParser4
+                   Parser.constraintParser7
                    @ b1
                    eta2
                    eta3
                    eta4
                    eta5
                    eta6) -}
-63003476f9f8d9a38552ea22e42580fb
+7b0b2606597bc5f83484ecc7b4e02b1a
   loc_entryParser5 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ((GHC.Base.String
@@ -1189,7 +1846,7 @@ b128f164d31bbd4873cf7b9e75ed7263
                          (eta1 :: Sudoku.Entry) ->
                        (x1, eta, eta1)))
                    eerr }) -}
-13a974f93570a3a351ab363e48455f98
+6fcb644820cb2b9570ca1d7ce2edc689
   parseBoard ::
     GHC.Base.String
     -> Data.Either.Either
@@ -1413,7 +2070,7 @@ ee0a4e57d54087d48f25a4085d690f0a
   {- HasNoCafRefs,
      Unfolding: ((GHC.Types.[] @ GHC.Types.Char,
                   GHC.Types.[] @ GHC.Types.Char)) -}
-6d824294e7e308b4185dd2193927414e
+4f684fa291566f9ed498b43cbba78019
   parseBoard19 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (GHC.Base.Maybe Sudoku.Board
@@ -1500,7 +2157,7 @@ ee0a4e57d54087d48f25a4085d690f0a
                    @ ()
                    (Parser.$s$fStream[]mtok @ GHC.Types.Char)
                    GHC.Show.$fShowChar) -}
-d2265a8a82d79db070243f9ff62a652a
+f3b814b544690955396f9fe9861d2f85
   parseBoard21 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ((() -> GHC.Base.Maybe Sudoku.Board)
@@ -1544,10 +2201,10 @@ d2265a8a82d79db070243f9ff62a652a
                              <()>_R
                              <Data.Functor.Identity.Identity>_R
                              <GHC.Base.Maybe Sudoku.Board -> GHC.Base.Maybe Sudoku.Board>_R))
-                   Parser.boardParser1
+                   Parser.boardParser'1
                      `cast`
                    (Sym (Text.Parsec.Prim.N:ParsecT[0]
-                             <GHC.Base.String>_R
+                             <[GHC.Types.Char]>_R
                              <()>_R
                              <Data.Functor.Identity.Identity>_R
                              <GHC.Base.Maybe Sudoku.Board>_R))
@@ -1557,7 +2214,7 @@ d2265a8a82d79db070243f9ff62a652a
                    cerr
                    (\ (x :: GHC.Base.Maybe Sudoku.Board) -> eok (\ (ds :: ()) -> x))
                    eerr) -}
-710ed95fcbe56c0fd60d709625eb7a5f
+d949b1ba8f783c2d244e8296e0154cf1
   parseBoard22 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> ((GHC.Base.Maybe Sudoku.Board -> GHC.Base.Maybe Sudoku.Board)
@@ -1593,13 +2250,13 @@ d2265a8a82d79db070243f9ff62a652a
                  case Parser.lexer
                         @ () of wild { Text.Parsec.Token.TokenParser ds1 ds2 ds3 ds4 ds5 ds6 ds7 ds8 ds9 ds10 ds11 ds12 ds13 ds14 ds15 ds16 ds17 ds18 ds19 ds20 ds21 ds22 ds23 ds24 ds25 ds26 ds27 ds28 ds29 ->
                  let {
-                   lvl4 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                   lvl5 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
                            -> Text.Parsec.Error.ParseError
                            -> Data.Functor.Identity.Identity b1
                    = eta5 (GHC.Base.breakpoint @ (GHC.Base.Maybe Sudoku.Board))
                  } in
                  let {
-                   lvl5 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
+                   lvl6 :: Text.Parsec.Prim.State [GHC.Types.Char] ()
                            -> Text.Parsec.Error.ParseError
                            -> Data.Functor.Identity.Identity b1
                    = eta3 (GHC.Base.breakpoint @ (GHC.Base.Maybe Sudoku.Board))
@@ -1613,9 +2270,9 @@ d2265a8a82d79db070243f9ff62a652a
                       <()>_R)
                    @ b1
                    eta2
-                   (\ (x :: ()) -> lvl5)
+                   (\ (x :: ()) -> lvl6)
                    eta4
-                   (\ (x :: ()) -> lvl4)
+                   (\ (x :: ()) -> lvl5)
                    eta6 }) -}
 683a4941bb3d66c0b4a73ccbcb4916bb
   parseBoard3 :: [GHC.Types.Int]
@@ -1670,7 +2327,7 @@ b3fca0f8524b9c054e671a2b797a959b
   {- Unfolding: (case System.Console.ANSI.Codes.$wsgrToCode
                         Parser.parseBoard10 of ww { DEFAULT ->
                  GHC.Types.I# ww }) -}
-c06e9f85b310760140055b278fb2de74
+24d5d3ce37a9a44d7ca346eb30d778cb
   partial_boardParser :: Text.Parsec.String.Parser Sudoku.Board
   {- Arity: 5,
      Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
@@ -1682,7 +2339,7 @@ c06e9f85b310760140055b278fb2de74
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <Sudoku.Board>_R)) -}
-223beddc74adc483adcf12726015d484
+64298b0b98c3351c1191d84dab48356c
   partial_boardParser1 ::
     Text.Parsec.Prim.State [GHC.Types.Char] ()
     -> (Sudoku.Board
@@ -1767,7 +2424,7 @@ c06e9f85b310760140055b278fb2de74
                       (\ (err' :: Text.Parsec.Error.ParseError) ->
                        eerr (Text.Parsec.Error.mergeError err err')))
                    eerr }) -}
-c650ee1a97d4d462c90912e5189fc711
+23650b65c2de064f1a0095e1d3f2231b
   partial_boardParser2 ::
     GHC.Types.Int
     -> forall b.
@@ -1787,18 +2444,66 @@ c650ee1a97d4d462c90912e5189fc711
        -> Data.Functor.Identity.Identity b
   {- Arity: 6,
      Strictness: <L,U(U)><L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U> -}
-da2c0c858facd4c7c92e47fb501164c7
+702a833969e15f428ac99a309c3d7251
   rowParser :: Text.Parsec.String.Parser [Sudoku.Entry]
   {- Arity: 5,
      Strictness: <L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
      Unfolding: InlineRule (0, True, True)
-                Parser.full_boardParser3
+                Parser.full_boardParser2
                   `cast`
                 (Sym (Text.Parsec.Prim.N:ParsecT[0]
                           <GHC.Base.String>_R
                           <()>_R
                           <Data.Functor.Identity.Identity>_R
                           <[Sudoku.Entry]>_R)) -}
+13100e903a343bfedabfe62accae6af3
+  sumConstraintParser :: Text.Parsec.String.Parser Sudoku.Constraint
+  {- Arity: 5,
+     Unfolding: InlineRule (0, True, True)
+                Parser.sumConstraintParser1
+                  `cast`
+                (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                          <[GHC.Types.Char]>_R
+                          <()>_R
+                          <Data.Functor.Identity.Identity>_R
+                          <Sudoku.Constraint>_R)) -}
+b3332a1c361b58c6c33d98d9833752b7
+  sumConstraintParser1 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> (Sudoku.Constraint
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Sudoku.Constraint
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Unfolding: (Text.Parsec.Prim.$fAlternativeParsecT2
+                   @ [GHC.Types.Char]
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   @ [(GHC.Types.Int, GHC.Types.Int)]
+                   @ Sudoku.Constraint
+                   Parser.constraintParser8
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <[GHC.Types.Char]>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <[(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint>_R))
+                   Parser.constraintParser6
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <GHC.Base.String>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <[(GHC.Types.Int, GHC.Types.Int)]>_R))) -}
 cd7c3bced68a2db54df663560297f929
   unQuote :: GHC.Base.String -> GHC.Base.String
   {- Arity: 1, Strictness: <S,1*U>,
@@ -1810,6 +2515,55 @@ cd7c3bced68a2db54df663560297f929
                    -> case ds1 of wild1 { GHC.Types.C# ds2 ->
                       case ds2 of ds3 {
                         DEFAULT -> wild '"'# -> GHC.List.init @ GHC.Types.Char xs } } }) -}
+3690a8c268b264103dd56eee3af43dc7
+  uniqueConstraintParser ::
+    Text.Parsec.String.Parser Sudoku.Constraint
+  {- Arity: 5,
+     Unfolding: InlineRule (0, True, True)
+                Parser.uniqueConstraintParser1
+                  `cast`
+                (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                          <[GHC.Types.Char]>_R
+                          <()>_R
+                          <Data.Functor.Identity.Identity>_R
+                          <Sudoku.Constraint>_R)) -}
+54cf3265a60b8d0f97c3fcbf126511ef
+  uniqueConstraintParser1 ::
+    Text.Parsec.Prim.State [GHC.Types.Char] ()
+    -> (Sudoku.Constraint
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Sudoku.Constraint
+        -> Text.Parsec.Prim.State [GHC.Types.Char] ()
+        -> Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> (Text.Parsec.Error.ParseError
+        -> Data.Functor.Identity.Identity b1)
+    -> Data.Functor.Identity.Identity b1
+  {- Arity: 5,
+     Unfolding: (Text.Parsec.Prim.$fAlternativeParsecT2
+                   @ [GHC.Types.Char]
+                   @ ()
+                   @ Data.Functor.Identity.Identity
+                   @ [(GHC.Types.Int, GHC.Types.Int)]
+                   @ Sudoku.Constraint
+                   Parser.constraintParser3
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <[GHC.Types.Char]>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <[(GHC.Types.Int, GHC.Types.Int)] -> Sudoku.Constraint>_R))
+                   Parser.constraintParser6
+                     `cast`
+                   (Sym (Text.Parsec.Prim.N:ParsecT[0]
+                             <GHC.Base.String>_R
+                             <()>_R
+                             <Data.Functor.Identity.Identity>_R
+                             <[(GHC.Types.Int, GHC.Types.Int)]>_R))) -}
 "SPEC/Parser $fStream[]mtok @ Identity _" [ALWAYS] forall @ tok
                                                           ($dMonad :: GHC.Base.Monad
                                                                         Data.Functor.Identity.Identity)

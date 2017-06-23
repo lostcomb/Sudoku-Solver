@@ -32,51 +32,59 @@ isEmpty _     = False
 type Set = [Entry]
 type Row = Set
 
+-- The data type for constraints that valid solutions must
+-- satisfy.
+data Constraint
+  = Unique  [(Int, Int)]
+  | Sum Int [(Int, Int)]
+  deriving (Show, Eq, Read)
+
 -- The data type for the Sudoku board. This data type contains
--- the size of the boxes, and the rows of the board.
-data Board = Board Int [Row]
+-- the size of the boxes, and the rows of the board. It also
+-- contains user-defined constraints on the solutions.
+data Board = Board Int [Row] [Constraint]
   deriving (Eq)
 
 -- This function returns the size of the specified board.
 boardSize :: Board -> Int
-boardSize (Board _ rows) = length rows
+boardSize (Board _ rows _) = length rows
 
 -- This function returns the size of the boxes of the specified
 -- board.
 boxSize :: Board -> Int
-boxSize (Board n _) = n
+boxSize (Board n _ _) = n
 
 -- Pretty print the Sudoku board.
 instance Show Board where
-  show (Board n rows) = init
-                      . unlines
-                      . concat
-                      . map (\box -> [lineStr] ++ box ++ [lineStr])
-                      . map (intersperse lineStr)
-                      . chunk n
-                      . map rowStr $ rows
-    where p           = length . show $ (n * n)
-          rowStr      = concat
-                      . map (\box -> "| " ++ box ++ " |")
-                      . map (intercalate " | ")
-                      . chunk n
-                      . map (pad p . show)
-          lineStr     = concat
-                      . replicate (length rows `div` n) $ boxStr
-          boxStr      = "+" ++ replicate (n * (p + 2) + (n - 1)) '-' ++ "+"
-          pad n str   = replicate (n - length str) ' ' ++ str
+  show (Board n rows _) = init
+                        . unlines
+                        . concat
+                        . map (\box -> [lineStr] ++ box ++ [lineStr])
+                        . map (intersperse lineStr)
+                        . chunk n
+                        . map rowStr $ rows
+    where p             = length . show $ (n * n)
+          rowStr        = concat
+                        . map (\box -> "| " ++ box ++ " |")
+                        . map (intercalate " | ")
+                        . chunk n
+                        . map (pad p . show)
+          lineStr       = concat
+                        . replicate (length rows `div` n) $ boxStr
+          boxStr        = "+" ++ replicate (n * (p + 2) + (n - 1)) '-' ++ "+"
+          pad n str     = replicate (n - length str) ' ' ++ str
 
 -- This function returns the list of rows of the specified board.
 getRows :: Board -> [Set]
-getRows (Board _ rows) = rows
+getRows (Board _ rows _) = rows
 
 -- This function returns the list of columns of the specified board.
 getColumns :: Board -> [Set]
-getColumns (Board _ rows) = transpose rows
+getColumns (Board _ rows _) = transpose rows
 
 -- This function returns the list of boxes of the specified board.
 getBoxes :: Board -> [Set]
-getBoxes (Board n rows) = boxes
+getBoxes (Board n rows _) = boxes
   where rows' = chunk n . map (chunk n) $ rows
         boxes = concat . map zipN $ rows'
         zipN :: [[[a]]] -> [[a]]
@@ -121,7 +129,7 @@ possibleValues n set = filter ((flip notElem) set) (map Full [1,2..n])
 -- This function returns the coordinates of all empty entries in the Sudoku
 -- board.
 emptyEntries :: Board -> [(Int, Int)]
-emptyEntries (Board _ rows) = coordinates 0 indices
+emptyEntries (Board _ rows _) = coordinates 0 indices
   where indices = map (findIndices (==Empty)) rows
         coordinates _   [] = []
         coordinates row is =  map (\col -> (row, col)) (head is)
@@ -131,9 +139,9 @@ emptyEntries (Board _ rows) = coordinates 0 indices
 -- in the board. If the specified position is off the board, this function
 -- makes no change to the board.
 updateEntry :: Board -> Int -> Int -> Entry -> Board
-updateEntry (Board n rows) row_i col_i entry
-  | outOfBounds = Board n rows
-  | otherwise   = Board n rows'
+updateEntry (Board n rows cs) row_i col_i entry
+  | outOfBounds = Board n rows  cs
+  | otherwise   = Board n rows' cs
   where row         = rows !! row_i
         row'        = update col_i entry row
         rows'       = update row_i row' rows
@@ -145,7 +153,7 @@ updateEntry (Board n rows) row_i col_i entry
 -- i.e. this function returns True if all entries in the board
 -- are Full.
 complete :: Board -> Bool
-complete (Board _ rows) = and . map (and . map isFull) $ rows
+complete (Board _ rows _) = and . map (and . map isFull) $ rows
 
 -- This function returns a uniform 9x9 board.
 uniform9x9Board :: Entry -> Board
@@ -153,19 +161,15 @@ uniform9x9Board = uniformBoard 3
 
 -- This function returns a square board of size n^2 with all entries the same.
 uniformBoard :: Int -> Entry -> Board
-uniformBoard n e = Board n rows
-  where n2   = n * n
-        row  = replicate n2 e
-        rows = replicate n2 row
+uniformBoard n e = Board n ((replicate n2 . replicate n2) e) []
+  where n2 = n * n
 
 -- This function returns a square board of size n^2 with entries in ascending
 -- order.
 nonUniformBoard :: Int -> Board
-nonUniformBoard n = Board n (map (map Full) (rows n2 is))
-  where is = [1,2..]
-        n2 = n * n
-        rows 0 _  = []
-        rows x is = (take n2 is) : rows (x - 1) (drop n2 is)
+nonUniformBoard n
+  = Board n [[Full (row_i * n2 + col_i) | col_i <- [0..n2]] | row_i <- [0..n2]] []
+  where n2 = (n * n) - 1
 
 -- This function updates the element at the specified index of the list.
 -- If the specified position is <= 0, the element is appended to the head
@@ -182,3 +186,7 @@ chunk :: Int -> [a] -> [[a]]
 chunk n xs
   | length xs <= n = [xs]
   | otherwise      = take n xs : chunk n (drop n xs)
+
+-- This function returns the intersection of a list of sets.
+intersectAll :: (Eq a) => [[a]] -> [a]
+intersectAll = foldr intersect []
