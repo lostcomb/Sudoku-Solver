@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-23 15:22:28.6604872 UTC
+2017-06-23 16:50:42.278828 UTC
 
 interface main@main:Sudoku 8002
-  interface hash: 1c02f4b4dc345982afe9e5b19bcfcc4d
-  ABI hash: cbdeed1130064e2ee058cf35e212c94d
-  export-list hash: bc4f6f0102caebd68ec88d40af7b5792
+  interface hash: 853bb2ddcb9f48e274f7dedfcf878d96
+  ABI hash: 3d78cb2e645a63c7a5e7b77025517271
+  export-list hash: 810e2a39f259a133cdbcba4a6f2ace99
   orphan hash: 1f2d405805ba8159e3aa6cd85cd75e42
   flag hash: 9d5d0e5951e43ac5c54d51d3e1285ccf
   sig of: Nothing
@@ -14,20 +14,24 @@ interface main@main:Sudoku 8002
 exports:
   Sudoku.boardSize
   Sudoku.boxSize
+  Sudoku.cToV
   Sudoku.chunk
   Sudoku.complete
+  Sudoku.elemConstraint
   Sudoku.emptyEntries
   Sudoku.getBoxes
   Sudoku.getColumns
+  Sudoku.getConstraints
+  Sudoku.getEntry
   Sudoku.getRows
   Sudoku.intersectAll
   Sudoku.isEmpty
   Sudoku.isFull
   Sudoku.nonUniformBoard
-  Sudoku.possibleValues
+  Sudoku.possibleValuesSum
+  Sudoku.possibleValuesUnique
   Sudoku.uniform9x9Board
   Sudoku.uniformBoard
-  Sudoku.uniqueSet
   Sudoku.update
   Sudoku.updateEntry
   Sudoku.validEntries
@@ -48,7 +52,9 @@ family instance modules: base-4.9.1.0:Control.Applicative
 import  -/  base-4.9.1.0:Data.Foldable 254e836c2d813d34e47feb29bb8d40ed
 import  -/  base-4.9.1.0:Data.List 7349774f430841349c90dfd1144aea97
 import  -/  base-4.9.1.0:Data.OldList c9282ee91951bdcbd918d2960562c007
+import  -/  base-4.9.1.0:Data.Tuple b07f695e7ce8fe20cc8a32abf62f60ec
 import  -/  base-4.9.1.0:GHC.Base 4caea1123ecf4b46e27cbccd6d279377
+import  -/  base-4.9.1.0:GHC.Enum 3beb5abd88e2173130728ffba8194381
 import  -/  base-4.9.1.0:GHC.List d11eb227c1c6fbfd89bb781d72eaea0d
 import  -/  base-4.9.1.0:GHC.Num 38b8aac8807c096c7f3ca3c1eff02939
 import  -/  base-4.9.1.0:GHC.Read 823163de9fa29f31f251382abc171b2b
@@ -58,13 +64,240 @@ import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
 import  -/  base-4.9.1.0:Text.ParserCombinators.ReadPrec 5cc8ec62ab8aeda628247695b64f5e42
 import  -/  base-4.9.1.0:Text.Read.Lex a861691fe58d2d0a125f55a5ebadf631
 import  -/  ghc-prim-0.5.0.0:GHC.Classes 16d48e012d23eaef9bca91ccdd572c02
-0c55e2eef340310bbd77e171b8476532
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry :: GHC.Enum.Enum Sudoku.Entry
+  DFunId
+  {- Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Sudoku.Entry
+                  Sudoku.$fEnumEntry_$csucc
+                  Sudoku.$fEnumEntry_$cpred
+                  Sudoku.$fEnumEntry_$ctoEnum
+                  Sudoku.$fEnumEntry_$cfromEnum
+                  Sudoku.$fEnumEntry_$cenumFrom
+                  Sudoku.$fEnumEntry_$cenumFromThen
+                  Sudoku.$fEnumEntry_$cenumFromTo
+                  Sudoku.$fEnumEntry_$cenumFromThenTo -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry1 :: [Sudoku.Entry]
+  {- Unfolding: (Sudoku.$fEnumEntry_go1 0#) -}
+585938cf7195c5cfdb6778b9d6725158
+  $fEnumEntry2 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 0#) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry3 :: Sudoku.Entry
+  {- HasNoCafRefs, Unfolding: (Sudoku.Full Sudoku.$fEnumEntry4) -}
+6534126fe882876595643aa97bfa66cc
+  $fEnumEntry4 :: GHC.Types.Int
+  {- HasNoCafRefs, Unfolding: (GHC.Types.I# -1#) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry5 :: Sudoku.Entry
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (Sudoku.Full Sudoku.$fEnumEntry6) -}
+2fa781c545d57a5ecd681d861c81f845
+  $fEnumEntry6 :: GHC.Types.Int
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 1#) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_$cenumFrom :: Sudoku.Entry -> [Sudoku.Entry]
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: (\ (x :: Sudoku.Entry) ->
+                 case x of wild {
+                   Sudoku.Full x1
+                   -> case x1 of wild1 { GHC.Types.I# x2 ->
+                      Sudoku.$fEnumEntry_go2 x2 }
+                   Sudoku.Empty -> Sudoku.$fEnumEntry1 }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_$cenumFromThen ::
+    Sudoku.Entry -> Sudoku.Entry -> [Sudoku.Entry]
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (x :: Sudoku.Entry) (y :: Sudoku.Entry) ->
+                 let {
+                   $j :: GHC.Prim.Int# -> [Sudoku.Entry]
+                     {- Arity: 1, Strictness: <S,U> -}
+                   = \ (x1 :: GHC.Prim.Int#)[OneShot] ->
+                     case y of wild {
+                       Sudoku.Full x2
+                       -> case x2 of wild1 { GHC.Types.I# x3 ->
+                          GHC.Base.map
+                            @ GHC.Types.Int
+                            @ Sudoku.Entry
+                            Sudoku.$fEnumEntry_$ctoEnum
+                            (GHC.Enum.efdInt x1 x3) }
+                       Sudoku.Empty
+                       -> GHC.Base.map
+                            @ GHC.Types.Int
+                            @ Sudoku.Entry
+                            Sudoku.$fEnumEntry_$ctoEnum
+                            (GHC.Enum.efdInt x1 0#) }
+                 } in
+                 case x of wild {
+                   Sudoku.Full x1 -> case x1 of wild1 { GHC.Types.I# x2 -> $j x2 }
+                   Sudoku.Empty -> $j 0# }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_$cenumFromThenTo ::
+    Sudoku.Entry -> Sudoku.Entry -> Sudoku.Entry -> [Sudoku.Entry]
+  {- Arity: 3, HasNoCafRefs, Strictness: <S,1*U><S,1*U><S,1*U>,
+     Unfolding: (\ (x1 :: Sudoku.Entry)
+                   (x2 :: Sudoku.Entry)
+                   (y :: Sudoku.Entry) ->
+                 let {
+                   $j :: GHC.Prim.Int# -> [Sudoku.Entry]
+                     {- Arity: 1, Strictness: <S,U> -}
+                   = \ (x4 :: GHC.Prim.Int#)[OneShot] ->
+                     let {
+                       $j1 :: GHC.Prim.Int# -> [Sudoku.Entry]
+                         {- Arity: 1, Strictness: <S,U> -}
+                       = \ (x5 :: GHC.Prim.Int#)[OneShot] ->
+                         case y of wild {
+                           Sudoku.Full x
+                           -> case x of wild2 { GHC.Types.I# y1 ->
+                              case GHC.Prim.tagToEnum#
+                                     @ GHC.Types.Bool
+                                     (GHC.Prim.>=# x5 x4) of wild1 {
+                                GHC.Types.False
+                                -> GHC.Enum.efdtIntDnFB
+                                     @ [Sudoku.Entry]
+                                     Sudoku.$fEnumEntry_c
+                                     (GHC.Types.[] @ Sudoku.Entry)
+                                     x4
+                                     x5
+                                     y1
+                                GHC.Types.True
+                                -> GHC.Enum.efdtIntUpFB
+                                     @ [Sudoku.Entry]
+                                     Sudoku.$fEnumEntry_c
+                                     (GHC.Types.[] @ Sudoku.Entry)
+                                     x4
+                                     x5
+                                     y1 } }
+                           Sudoku.Empty
+                           -> case GHC.Prim.tagToEnum#
+                                     @ GHC.Types.Bool
+                                     (GHC.Prim.>=# x5 x4) of wild1 {
+                                GHC.Types.False
+                                -> GHC.Enum.efdtIntDnFB
+                                     @ [Sudoku.Entry]
+                                     Sudoku.$fEnumEntry_c
+                                     (GHC.Types.[] @ Sudoku.Entry)
+                                     x4
+                                     x5
+                                     0#
+                                GHC.Types.True
+                                -> GHC.Enum.efdtIntUpFB
+                                     @ [Sudoku.Entry]
+                                     Sudoku.$fEnumEntry_c
+                                     (GHC.Types.[] @ Sudoku.Entry)
+                                     x4
+                                     x5
+                                     0# } }
+                     } in
+                     case x2 of wild {
+                       Sudoku.Full x -> case x of wild1 { GHC.Types.I# x5 -> $j1 x5 }
+                       Sudoku.Empty -> $j1 0# }
+                 } in
+                 case x1 of wild {
+                   Sudoku.Full x -> case x of wild1 { GHC.Types.I# x4 -> $j x4 }
+                   Sudoku.Empty -> $j 0# }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_$cenumFromTo ::
+    Sudoku.Entry -> Sudoku.Entry -> [Sudoku.Entry]
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: (\ (x :: Sudoku.Entry) (y :: Sudoku.Entry) ->
+                 let {
+                   $j :: GHC.Prim.Int# -> [Sudoku.Entry]
+                     {- Arity: 1, Strictness: <S,U> -}
+                   = \ (x1 :: GHC.Prim.Int#)[OneShot] ->
+                     case y of wild {
+                       Sudoku.Full x2
+                       -> case x2 of wild1 { GHC.Types.I# y1 ->
+                          case GHC.Prim.tagToEnum#
+                                 @ GHC.Types.Bool
+                                 (GHC.Prim.># x1 y1) of wild2 {
+                            GHC.Types.False
+                            -> letrec {
+                                 go6 :: GHC.Prim.Int# -> [Sudoku.Entry]
+                                   {- Arity: 1, Strictness: <L,U> -}
+                                 = \ (x3 :: GHC.Prim.Int#) ->
+                                   GHC.Types.:
+                                     @ Sudoku.Entry
+                                     (case x3 of ds {
+                                        DEFAULT -> Sudoku.Full (GHC.Types.I# ds)
+                                        0# -> Sudoku.Empty })
+                                     (case GHC.Prim.tagToEnum#
+                                             @ GHC.Types.Bool
+                                             (GHC.Prim.==# x3 y1) of wild3 {
+                                        GHC.Types.False -> go6 (GHC.Prim.+# x3 1#)
+                                        GHC.Types.True -> GHC.Types.[] @ Sudoku.Entry })
+                               } in
+                               go6 x1
+                            GHC.Types.True -> GHC.Types.[] @ Sudoku.Entry } }
+                       Sudoku.Empty
+                       -> case GHC.Prim.tagToEnum#
+                                 @ GHC.Types.Bool
+                                 (GHC.Prim.># x1 0#) of wild1 {
+                            GHC.Types.False -> Sudoku.$fEnumEntry_go x1
+                            GHC.Types.True -> GHC.Types.[] @ Sudoku.Entry } }
+                 } in
+                 case x of wild {
+                   Sudoku.Full x1 -> case x1 of wild1 { GHC.Types.I# x2 -> $j x2 }
+                   Sudoku.Empty -> $j 0# }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_$cfromEnum :: Sudoku.Entry -> GHC.Types.Int
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: Sudoku.Entry) ->
+                 case ds of wild {
+                   Sudoku.Full x -> x Sudoku.Empty -> Sudoku.$fEnumEntry2 }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_$cpred :: Sudoku.Entry -> Sudoku.Entry
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: (\ (eta :: Sudoku.Entry) ->
+                 case eta of wild {
+                   Sudoku.Full x
+                   -> case x of wild1 { GHC.Types.I# x1 ->
+                      case GHC.Prim.-# x1 1# of ds {
+                        DEFAULT -> Sudoku.Full (GHC.Types.I# ds) 0# -> Sudoku.Empty } }
+                   Sudoku.Empty -> Sudoku.$fEnumEntry3 }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_$csucc :: Sudoku.Entry -> Sudoku.Entry
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: (\ (eta :: Sudoku.Entry) ->
+                 case eta of wild {
+                   Sudoku.Full x
+                   -> case x of wild1 { GHC.Types.I# x1 ->
+                      case GHC.Prim.+# x1 1# of ds {
+                        DEFAULT -> Sudoku.Full (GHC.Types.I# ds) 0# -> Sudoku.Empty } }
+                   Sudoku.Empty -> Sudoku.$fEnumEntry5 }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_$ctoEnum :: GHC.Types.Int -> Sudoku.Entry
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(S),1*U(U)>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: GHC.Types.Int) ->
+                 case ds of wild { GHC.Types.I# ds1 ->
+                 case ds1 of ds2 {
+                   DEFAULT -> Sudoku.Full wild 0# -> Sudoku.Empty } }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_c :: GHC.Types.Int -> [Sudoku.Entry] -> [Sudoku.Entry]
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,1*U(U)><L,U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (x :: GHC.Types.Int) (ys :: [Sudoku.Entry]) ->
+                 GHC.Types.: @ Sudoku.Entry (Sudoku.$fEnumEntry_$ctoEnum x) ys) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_go :: GHC.Prim.Int# -> [Sudoku.Entry]
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U> -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_go1 :: GHC.Prim.Int# -> [Sudoku.Entry]
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U> -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fEnumEntry_go2 :: GHC.Prim.Int# -> [Sudoku.Entry]
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U> -}
+d66cc08bc62b834f8dc0cbb9b152d89a
   $fEqBoard :: GHC.Classes.Eq Sudoku.Board
   DFunId
   {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
      Unfolding: DFun:.
                   @ Sudoku.Board Sudoku.$fEqBoard_$c== Sudoku.$fEqBoard_$c/= -}
-0c55e2eef340310bbd77e171b8476532
+d66cc08bc62b834f8dc0cbb9b152d89a
   $fEqBoard_$c/= :: Sudoku.Board -> Sudoku.Board -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs,
      Strictness: <S(S(S)LL),1*U(1*U(U),1*U,1*U)><S(S(S)LL),1*U(1*U(U),1*U,1*U)>,
@@ -73,7 +306,7 @@ import  -/  ghc-prim-0.5.0.0:GHC.Classes 16d48e012d23eaef9bca91ccdd572c02
                  case Sudoku.$fEqBoard_$c== a b of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-0c55e2eef340310bbd77e171b8476532
+d66cc08bc62b834f8dc0cbb9b152d89a
   $fEqBoard_$c== :: Sudoku.Board -> Sudoku.Board -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs,
      Strictness: <S(S(S)LL),1*U(1*U(U),1*U,1*U)><S(S(S)LL),1*U(1*U(U),1*U,1*U)>,
@@ -85,14 +318,14 @@ import  -/  ghc-prim-0.5.0.0:GHC.Classes 16d48e012d23eaef9bca91ccdd572c02
                  case w1 of ww6 { Sudoku.Board ww7 ww8 ww9 ->
                  case ww7 of ww10 { GHC.Types.I# ww11 ->
                  Sudoku.$w$c== ww5 ww2 ww3 ww11 ww8 ww9 } } } }) -}
-421fcac56b27cda114cb8e4a4ce738ef
+c065aa8fcf23f42084d7edf84c7ab897
   $fEqBoard_$s$fEq[] :: GHC.Classes.Eq [Sudoku.Entry]
   {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
      Unfolding: DFun:.
                   @ [Sudoku.Entry]
                   (GHC.Classes.$fEq[]_$c== @ Sudoku.Entry Sudoku.$fEqEntry)
                   Sudoku.$fEqBoard_$s$fEq[]_$c/= -}
-98ea650084328f444ada965e787d30c6
+8f24fdcd75edab18c345b9ed5c21a260
   $fEqBoard_$s$fEq[]_$c/= ::
     [Sudoku.Entry] -> [Sudoku.Entry] -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
@@ -166,13 +399,13 @@ a47aecaf9bd6b9833e2283bff614c8bd
                      @ GHC.Types.Int
                      GHC.Classes.$fEqInt
                      GHC.Classes.$fEqInt) -}
-f0f5133c2a513737f90527c34f9a37ca
+e6dfbdc87f3a8305e6f4e073348b0f27
   $fEqEntry :: GHC.Classes.Eq Sudoku.Entry
   DFunId
   {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
      Unfolding: DFun:.
                   @ Sudoku.Entry Sudoku.$fEqEntry_$c== Sudoku.$fEqEntry_$c/= -}
-f0f5133c2a513737f90527c34f9a37ca
+e6dfbdc87f3a8305e6f4e073348b0f27
   $fEqEntry_$c/= :: Sudoku.Entry -> Sudoku.Entry -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
      Unfolding: (\ (a :: Sudoku.Entry) (b :: Sudoku.Entry) ->
@@ -192,7 +425,7 @@ f0f5133c2a513737f90527c34f9a37ca
                    -> case b of wild1 {
                         Sudoku.Full ipv -> GHC.Types.True
                         Sudoku.Empty -> GHC.Types.False } }) -}
-f0f5133c2a513737f90527c34f9a37ca
+e6dfbdc87f3a8305e6f4e073348b0f27
   $fEqEntry_$c== :: Sudoku.Entry -> Sudoku.Entry -> GHC.Types.Bool
   {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
      Unfolding: InlineRule (2, True, False)
@@ -206,6 +439,86 @@ f0f5133c2a513737f90527c34f9a37ca
                    -> case ds1 of wild1 {
                         Sudoku.Full ipv -> GHC.Types.False
                         Sudoku.Empty -> GHC.Types.True } }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fNumEntry :: GHC.Num.Num Sudoku.Entry
+  DFunId
+  {- HasNoCafRefs, Strictness: m, Inline: [ALWAYS] CONLIKE,
+     Unfolding: DFun:.
+                  @ Sudoku.Entry
+                  Sudoku.$fNumEntry_$c+
+                  Sudoku.$fNumEntry_$c-
+                  Sudoku.$fNumEntry_$c*
+                  Sudoku.$fNumEntry_$cnegate
+                  Sudoku.$fNumEntry_$cabs
+                  Sudoku.$fNumEntry_$csignum
+                  Sudoku.$fNumEntry_$cfromInteger -}
+a7a4db5a2ff5ea03a918864feb7f3785
+  $fNumEntry1 :: GHC.Integer.Type.Integer
+  {- HasNoCafRefs, Unfolding: (0) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fNumEntry_$c* :: Sudoku.Entry -> Sudoku.Entry -> Sudoku.Entry
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,1*U><S,1*U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (x :: Sudoku.Entry) (ds :: Sudoku.Entry) ->
+                 case ds of wild {
+                   Sudoku.Full ipv
+                   -> case x of wild1 {
+                        Sudoku.Full i -> Sudoku.Full (GHC.Num.$fNumInt_$c* i ipv)
+                        Sudoku.Empty -> Sudoku.Empty }
+                   Sudoku.Empty -> Sudoku.Empty }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fNumEntry_$c+ :: Sudoku.Entry -> Sudoku.Entry -> Sudoku.Entry
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (x :: Sudoku.Entry) (ds :: Sudoku.Entry) ->
+                 case ds of wild {
+                   Sudoku.Full ipv
+                   -> case x of wild1 {
+                        Sudoku.Full i -> Sudoku.Full (GHC.Num.$fNumInt_$c+ i ipv)
+                        Sudoku.Empty -> wild }
+                   Sudoku.Empty -> x }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fNumEntry_$c- :: Sudoku.Entry -> Sudoku.Entry -> Sudoku.Entry
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,U><L,U>,
+     Inline: INLINE (sat-args=2),
+     Unfolding: InlineRule (2, False, False)
+                (\ (x :: Sudoku.Entry) (y :: Sudoku.Entry) ->
+                 Sudoku.$fNumEntry_$c+ x (Sudoku.$fNumEntry_$cnegate y)) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fNumEntry_$cabs :: Sudoku.Entry -> Sudoku.Entry
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: Sudoku.Entry) ->
+                 case ds of wild {
+                   Sudoku.Full x -> Sudoku.Full (GHC.Num.$fNumInt_$cabs x)
+                   Sudoku.Empty -> Sudoku.Empty }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fNumEntry_$cfromInteger ::
+    GHC.Integer.Type.Integer -> Sudoku.Entry
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,U>,
+     Unfolding: (\ (ds :: GHC.Integer.Type.Integer) ->
+                 case GHC.Integer.Type.eqInteger#
+                        ds
+                        Sudoku.$fNumEntry1 of wild { DEFAULT ->
+                 case GHC.Prim.tagToEnum# @ GHC.Types.Bool wild of wild1 {
+                   GHC.Types.False -> Sudoku.Full (GHC.Num.$fNumInt_$cfromInteger ds)
+                   GHC.Types.True -> Sudoku.Empty } }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fNumEntry_$cnegate :: Sudoku.Entry -> Sudoku.Entry
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: Sudoku.Entry) ->
+                 case ds of wild {
+                   Sudoku.Full x -> Sudoku.Full (GHC.Num.$fNumInt_$cnegate x)
+                   Sudoku.Empty -> Sudoku.Empty }) -}
+e6dfbdc87f3a8305e6f4e073348b0f27
+  $fNumEntry_$csignum :: Sudoku.Entry -> Sudoku.Entry
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: Sudoku.Entry) ->
+                 case ds of wild {
+                   Sudoku.Full x -> Sudoku.Full (GHC.Num.$fNumInt_$csignum x)
+                   Sudoku.Empty -> Sudoku.Empty }) -}
 00812975d45cc4583efc04bbf7551402
   $fReadConstraint :: GHC.Read.Read Sudoku.Constraint
   DFunId
@@ -354,7 +667,7 @@ b983ccc68cb9b8073aa2a3f6c40deb7e
                       @ Sudoku.Constraint
                       (Text.ParserCombinators.ReadP.$fApplicativeP_$cpure
                          @ Sudoku.Constraint))) -}
-0c55e2eef340310bbd77e171b8476532
+d66cc08bc62b834f8dc0cbb9b152d89a
   $fShowBoard :: GHC.Show.Show Sudoku.Board
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -363,7 +676,7 @@ b983ccc68cb9b8073aa2a3f6c40deb7e
                   Sudoku.$fShowBoard_$cshowsPrec
                   Sudoku.$fShowBoard_$cshow
                   Sudoku.$fShowBoard_$cshowList -}
-0c55e2eef340310bbd77e171b8476532
+d66cc08bc62b834f8dc0cbb9b152d89a
   $fShowBoard1 :: Sudoku.Board -> GHC.Base.String -> [GHC.Types.Char]
   {- Arity: 2,
      Unfolding: (\ (x :: Sudoku.Board)
@@ -371,7 +684,7 @@ b983ccc68cb9b8073aa2a3f6c40deb7e
                  case x of ww { Sudoku.Board ww1 ww2 ww3 ->
                  case ww1 of ww4 { GHC.Types.I# ww5 ->
                  GHC.Base.++ @ GHC.Types.Char (Sudoku.$w$cshow ww5 ww2) s } }) -}
-0c55e2eef340310bbd77e171b8476532
+d66cc08bc62b834f8dc0cbb9b152d89a
   $fShowBoard_$cshow :: Sudoku.Board -> GHC.Base.String
   {- Arity: 1, Strictness: <S(S(S)SL),1*U(U(U),U,A)>,
      Inline: INLINE[0],
@@ -380,12 +693,12 @@ b983ccc68cb9b8073aa2a3f6c40deb7e
                  case w of ww { Sudoku.Board ww1 ww2 ww3 ->
                  case ww1 of ww4 { GHC.Types.I# ww5 ->
                  Sudoku.$w$cshow ww5 ww2 } }) -}
-0c55e2eef340310bbd77e171b8476532
+d66cc08bc62b834f8dc0cbb9b152d89a
   $fShowBoard_$cshowList :: [Sudoku.Board] -> GHC.Show.ShowS
   {- Arity: 2, Strictness: <S,1*U><L,U>,
      Unfolding: (\ (ls :: [Sudoku.Board]) (s :: GHC.Base.String) ->
                  GHC.Show.showList__ @ Sudoku.Board Sudoku.$fShowBoard1 ls s) -}
-0c55e2eef340310bbd77e171b8476532
+d66cc08bc62b834f8dc0cbb9b152d89a
   $fShowBoard_$cshowsPrec ::
     GHC.Types.Int -> Sudoku.Board -> GHC.Show.ShowS
   {- Arity: 3, Strictness: <L,A><S(S(S)SL),1*U(U(U),U,A)><L,1*U>,
@@ -478,7 +791,7 @@ b0af1a120da35fc43a59307706537a90
                    (w2 :: GHC.Base.String) ->
                  case w of ww { GHC.Types.I# ww1 ->
                  Sudoku.$w$cshowsPrec ww1 w1 w2 }) -}
-f0f5133c2a513737f90527c34f9a37ca
+e6dfbdc87f3a8305e6f4e073348b0f27
   $fShowEntry :: GHC.Show.Show Sudoku.Entry
   DFunId
   {- Strictness: m, Inline: [ALWAYS] CONLIKE,
@@ -490,7 +803,7 @@ f0f5133c2a513737f90527c34f9a37ca
 2054a46ce0272329320b817300e6ee3d
   $fShowEntry1 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# "."#) -}
-f0f5133c2a513737f90527c34f9a37ca
+e6dfbdc87f3a8305e6f4e073348b0f27
   $fShowEntry_$cshow :: Sudoku.Entry -> GHC.Base.String
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: InlineRule (1, True, False)
@@ -498,7 +811,7 @@ f0f5133c2a513737f90527c34f9a37ca
                  case ds of wild {
                    Sudoku.Full i -> GHC.Show.$fShowInt_$cshow i
                    Sudoku.Empty -> Sudoku.$fShowEntry1 }) -}
-f0f5133c2a513737f90527c34f9a37ca
+e6dfbdc87f3a8305e6f4e073348b0f27
   $fShowEntry_$cshowList :: [Sudoku.Entry] -> GHC.Show.ShowS
   {- Arity: 2, Strictness: <S,1*U><L,U>,
      Unfolding: InlineRule (2, True, False)
@@ -508,7 +821,7 @@ f0f5133c2a513737f90527c34f9a37ca
                    (Sudoku.$fShowEntry_$cshowsPrec GHC.Show.shows22)
                    ls
                    s) -}
-f0f5133c2a513737f90527c34f9a37ca
+e6dfbdc87f3a8305e6f4e073348b0f27
   $fShowEntry_$cshowsPrec ::
     GHC.Types.Int -> Sudoku.Entry -> GHC.Show.ShowS
   {- Arity: 3, Strictness: <L,A><S,1*U><L,1*U>, Inline: INLINE[0],
@@ -627,7 +940,7 @@ d0eb5ff3ecc3811acbcaa8ab0151f64d
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
-5f23827354e5c4062dab885186d11769
+e81358dfcc610be540e12cb80a2176bc
   $w$c== ::
     GHC.Prim.Int#
     -> [Sudoku.Row]
@@ -782,7 +1095,7 @@ d0eb5ff3ecc3811acbcaa8ab0151f64d
                               @ b
                               k))
                         karg }) -}
-3bab2001b1f749e66f82e554fb0d46b4
+dc6419e2f1de47a5de74daf7e8d36752
   $w$cshow :: GHC.Prim.Int# -> [Sudoku.Row] -> GHC.Base.String
   {- Arity: 2, Strictness: <S,U><S,U>, Inline: [0] -}
 00812975d45cc4583efc04bbf7551402
@@ -849,7 +1162,7 @@ d0eb5ff3ecc3811acbcaa8ab0151f64d
                              @ GHC.Types.Char
                              GHC.Show.shows7
                              (p (GHC.Types.: @ GHC.Types.Char GHC.Show.shows4 w1)) } }) -}
-f0f5133c2a513737f90527c34f9a37ca
+e6dfbdc87f3a8305e6f4e073348b0f27
   $w$cshowsPrec1 ::
     Sudoku.Entry -> GHC.Base.String -> [GHC.Types.Char]
   {- Arity: 2, Strictness: <S,1*U><L,1*U>, Inline: [0],
@@ -870,7 +1183,7 @@ f0f5133c2a513737f90527c34f9a37ca
 7c4ab3da7c36955dceafd52942ce8840
   $wchunk :: GHC.Prim.Int# -> [a] -> (# [a], [[a]] #)
   {- Arity: 2, HasNoCafRefs, Strictness: <S,U><S,U>, Inline: [0] -}
-fb0b47e196a15fb35a5032c996a9782e
+1a8a8bdc8fa7abd5652fbeab150baf3b
   $wgetBoxes :: GHC.Prim.Int# -> [Sudoku.Row] -> [Sudoku.Set]
   {- Arity: 2, Strictness: <S,U><S,1*U>, Inline: [0],
      Unfolding: (\ (ww :: GHC.Prim.Int#) (ww1 :: [Sudoku.Row]) ->
@@ -885,7 +1198,43 @@ fb0b47e196a15fb35a5032c996a9782e
                             GHC.Types.: @ [Sudoku.Entry] ww3 ww4 })
                            ww1) of ww2 { (#,#) ww3 ww4 ->
                  Sudoku.getBoxes_go (GHC.Types.: @ [[[Sudoku.Entry]]] ww3 ww4) }) -}
-4a1b03ad4ba322e1a182dcafb4a8127a
+b6d7f56503bb8a144e7edaf81be06f06
+  $wgetEntry ::
+    [Sudoku.Row] -> GHC.Prim.Int# -> GHC.Types.Int -> Sudoku.Entry
+  {- Arity: 3, Strictness: <S,U><S,U><L,1*U(U)>, Inline: [0],
+     Unfolding: (\ (ww :: [Sudoku.Row])
+                   (ww1 :: GHC.Prim.Int#)
+                   (w :: GHC.Types.Int) ->
+                 case GHC.List.$wlenAcc @ [Sudoku.Entry] ww 0# of ww2 { DEFAULT ->
+                 case GHC.Prim.tagToEnum#
+                        @ GHC.Types.Bool
+                        (GHC.Prim.>=# ww1 ww2) of wild {
+                   GHC.Types.False
+                   -> case w of wild1 { GHC.Types.I# x ->
+                      case GHC.Prim.tagToEnum#
+                             @ GHC.Types.Bool
+                             (GHC.Prim.>=# x ww2) of wild2 {
+                        GHC.Types.False
+                        -> case GHC.Prim.tagToEnum#
+                                  @ GHC.Types.Bool
+                                  (GHC.Prim.<# ww1 0#) of wild3 {
+                             GHC.Types.False
+                             -> case GHC.Prim.tagToEnum#
+                                       @ GHC.Types.Bool
+                                       (GHC.Prim.<# x 0#) of wild4 {
+                                  GHC.Types.False
+                                  -> GHC.List.$w!!
+                                       @ Sudoku.Entry
+                                       (GHC.List.$w!! @ Sudoku.Row ww ww1)
+                                       x
+                                  GHC.Types.True -> Sudoku.Empty }
+                             GHC.Types.True -> Sudoku.Empty }
+                        GHC.Types.True -> Sudoku.Empty } }
+                   GHC.Types.True -> Sudoku.Empty } }) -}
+d33020e2da46a5d4f27e7ecfaadfe0f6
+  $wgo :: [Sudoku.Entry] -> GHC.Prim.Int# -> GHC.Prim.Int#
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><L,U>, Inline: [0] -}
+e0544c906b324f76fc04d89e57f54eac
   $wnonUniformBoard ::
     GHC.Types.Int
     -> (# GHC.Types.Int, [Sudoku.Row], [Sudoku.Constraint] #)
@@ -901,19 +1250,19 @@ fb0b47e196a15fb35a5032c996a9782e
                            (GHC.Prim.># 0# y) of wild1 {
                       GHC.Types.False
                       -> let {
-                           lvl14 :: [GHC.Types.Int] = GHC.Enum.eftInt 0# y
+                           lvl17 :: [GHC.Types.Int] = GHC.Enum.eftInt 0# y
                          } in
                          letrec {
-                           go2 :: GHC.Prim.Int# -> [Sudoku.Row]
+                           go6 :: GHC.Prim.Int# -> [Sudoku.Row]
                              {- Arity: 1, Strictness: <L,U> -}
                            = \ (x1 :: GHC.Prim.Int#) ->
                              GHC.Types.:
                                @ Sudoku.Row
                                (let {
-                                  lvl15 :: GHC.Prim.Int# = GHC.Prim.*# x1 y
+                                  lvl18 :: GHC.Prim.Int# = GHC.Prim.*# x1 y
                                 } in
                                 letrec {
-                                  go3 :: [GHC.Types.Int] -> [Sudoku.Entry]
+                                  go7 :: [GHC.Types.Int] -> [Sudoku.Entry]
                                     {- Arity: 1, Strictness: <S,1*U> -}
                                   = \ (ds :: [GHC.Types.Int]) ->
                                     case ds of wild2 {
@@ -923,37 +1272,57 @@ fb0b47e196a15fb35a5032c996a9782e
                                            @ Sudoku.Entry
                                            (Sudoku.Full
                                               (case y1 of wild3 { GHC.Types.I# y2 ->
-                                               GHC.Types.I# (GHC.Prim.+# lvl15 y2) }))
-                                           (go3 ys) }
+                                               GHC.Types.I# (GHC.Prim.+# lvl18 y2) }))
+                                           (go7 ys) }
                                 } in
-                                go3 lvl14)
+                                go7 lvl17)
                                (case GHC.Prim.tagToEnum#
                                        @ GHC.Types.Bool
                                        (GHC.Prim.==# x1 y) of wild2 {
-                                  GHC.Types.False -> go2 (GHC.Prim.+# x1 1#)
+                                  GHC.Types.False -> go6 (GHC.Prim.+# x1 1#)
                                   GHC.Types.True -> GHC.Types.[] @ Sudoku.Row })
                          } in
-                         go2 0#
+                         go6 0#
                       GHC.Types.True -> GHC.Types.[] @ Sudoku.Row } },
                     GHC.Types.[] @ Sudoku.Constraint #)) -}
-fdf8e9ca4afc7df2d70a385712afbda3
-  $wpossibleValues :: GHC.Prim.Int# -> Sudoku.Set -> [Sudoku.Entry]
+4ecf211904dcd8e9c75ac61223ec7c0c
+  $wpossibleValuesUnique ::
+    GHC.Prim.Int# -> Sudoku.Set -> [Sudoku.Entry]
   {- Arity: 2, HasNoCafRefs, Strictness: <S,U><L,U>, Inline: [0],
      Unfolding: (\ (ww :: GHC.Prim.Int#) (w :: Sudoku.Set) ->
-                 GHC.Enum.efdtIntUpFB
-                   @ [Sudoku.Entry]
-                   (\ (x :: GHC.Types.Int) (ys :: [Sudoku.Entry])[OneShot] ->
-                    let {
-                      x1 :: Sudoku.Entry = Sudoku.Full x
-                    } in
-                    case GHC.List.elem @ Sudoku.Entry Sudoku.$fEqEntry x1 w of wild {
-                      GHC.Types.False -> GHC.Types.: @ Sudoku.Entry x1 ys
-                      GHC.Types.True -> ys })
-                   (GHC.Types.[] @ Sudoku.Entry)
-                   1#
-                   2#
-                   ww) -}
-93065bec2e82abab136ba2a1b0f367c2
+                 case GHC.Prim.tagToEnum#
+                        @ GHC.Types.Bool
+                        (GHC.Prim.># 1# ww) of wild {
+                   GHC.Types.False
+                   -> letrec {
+                        go6 :: GHC.Prim.Int# -> [Sudoku.Entry]
+                          {- Arity: 1, Strictness: <L,U> -}
+                        = \ (x :: GHC.Prim.Int#) ->
+                          let {
+                            x1 :: Sudoku.Entry
+                            = case x of ds {
+                                DEFAULT -> Sudoku.Full (GHC.Types.I# ds) 0# -> Sudoku.Empty }
+                          } in
+                          case GHC.List.elem @ Sudoku.Entry Sudoku.$fEqEntry x1 w of wild1 {
+                            GHC.Types.False
+                            -> GHC.Types.:
+                                 @ Sudoku.Entry
+                                 x1
+                                 (case GHC.Prim.tagToEnum#
+                                         @ GHC.Types.Bool
+                                         (GHC.Prim.==# x ww) of wild2 {
+                                    GHC.Types.False -> go6 (GHC.Prim.+# x 1#)
+                                    GHC.Types.True -> GHC.Types.[] @ Sudoku.Entry })
+                            GHC.Types.True
+                            -> case GHC.Prim.tagToEnum#
+                                      @ GHC.Types.Bool
+                                      (GHC.Prim.==# x ww) of wild2 {
+                                 GHC.Types.False -> go6 (GHC.Prim.+# x 1#)
+                                 GHC.Types.True -> GHC.Types.[] @ Sudoku.Entry } }
+                      } in
+                      go6 1#
+                   GHC.Types.True -> GHC.Types.[] @ Sudoku.Entry }) -}
+edd847a2857bbc5396bf0d7352983331
   $wuniformBoard ::
     GHC.Types.Int
     -> Sudoku.Entry
@@ -973,7 +1342,7 @@ fdf8e9ca4afc7df2d70a385712afbda3
                       -> let {
                            x1 :: [Sudoku.Entry]
                            = let {
-                               lvl14 :: [Sudoku.Entry]
+                               lvl17 :: [Sudoku.Entry]
                                = GHC.Types.: @ Sudoku.Entry w1 (GHC.Types.[] @ Sudoku.Entry)
                              } in
                              letrec {
@@ -983,12 +1352,12 @@ fdf8e9ca4afc7df2d70a385712afbda3
                                  case ww of ds1 {
                                    DEFAULT
                                    -> GHC.Types.: @ Sudoku.Entry w1 ($wxs1 (GHC.Prim.-# ds1 1#))
-                                   1# -> lvl14 }
+                                   1# -> lvl17 }
                              } in
                              $wxs1 y
                          } in
                          let {
-                           lvl14 :: [[Sudoku.Entry]]
+                           lvl17 :: [[Sudoku.Entry]]
                            = GHC.Types.: @ [Sudoku.Entry] x1 (GHC.Types.[] @ [Sudoku.Entry])
                          } in
                          letrec {
@@ -998,7 +1367,7 @@ fdf8e9ca4afc7df2d70a385712afbda3
                              case ww of ds1 {
                                DEFAULT
                                -> GHC.Types.: @ [Sudoku.Entry] x1 ($wxs1 (GHC.Prim.-# ds1 1#))
-                               1# -> lvl14 }
+                               1# -> lvl17 }
                          } in
                          $wxs1 y } },
                     GHC.Types.[] @ Sudoku.Constraint #)) -}
@@ -1006,7 +1375,7 @@ b27e7f14c121efd2ae219e4ac6135fbe
   $wunsafeDrop :: GHC.Prim.Int# -> [a1] -> [a1]
   {- Arity: 2, HasNoCafRefs, Strictness: <L,1*U><S,1*U>,
      Inline: [0] -}
-81279e4086a333e28cd2e74efb4c59e7
+27565f31ee366efa6a1da0e3b6aadb4a
   $wupdate :: GHC.Prim.Int# -> a -> [a] -> [a]
   {- Arity: 3, HasNoCafRefs, Strictness: <S,U><L,U><L,U>,
      Inline: [0],
@@ -1031,72 +1400,40 @@ b27e7f14c121efd2ae219e4ac6135fbe
                    GHC.Types.False -> n1
                    GHC.Types.True
                    -> letrec {
-                        $wgo :: [a] -> GHC.Prim.Int# -> [a]
+                        $wgo1 :: [a] -> GHC.Prim.Int# -> [a]
                           {- Arity: 2, Strictness: <S,1*U><L,1*U>, Inline: [0] -}
                         = \ (w2 :: [a]) (ww1 :: GHC.Prim.Int#) ->
                           case w2 of wild1 {
                             [] -> n1
                             : y ys
                             -> case ww1 of ds1 {
-                                 DEFAULT -> GHC.Types.: @ a y ($wgo ys (GHC.Prim.-# ds1 1#))
+                                 DEFAULT -> GHC.Types.: @ a y ($wgo1 ys (GHC.Prim.-# ds1 1#))
                                  1# -> GHC.Types.: @ a y n1 } }
                       } in
-                      $wgo w1 ww }) -}
-baa53349e3501b5bcb061520138d96ce
+                      $wgo1 w1 ww }) -}
+41b31e02a3bcda5ac94850d7f7cb454f
   $wvalidEntries ::
     GHC.Types.Int
-    -> [Sudoku.Row] -> GHC.Prim.Int# -> GHC.Prim.Int# -> [Sudoku.Entry]
-  {- Arity: 4, Strictness: <L,U(U)><S,U><S,U><S,U>, Inline: [0],
-     Unfolding: (\ (ww :: GHC.Types.Int)
-                   (ww1 :: [Sudoku.Row])
-                   (ww2 :: GHC.Prim.Int#)
-                   (ww3 :: GHC.Prim.Int#) ->
-                 case GHC.List.$w!!
-                        @ Sudoku.Entry
-                        (GHC.List.$w!! @ Sudoku.Set ww1 ww2)
-                        ww3 of wild {
-                   Sudoku.Full ds
-                   -> GHC.Types.: @ Sudoku.Entry wild (GHC.Types.[] @ Sudoku.Entry)
-                   Sudoku.Empty
-                   -> case GHC.List.$wlenAcc
-                             @ [Sudoku.Entry]
-                             ww1
-                             0# of ww4 { DEFAULT ->
-                      Data.OldList.intersectBy
-                        @ Sudoku.Entry
-                        Sudoku.$fEqEntry_$c==
-                        (Data.OldList.intersectBy
-                           @ Sudoku.Entry
-                           Sudoku.$fEqEntry_$c==
-                           (Sudoku.$wpossibleValues ww4 (GHC.List.$w!! @ Sudoku.Set ww1 ww2))
-                           (Sudoku.$wpossibleValues
-                              ww4
-                              (GHC.List.$w!!
-                                 @ Sudoku.Set
-                                 (Data.OldList.transpose @ Sudoku.Entry ww1)
-                                 ww3)))
-                        (Sudoku.$wpossibleValues
-                           ww4
-                           (case ww of ww5 { GHC.Types.I# ww6 ->
-                            case GHC.Real.$w$cdiv ww2 ww6 of ww7 { DEFAULT ->
-                            case GHC.Real.$w$cdiv ww3 ww6 of ww8 { DEFAULT ->
-                            GHC.List.$w!!
-                              @ Sudoku.Set
-                              (Sudoku.$wgetBoxes ww6 ww1)
-                              (GHC.Prim.+# (GHC.Prim.*# ww7 ww6) ww8) } } })) } }) -}
-0c55e2eef340310bbd77e171b8476532
+    -> [Sudoku.Row]
+    -> [Sudoku.Constraint]
+    -> GHC.Prim.Int#
+    -> GHC.Types.Int
+    -> [Sudoku.Entry]
+  {- Arity: 5, Strictness: <L,U(U)><S,U><L,1*U><S,U><L,1*U(U)>,
+     Inline: [0] -}
+d66cc08bc62b834f8dc0cbb9b152d89a
   data Board = Board GHC.Types.Int [Sudoku.Row] [Sudoku.Constraint]
 00812975d45cc4583efc04bbf7551402
   data Constraint
     = Unique [(GHC.Types.Int, GHC.Types.Int)]
     | Sum GHC.Types.Int [(GHC.Types.Int, GHC.Types.Int)]
-f0f5133c2a513737f90527c34f9a37ca
+e6dfbdc87f3a8305e6f4e073348b0f27
   data Entry = Full GHC.Types.Int | Empty
-86497e53bc61a146e41414f86f53c388
+8d3baffd1edcad19e01c7a7ddd6ba362
   type Row = Sudoku.Set
-5c943fd55bad4622d832adf3ee15d875
+fdd23effe2eb3d42b1a59a35737528d3
   type Set = [Sudoku.Entry]
-8726189ac68bdbb99f4941ddf684b3b5
+7ad3879850c3cc89efc4026f4043d73a
   boardSize :: Sudoku.Board -> GHC.Types.Int
   {- Arity: 1, HasNoCafRefs, Strictness: <S(LSL),1*U(A,1*U,A)>m,
      Unfolding: InlineRule (1, True, False)
@@ -1104,12 +1441,46 @@ f0f5133c2a513737f90527c34f9a37ca
                  case ds of wild { Sudoku.Board ds1 rows ds2 ->
                  case GHC.List.$wlenAcc @ [Sudoku.Entry] rows 0# of ww2 { DEFAULT ->
                  GHC.Types.I# ww2 } }) -}
-525912763b4059c535c9c6f52eaf44bc
+42d0e68910bd329ce8306b733916ca19
   boxSize :: Sudoku.Board -> GHC.Types.Int
   {- Arity: 1, HasNoCafRefs, Strictness: <S(SLL),1*U(1*U(U),A,A)>m,
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Sudoku.Board) ->
                  case ds of wild { Sudoku.Board n ds1 ds2 -> n }) -}
+48d43ae319ef6e2d8c1105146dc81e3b
+  cToV ::
+    Sudoku.Board
+    -> GHC.Types.Int -> Sudoku.Constraint -> [Sudoku.Entry]
+  {- Arity: 3, Strictness: <L,U(A,U,A)><L,1*U(U)><S,1*U>,
+     Unfolding: (\ (board :: Sudoku.Board)
+                   (n :: GHC.Types.Int)
+                   (ds :: Sudoku.Constraint) ->
+                 case ds of wild {
+                   Sudoku.Unique cs
+                   -> case n of ww { GHC.Types.I# ww1 ->
+                      Sudoku.$wpossibleValuesUnique
+                        ww1
+                        (GHC.Base.map
+                           @ (GHC.Types.Int, GHC.Types.Int)
+                           @ Sudoku.Entry
+                           (\ (p :: (GHC.Types.Int, GHC.Types.Int)) ->
+                            case board of ww2 { Sudoku.Board ww3 ww4 ww5 ->
+                            case p of wild1 { (,) x ds1 ->
+                            case x of ww6 { GHC.Types.I# ww7 ->
+                            Sudoku.$wgetEntry ww4 ww7 ds1 } } })
+                           cs) }
+                   Sudoku.Sum s cs
+                   -> Sudoku.possibleValuesSum
+                        s
+                        (GHC.Base.map
+                           @ (GHC.Types.Int, GHC.Types.Int)
+                           @ Sudoku.Entry
+                           (\ (p :: (GHC.Types.Int, GHC.Types.Int)) ->
+                            case board of ww { Sudoku.Board ww1 ww2 ww3 ->
+                            case p of wild1 { (,) x ds1 ->
+                            case x of ww4 { GHC.Types.I# ww5 ->
+                            Sudoku.$wgetEntry ww2 ww5 ds1 } } })
+                           cs) }) -}
 1f162feb46ebd50347a5e9d1bf07a6ea
   chunk :: GHC.Types.Int -> [a] -> [[a]]
   {- Arity: 2, HasNoCafRefs, Strictness: <S(S),1*U(U)><S,U>m2,
@@ -1119,7 +1490,7 @@ f0f5133c2a513737f90527c34f9a37ca
                  case w of ww { GHC.Types.I# ww1 ->
                  case Sudoku.$wchunk @ a ww1 w1 of ww2 { (#,#) ww3 ww4 ->
                  GHC.Types.: @ [a] ww3 ww4 } }) -}
-4da58fc5682b39af876c4cffcfc8d094
+b2a8b8753d0329ee032db9d15f6c7d5b
   complete :: Sudoku.Board -> GHC.Types.Bool
   {- Arity: 1, HasNoCafRefs, Strictness: <S(LSL),1*U(A,1*U,A)>,
      Inline: INLINE[0],
@@ -1127,17 +1498,37 @@ f0f5133c2a513737f90527c34f9a37ca
                 (\ (w :: Sudoku.Board) ->
                  case w of ww { Sudoku.Board ww1 ww2 ww3 ->
                  (Sudoku.complete_go ww2) `cast` (Data.Monoid.N:All[0]) }) -}
-9a4829bfa4b01dfca4811103b777a26c
+28351437813d843f0b3e2168dff97390
   complete_go :: [[Sudoku.Entry]] -> Data.Monoid.All
   {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U> -}
-2ec0a305da793968682fc0ad78a405a2
+460596c41e53c0c291055efb95347c7e
+  elemConstraint ::
+    (GHC.Types.Int, GHC.Types.Int)
+    -> Sudoku.Constraint -> GHC.Types.Bool
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,U><S,1*U>,
+     Unfolding: (\ (x :: (GHC.Types.Int, GHC.Types.Int))
+                   (ds :: Sudoku.Constraint) ->
+                 case ds of wild {
+                   Sudoku.Unique cs
+                   -> GHC.List.elem
+                        @ (GHC.Types.Int, GHC.Types.Int)
+                        Sudoku.$fEqConstraint_$s$fEq(,)
+                        x
+                        cs
+                   Sudoku.Sum ds1 cs
+                   -> GHC.List.elem
+                        @ (GHC.Types.Int, GHC.Types.Int)
+                        Sudoku.$fEqConstraint_$s$fEq(,)
+                        x
+                        cs }) -}
+928f54122e1b3538b946058ce39972c3
   emptyEntries :: Sudoku.Board -> [(GHC.Types.Int, GHC.Types.Int)]
   {- Arity: 1, HasNoCafRefs, Strictness: <S(LSL),1*U(A,1*U,A)>,
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Sudoku.Board) ->
                  case ds of wild { Sudoku.Board ds1 rows ds2 ->
                  Sudoku.emptyEntries_coordinates
-                   Sudoku.emptyEntries3
+                   Sudoku.$fEnumEntry2
                    (GHC.Base.build
                       @ [GHC.Types.Int]
                       (\ @ b1
@@ -1154,13 +1545,13 @@ f0f5133c2a513737f90527c34f9a37ca
                             Sudoku.emptyEntries1)
                          n
                          rows)) }) -}
-55e18a14ed786d23912187051d0e8b9a
+e07692c5e6d5ca2997d2f055a6aa3221
   emptyEntries1 :: [Sudoku.Entry] -> [GHC.Types.Int]
   {- Arity: 1, HasNoCafRefs,
      Unfolding: (Data.OldList.findIndices
                    @ Sudoku.Entry
                    Sudoku.emptyEntries2) -}
-f4ae90ee26e8080e2d69b09ff84fccba
+adba1005b350a49331004a19288ecd33
   emptyEntries2 :: Sudoku.Entry -> GHC.Types.Bool
   {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
      Unfolding: InlineRule (1, True, False)
@@ -1168,15 +1559,12 @@ f4ae90ee26e8080e2d69b09ff84fccba
                  case ds of wild {
                    Sudoku.Full a1 -> GHC.Types.False
                    Sudoku.Empty -> GHC.Types.True }) -}
-5fc0e721316d09f8d5bb4db8ab7972d8
-  emptyEntries3 :: GHC.Types.Int
-  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 0#) -}
 00b9222aa55e13579ba2a0955a0e9c70
   emptyEntries_coordinates ::
     GHC.Types.Int
     -> [[GHC.Types.Int]] -> [(GHC.Types.Int, GHC.Types.Int)]
   {- Arity: 2, HasNoCafRefs, Strictness: <L,U(U)><S,1*U> -}
-d14c1def951784bebfd39b287d9b6459
+1b334631a7f870652f5dba6b8c25e03f
   getBoxes :: Sudoku.Board -> [Sudoku.Set]
   {- Arity: 1, Strictness: <S(S(S)SL),1*U(U(U),1*U,A)>,
      Inline: INLINE[0],
@@ -1185,38 +1573,63 @@ d14c1def951784bebfd39b287d9b6459
                  case w of ww { Sudoku.Board ww1 ww2 ww3 ->
                  case ww1 of ww4 { GHC.Types.I# ww5 ->
                  Sudoku.$wgetBoxes ww5 ww2 } }) -}
-218ffcba82adaebbf7866259bc7981bf
+1de35bf53d527c6d303198e09b164f3b
   getBoxes_go :: [[[[Sudoku.Entry]]]] -> [[Sudoku.Entry]]
   {- Arity: 1, Strictness: <S,1*U> -}
-063d5cc6e2d17802c0e74d664b617b93
+9c6ba7fe0cc92074d2afb2735f37eeba
   getColumns :: Sudoku.Board -> [Sudoku.Set]
   {- Arity: 1, HasNoCafRefs, Strictness: <S(LSL),1*U(A,1*U,A)>,
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Sudoku.Board) ->
                  case ds of wild { Sudoku.Board ds1 rows ds2 ->
                  Data.OldList.transpose @ Sudoku.Entry rows }) -}
-bc907c31102e65c8071f31ef6d6553bb
+f1c169a6d8ae951f2a3a849c59795f28
+  getConstraints :: Sudoku.Board -> [Sudoku.Constraint]
+  {- Arity: 1, HasNoCafRefs, Strictness: <S(LLS),1*U(A,A,1*U)>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: Sudoku.Board) ->
+                 case ds of wild { Sudoku.Board ds1 ds2 cs -> cs }) -}
+6ac5a51858eb0766abe0954c66e8e541
+  getEntry ::
+    Sudoku.Board -> GHC.Types.Int -> GHC.Types.Int -> Sudoku.Entry
+  {- Arity: 3,
+     Strictness: <S(LSL),1*U(A,U,A)><S(S),1*U(U)><L,1*U(U)>,
+     Inline: INLINE[0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: Sudoku.Board)
+                   (w1 :: GHC.Types.Int)
+                   (w2 :: GHC.Types.Int) ->
+                 case w of ww { Sudoku.Board ww1 ww2 ww3 ->
+                 case w1 of ww4 { GHC.Types.I# ww5 ->
+                 Sudoku.$wgetEntry ww2 ww5 w2 } }) -}
+9e721363bcfc38871a8256dca2c6dfd1
   getRows :: Sudoku.Board -> [Sudoku.Set]
   {- Arity: 1, HasNoCafRefs, Strictness: <S(LSL),1*U(A,1*U,A)>,
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Sudoku.Board) ->
                  case ds of wild { Sudoku.Board ds1 rows ds2 -> rows }) -}
-002026d0ad8ec488d1336d5f4ee911a8
+73d95d8a1ee26132af347831eeac6658
   intersectAll :: GHC.Classes.Eq a => [[a]] -> [a]
-  {- Arity: 2, HasNoCafRefs, Strictness: <L,U(C(C(U)),A)><S,1*U>,
+  {- Arity: 2, Strictness: <L,U(C(C(U)),A)><S,1*U>,
      Unfolding: (\ @ a ($dEq :: GHC.Classes.Eq a) (eta :: [[a]]) ->
                  let {
-                   lvl14 :: a -> a -> GHC.Types.Bool = GHC.Classes.== @ a $dEq
+                   lvl17 :: a -> a -> GHC.Types.Bool = GHC.Classes.== @ a $dEq
                  } in
                  letrec {
-                   go2 :: [[a]] -> [a] {- Arity: 1, Strictness: <S,1*U> -}
+                   go6 :: [[a]] -> [a] {- Arity: 1, Strictness: <S,1*U> -}
                    = \ (ds :: [[a]]) ->
                      case ds of wild {
-                       [] -> GHC.Types.[] @ a
-                       : y ys -> Data.OldList.intersectBy @ a lvl14 y (go2 ys) }
+                       [] -> Sudoku.intersectAll1 @ a
+                       : x ds1
+                       -> case ds1 of wild1 {
+                            [] -> x
+                            : ipv ipv1 -> Data.OldList.intersectBy @ a lvl17 x (go6 wild1) } }
                  } in
-                 go2 eta) -}
-37a152ef743090ffa40469a0c0393768
+                 go6 eta) -}
+770331eb9f82833d295e7649b490469c
+  intersectAll1 :: [a]
+  {- Strictness: x -}
+d0f71960f67f74c55d4b047e4a07e735
   isEmpty :: Sudoku.Entry -> GHC.Types.Bool
   {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
      Unfolding: InlineRule (1, True, False)
@@ -1224,7 +1637,7 @@ bc907c31102e65c8071f31ef6d6553bb
                  case ds of wild {
                    Sudoku.Full ipv -> GHC.Types.False
                    Sudoku.Empty -> GHC.Types.True }) -}
-263f470129594296e7e85db5079c8755
+4eddffd4011421ed50745de5321ac950
   isFull :: Sudoku.Entry -> GHC.Types.Bool
   {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
      Unfolding: InlineRule (1, True, False)
@@ -1232,7 +1645,7 @@ bc907c31102e65c8071f31ef6d6553bb
                  case ds of wild {
                    Sudoku.Full ds1 -> GHC.Types.True
                    Sudoku.Empty -> GHC.Types.False }) -}
-a61e0d377b46a4f03d27b553a5092a27
+f50d04aad59e2fcdad08da7acc8544c6
   nonUniformBoard :: GHC.Types.Int -> Sudoku.Board
   {- Arity: 1, HasNoCafRefs, Strictness: <L,U(U)>m,
      Inline: INLINE[0],
@@ -1240,15 +1653,59 @@ a61e0d377b46a4f03d27b553a5092a27
                 (\ (w :: GHC.Types.Int) ->
                  case Sudoku.$wnonUniformBoard w of ww { (#,,#) ww1 ww2 ww3 ->
                  Sudoku.Board ww1 ww2 ww3 }) -}
-8eaa333550192ea27666f4e730d54482
-  possibleValues :: GHC.Types.Int -> Sudoku.Set -> [Sudoku.Entry]
+cb05f2068b0e37e9bd45634a7494f63c
+  possibleValuesSum :: GHC.Types.Int -> Sudoku.Set -> [Sudoku.Entry]
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,1*U(U)><S,U>,
+     Unfolding: (\ (target :: GHC.Types.Int) (set :: Sudoku.Set) ->
+                 case Sudoku.$wgo set 0# of ww { DEFAULT ->
+                 let {
+                   tar_val :: Sudoku.Entry
+                   = case target of wild { GHC.Types.I# i ->
+                     let {
+                       ds :: GHC.Integer.Type.Integer = GHC.Integer.Type.smallInteger i
+                     } in
+                     case GHC.Integer.Type.eqInteger#
+                            ds
+                            Sudoku.$fNumEntry1 of wild1 { DEFAULT ->
+                     case Sudoku.possibleValuesSum_go set Sudoku.Empty of wild2 {
+                       Sudoku.Full x
+                       -> case GHC.Prim.tagToEnum# @ GHC.Types.Bool wild1 of wild3 {
+                            GHC.Types.False
+                            -> Sudoku.Full
+                                 (case GHC.Integer.Type.integerToInt ds of wild4 { DEFAULT ->
+                                  case x of wild5 { GHC.Types.I# x1 ->
+                                  GHC.Types.I# (GHC.Prim.+# wild4 (GHC.Prim.negateInt# x1)) } })
+                            GHC.Types.True
+                            -> Sudoku.Full
+                                 (case x of wild4 { GHC.Types.I# x1 ->
+                                  GHC.Types.I# (GHC.Prim.negateInt# x1) }) }
+                       Sudoku.Empty
+                       -> case GHC.Prim.tagToEnum# @ GHC.Types.Bool wild1 of wild3 {
+                            GHC.Types.False -> Sudoku.Full (GHC.Num.$fNumInt_$cfromInteger ds)
+                            GHC.Types.True -> Sudoku.Empty } } } }
+                 } in
+                 case ww of wild {
+                   DEFAULT
+                   -> Sudoku.$fEnumEntry_$cenumFromTo Sudoku.$fEnumEntry5 tar_val
+                   1#
+                   -> GHC.Types.:
+                        @ Sudoku.Entry
+                        tar_val
+                        (GHC.Types.[] @ Sudoku.Entry) } }) -}
+5426d58917b7b569ce7e64343a4761bc
+  possibleValuesSum_go ::
+    [Sudoku.Entry] -> Sudoku.Entry -> Sudoku.Entry
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U> -}
+0c3a7b51540603fae2f42a8768d42180
+  possibleValuesUnique ::
+    GHC.Types.Int -> Sudoku.Set -> [Sudoku.Entry]
   {- Arity: 2, HasNoCafRefs, Strictness: <S(S),1*U(U)><L,U>,
      Inline: INLINE[0],
      Unfolding: InlineRule (2, True, False)
                 (\ (w :: GHC.Types.Int) (w1 :: Sudoku.Set) ->
                  case w of ww { GHC.Types.I# ww1 ->
-                 Sudoku.$wpossibleValues ww1 w1 }) -}
-5a449c94eeb12f49ecf9d204fe907946
+                 Sudoku.$wpossibleValuesUnique ww1 w1 }) -}
+836e81ccfed06498fffed284354c191d
   uniform9x9Board :: Sudoku.Entry -> Sudoku.Board
   {- Arity: 1, HasNoCafRefs,
      Unfolding: (\ (w :: Sudoku.Entry) ->
@@ -1259,7 +1716,7 @@ a61e0d377b46a4f03d27b553a5092a27
 e431eacb14fbe03e48c2e4bd583d35f3
   uniform9x9Board1 :: GHC.Types.Int
   {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 3#) -}
-a0dfcbf1665a6c421b4f736ddf03e1fa
+2258f5b242bd0e53f596182520e33965
   uniformBoard :: GHC.Types.Int -> Sudoku.Entry -> Sudoku.Board
   {- Arity: 2, HasNoCafRefs, Strictness: <L,U(U)><L,U>m,
      Inline: INLINE[0],
@@ -1267,35 +1724,7 @@ a0dfcbf1665a6c421b4f736ddf03e1fa
                 (\ (w :: GHC.Types.Int) (w1 :: Sudoku.Entry) ->
                  case Sudoku.$wuniformBoard w w1 of ww { (#,,#) ww1 ww2 ww3 ->
                  Sudoku.Board ww1 ww2 ww3 }) -}
-451760f417dec6df399195f8de469c74
-  uniqueSet :: Sudoku.Set -> GHC.Types.Bool
-  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
-     Unfolding: InlineRule (1, True, False)
-                (\ (s :: Sudoku.Set) ->
-                 Sudoku.uniqueSet_$sunique
-                   (GHC.Types.[] @ Sudoku.Entry)
-                   (GHC.Base.build
-                      @ Sudoku.Entry
-                      (\ @ b (c :: Sudoku.Entry -> b -> b)[OneShot] (n :: b)[OneShot] ->
-                       GHC.Base.foldr
-                         @ Sudoku.Entry
-                         @ b
-                         (GHC.List.filterFB @ Sudoku.Entry @ b c Sudoku.uniqueSet1)
-                         n
-                         s))) -}
-a514bb9e758d8d557ce0fc834f8db1b8
-  uniqueSet1 :: Sudoku.Entry -> GHC.Types.Bool
-  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
-     Unfolding: InlineRule (1, True, False)
-                (\ (ds :: Sudoku.Entry) ->
-                 case ds of wild {
-                   Sudoku.Full a1 -> GHC.Types.True
-                   Sudoku.Empty -> GHC.Types.False }) -}
-0b31f5020827eec51291232c5d5fc33d
-  uniqueSet_$sunique ::
-    [Sudoku.Entry] -> [Sudoku.Entry] -> GHC.Types.Bool
-  {- Arity: 2, HasNoCafRefs, Strictness: <L,U><S,1*U> -}
-96b2b94aff9530213d579843cfe0b6c9
+fa8b770665d42293f42c729f8c8a40eb
   update :: GHC.Types.Int -> a -> [a] -> [a]
   {- Arity: 3, HasNoCafRefs, Strictness: <S(S),1*U(U)><L,U><L,U>,
      Inline: INLINE[0],
@@ -1303,7 +1732,7 @@ a514bb9e758d8d557ce0fc834f8db1b8
                 (\ @ a (w :: GHC.Types.Int) (w1 :: a) (w2 :: [a]) ->
                  case w of ww { GHC.Types.I# ww1 ->
                  Sudoku.$wupdate @ a ww1 w1 w2 }) -}
-2cc45edfa5a8953c848741d518a7d440
+f4884904f05cdd7ca702b88980d71acf
   updateEntry ::
     Sudoku.Board
     -> GHC.Types.Int -> GHC.Types.Int -> Sudoku.Entry -> Sudoku.Board
@@ -1351,11 +1780,11 @@ a514bb9e758d8d557ce0fc834f8db1b8
                              GHC.Types.True -> Sudoku.Board ww1 ww2 ww3 }
                         GHC.Types.True -> Sudoku.Board ww1 ww2 ww3 } }
                    GHC.Types.True -> Sudoku.Board ww1 ww2 ww3 } } } }) -}
-83482474b833e92162d7928e30144bf6
+77808d374993719d0d8630a49b5961e2
   validEntries ::
     Sudoku.Board -> GHC.Types.Int -> GHC.Types.Int -> [Sudoku.Entry]
   {- Arity: 3,
-     Strictness: <S(LSL),1*U(U(U),U,A)><S(S),U(U)><S(S),1*U(U)>,
+     Strictness: <S(LSL),1*U(U(U),U,1*U)><S(S),1*U(U)><L,1*U(U)>,
      Inline: INLINE[0],
      Unfolding: InlineRule (3, True, False)
                 (\ (w :: Sudoku.Board)
@@ -1363,12 +1792,13 @@ a514bb9e758d8d557ce0fc834f8db1b8
                    (w2 :: GHC.Types.Int) ->
                  case w of ww { Sudoku.Board ww1 ww2 ww3 ->
                  case w1 of ww4 { GHC.Types.I# ww5 ->
-                 case w2 of ww6 { GHC.Types.I# ww7 ->
-                 Sudoku.$wvalidEntries ww1 ww2 ww5 ww7 } } }) -}
+                 Sudoku.$wvalidEntries ww1 ww2 ww3 ww5 w2 } }) -}
+instance [safe] GHC.Enum.Enum [Sudoku.Entry] = Sudoku.$fEnumEntry
 instance [safe] GHC.Classes.Eq [Sudoku.Board] = Sudoku.$fEqBoard
 instance [safe] GHC.Classes.Eq [Sudoku.Constraint]
   = Sudoku.$fEqConstraint
 instance [safe] GHC.Classes.Eq [Sudoku.Entry] = Sudoku.$fEqEntry
+instance [safe] GHC.Num.Num [Sudoku.Entry] = Sudoku.$fNumEntry
 instance [safe] GHC.Read.Read [Sudoku.Constraint]
   = Sudoku.$fReadConstraint
 instance [safe] GHC.Show.Show [Sudoku.Board] = Sudoku.$fShowBoard

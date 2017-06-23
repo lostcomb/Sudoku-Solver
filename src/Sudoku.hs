@@ -18,6 +18,36 @@ instance Show Entry where
   show (Full i) = show i
   show Empty    = "."
 
+-- Allow us to manipulate entries.
+instance Num Entry where
+  x        + Empty    = x
+  Empty    + x        = x
+  (Full i) + (Full j) = Full (i + j)
+
+  x        * Empty    = Empty
+  Empty    * x        = Empty
+  (Full i) * (Full j) = Full (i * j)
+
+  abs Empty    = Empty
+  abs (Full x) = Full (abs x)
+
+  signum Empty    = Empty
+  signum (Full x) = Full (signum x)
+
+  fromInteger 0 = Empty
+  fromInteger x = Full (fromIntegral x)
+
+  negate Empty    = Empty
+  negate (Full x) = Full (negate x)
+
+-- Allow us to generate entries using list comprehension.
+instance Enum Entry where
+  toEnum 0 = Empty
+  toEnum x = Full x
+
+  fromEnum Empty    = 0
+  fromEnum (Full x) = x
+
 -- This function returns True if the specified Entry is Full.
 isFull :: Entry -> Bool
 isFull (Full _) = True
@@ -74,6 +104,19 @@ instance Show Board where
           boxStr        = "+" ++ replicate (n * (p + 2) + (n - 1)) '-' ++ "+"
           pad n str     = replicate (n - length str) ' ' ++ str
 
+-- This function returns the entry at the specified index of the
+-- specified board.
+getEntry :: Board -> Int -> Int -> Entry
+getEntry (Board _ rows _) row_i col_i
+  | outOfBounds = Empty
+  | otherwise   = entry
+  where row         = rows !! row_i
+        entry       = row !! col_i
+        n2          = length rows
+        outOfBounds =  row_i >= n2 || col_i >= n2
+                    || row_i <  0  || col_i <  0
+
+
 -- This function returns the list of rows of the specified board.
 getRows :: Board -> [Set]
 getRows (Board _ rows _) = rows
@@ -94,37 +137,56 @@ getBoxes (Board n rows _) = boxes
           where box = concat . map head $ xs
                 xs' = map tail xs
 
--- This function returns True if the specified set does not contain any
--- duplicates.
-uniqueSet :: Set -> Bool -- MAY NOT NEED!
-uniqueSet s = unique [] s'
-  where s' = filter (/=Empty) s
-        unique :: (Eq a) => [a] -> [a] -> Bool
-        unique _       []   = True
-        unique working (x:xs)
-          | x `elem` working = False
-          | otherwise        = unique (x:working) xs
+-- This function returns the constraints of the specified board.
+getConstraints :: Board -> [Constraint]
+getConstraints (Board _ _ cs) = cs
 
 -- This function returns the possible values for the specified entry.
 -- If the specified entry already has a value, said value is the only
 -- value returned.
 validEntries :: Board -> Int -> Int -> [Entry]
 validEntries board row_i col_i
+  | outOfBounds  = []
   | isFull entry = [entry]
-  | otherwise    =           possibleValues size row
-                 `intersect` possibleValues size col
-                 `intersect` possibleValues size box
-  where size   = boardSize board
-        b_size = boxSize board
-        entry  = (getRows board !! row_i) !! col_i
-        row    = getRows    board !! row_i
-        col    = getColumns board !! col_i
-        box    = getBoxes   board !! box_i
-        box_i  = (row_i `div` b_size) * b_size + (col_i `div` b_size)
+  | otherwise    = intersectAll ([ possibleValuesUnique size row
+                                 , possibleValuesUnique size col
+                                 , possibleValuesUnique size box
+                                 ] ++ constraints)
+  where size        = boardSize board
+        b_size      = boxSize board
+        entry       = (getRows board !! row_i) !! col_i
+        row         = getRows    board !! row_i
+        col         = getColumns board !! col_i
+        box         = getBoxes   board !! box_i
+        box_i       = (row_i `div` b_size) * b_size + (col_i `div` b_size)
+        n2          = length (getRows board)
+        outOfBounds =  row_i >= n2 || col_i >= n2
+                    || row_i <  0  || col_i <  0
+        constraints = map (cToV board size) . filter (elemConstraint (row_i, col_i)) . getConstraints $ board
 
--- This function returns the possible entries for a given set.
-possibleValues :: Int -> Set -> [Entry]
-possibleValues n set = filter ((flip notElem) set) (map Full [1,2..n])
+cToV :: Board -> Int -> Constraint -> [Entry]
+cToV board n (Unique cs) = possibleValuesUnique n (map (uncurry $ getEntry board) cs)
+cToV board _ (Sum  s cs) = possibleValuesSum    s (map (uncurry $ getEntry board) cs)
+
+elemConstraint :: (Int, Int) -> Constraint -> Bool
+elemConstraint x (Unique cs) = elem x cs
+elemConstraint x (Sum  _ cs) = elem x cs
+
+-- This function returns the possible entries for a given set
+-- constrained by the uniqueness property.
+possibleValuesUnique :: Int -> Set -> [Entry]
+possibleValuesUnique n set = filter ((flip notElem) set) [Full 1..Full n]
+
+-- This function returns the possible entries for a given set
+-- constrained by the summation property (i.e. all entries must
+-- add up to the specified value).
+possibleValuesSum :: Int -> Set -> [Entry]
+possibleValuesSum target set
+  | empties == 1 = [tar_val]
+  | otherwise    = [Full 1..tar_val]
+  where empties  = length . filter (==Empty) $ set
+        curr_sum = sum set
+        tar_val  = fromInteger (fromIntegral target) - curr_sum
 
 -- This function returns the coordinates of all empty entries in the Sudoku
 -- board.
@@ -189,4 +251,4 @@ chunk n xs
 
 -- This function returns the intersection of a list of sets.
 intersectAll :: (Eq a) => [[a]] -> [a]
-intersectAll = foldr intersect []
+intersectAll = foldr1 intersect

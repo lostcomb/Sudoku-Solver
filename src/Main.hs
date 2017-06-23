@@ -41,6 +41,7 @@ displaySolutions boards = case solve boards of
     c <- getChar'
     case c of
       ';'       -> do putStrLn " ;"
+                      putStrLn ""
                       displaySolutions boards'
       otherwise -> do putStrLn ""
   Nothing                  -> do

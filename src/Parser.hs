@@ -152,7 +152,7 @@ emptyParser = Sudoku.Empty <$ dot lexer
 
 -- Parse a constraint.
 constraintParser :: Parser Constraint
-constraintParser =   sumConstraintParser
+constraintParser =   try sumConstraintParser
                  <|> uniqueConstraintParser
                  <?> invalidConstraintFormat
 

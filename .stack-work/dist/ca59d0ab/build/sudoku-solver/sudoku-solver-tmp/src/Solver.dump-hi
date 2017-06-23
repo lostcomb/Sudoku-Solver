@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-23 15:22:29.0803222 UTC
+2017-06-23 16:50:42.8802569 UTC
 
 interface main@main:Solver 8002
-  interface hash: 31e226eeb18fc81d367c69a2f02eec8a
-  ABI hash: 4e74f1f628ccd0f9dc63c25f85d43e1f
+  interface hash: b7f36d698830416221f36fa6c6a98333
+  ABI hash: 0640728bacba85336dec9748d497e800
   export-list hash: e00029da8439596fa29a3c8250e4570c
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 9d5d0e5951e43ac5c54d51d3e1285ccf
@@ -33,13 +33,13 @@ import  -/  base-4.9.1.0:Data.OldList c9282ee91951bdcbd918d2960562c007
 import  -/  base-4.9.1.0:GHC.Base 4caea1123ecf4b46e27cbccd6d279377
 import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
 import  -/  ghc-prim-0.5.0.0:GHC.Classes 16d48e012d23eaef9bca91ccdd572c02
-import  -/  Sudoku cbdeed1130064e2ee058cf35e212c94d
-  exports: bc4f6f0102caebd68ec88d40af7b5792
-  Board 0c55e2eef340310bbd77e171b8476532
-  complete 4da58fc5682b39af876c4cffcfc8d094
-  emptyEntries 2ec0a305da793968682fc0ad78a405a2
-  updateEntry 2cc45edfa5a8953c848741d518a7d440
-  validEntries 83482474b833e92162d7928e30144bf6
+import  -/  Sudoku 3d78cb2e645a63c7a5e7b77025517271
+  exports: 810e2a39f259a133cdbcba4a6f2ace99
+  Board d66cc08bc62b834f8dc0cbb9b152d89a
+  complete b2a8b8753d0329ee032db9d15f6c7d5b
+  emptyEntries 928f54122e1b3538b946058ce39972c3
+  updateEntry f4884904f05cdd7ca702b88980d71acf
+  validEntries 77808d374993719d0d8630a49b5961e2
 fc34009f402ef05eda146bbf36a21bc2
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
@@ -54,7 +54,7 @@ fc34009f402ef05eda146bbf36a21bc2
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
-e17171b5070e3b38a60cd69f29803ec8
+5f8922d32fb85a0ddb7c0e91b3295662
   $wnextLevel ::
     GHC.Types.Int
     -> [Sudoku.Row] -> [Sudoku.Constraint] -> [[Sudoku.Board]]
@@ -71,50 +71,48 @@ e17171b5070e3b38a60cd69f29803ec8
                    (\ (ds :: (GHC.Types.Int, GHC.Types.Int)) ->
                     case ds of wild { (,) row col ->
                     case row of ww4 { GHC.Types.I# ww5 ->
-                    case col of ww6 { GHC.Types.I# ww7 ->
                     let {
                       lvl4 :: GHC.Types.Bool
-                      = GHC.Prim.tagToEnum# @ GHC.Types.Bool (GHC.Prim.<# ww7 0#)
-                    } in
-                    let {
-                      lvl5 :: GHC.Types.Bool
                       = GHC.Prim.tagToEnum# @ GHC.Types.Bool (GHC.Prim.<# ww5 0#)
                     } in
                     let {
-                      lvl6 :: Sudoku.Row = GHC.List.$w!! @ Sudoku.Row ww1 ww5
+                      lvl5 :: Sudoku.Row = GHC.List.$w!! @ Sudoku.Row ww1 ww5
                     } in
                     GHC.Base.map
                       @ Sudoku.Entry
                       @ Sudoku.Board
                       (\ (w3 :: Sudoku.Entry) ->
-                       case GHC.List.$wlenAcc @ [Sudoku.Entry] ww1 0# of ww3 { DEFAULT ->
+                       case GHC.List.$wlenAcc @ [Sudoku.Entry] ww1 0# of ww6 { DEFAULT ->
                        case GHC.Prim.tagToEnum#
                               @ GHC.Types.Bool
-                              (GHC.Prim.>=# ww5 ww3) of wild1 {
+                              (GHC.Prim.>=# ww5 ww6) of wild1 {
                          GHC.Types.False
-                         -> case GHC.Prim.tagToEnum#
+                         -> case col of wild2 { GHC.Types.I# x ->
+                            case GHC.Prim.tagToEnum#
                                    @ GHC.Types.Bool
-                                   (GHC.Prim.>=# ww7 ww3) of wild2 {
+                                   (GHC.Prim.>=# x ww6) of wild3 {
                               GHC.Types.False
-                              -> case lvl5 of wild3 {
+                              -> case lvl4 of wild4 {
                                    GHC.Types.False
-                                   -> case lvl4 of wild4 {
+                                   -> case GHC.Prim.tagToEnum#
+                                             @ GHC.Types.Bool
+                                             (GHC.Prim.<# x 0#) of wild5 {
                                         GHC.Types.False
                                         -> Sudoku.Board
                                              ww
                                              (Sudoku.$wupdate
                                                 @ [Sudoku.Entry]
                                                 ww5
-                                                (Sudoku.$wupdate @ Sudoku.Entry ww7 w3 lvl6)
+                                                (Sudoku.$wupdate @ Sudoku.Entry x w3 lvl5)
                                                 ww1)
                                              ww2
                                         GHC.Types.True -> lvl3 }
                                    GHC.Types.True -> lvl3 }
-                              GHC.Types.True -> lvl3 }
+                              GHC.Types.True -> lvl3 } }
                          GHC.Types.True -> lvl3 } })
-                      (Sudoku.$wvalidEntries ww ww1 ww5 ww7) } } })
+                      (Sudoku.$wvalidEntries ww ww1 ww2 ww5 col) } })
                    (Sudoku.emptyEntries_coordinates
-                      Sudoku.emptyEntries3
+                      Sudoku.$fEnumEntry2
                       (GHC.Base.map
                          @ [Sudoku.Entry]
                          @ [GHC.Types.Int]
@@ -164,14 +162,14 @@ afb3f7eec37a392dc139f74acc597def
 9b8f2c4bbf90416050f055f0e699a349
   minimumLength2 :: t a
   {- Strictness: x -}
-4e182a832f78fb963acfc1679ffd3119
+834ecc1a54e52ff19c64990ffc44c39d
   nextLevel :: Sudoku.Board -> [[Sudoku.Board]]
   {- Arity: 1, Strictness: <S(LSL),1*U(U(U),U,U)>, Inline: INLINE[0],
      Unfolding: InlineRule (1, True, False)
                 (\ (w :: Sudoku.Board) ->
                  case w of ww { Sudoku.Board ww1 ww2 ww3 ->
                  Solver.$wnextLevel ww1 ww2 ww3 }) -}
-d55f7bd1acc437c2b6983957882ba99f
+a9a0bdc76c5a2bba3a9d3c9bf88c796d
   nextStepBF :: [Sudoku.Board] -> [Sudoku.Board]
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: (\ (ds :: [Sudoku.Board]) ->
@@ -183,13 +181,13 @@ d55f7bd1acc437c2b6983957882ba99f
                         xs
                         (case x of ww { Sudoku.Board ww1 ww2 ww3 ->
                          Solver.nextStepBF_go (Solver.$wnextLevel ww1 ww2 ww3) }) }) -}
-a45516dda6fd492feb9dc0bab5b05cb6
+06926720697fdeece4d0d34d45bbed59
   nextStepBF1 :: [Sudoku.Board]
   {- Strictness: x -}
-4efbd17570088d0b347424ce7585ee31
+f84d48c496ae65f5c8ea5001eed060f9
   nextStepBF_go :: [[Sudoku.Board]] -> [Sudoku.Board]
   {- Arity: 1, Strictness: <S,1*U> -}
-394d749d5cce4a23524034fcbcc2ee2d
+0f247e17674ab5c29ea6d790a248eb4b
   nextStepDF :: [Sudoku.Board] -> [Sudoku.Board]
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: (\ (ds :: [Sudoku.Board]) ->
@@ -201,13 +199,13 @@ a45516dda6fd492feb9dc0bab5b05cb6
                         @ Sudoku.Board
                         (Solver.nextStepDF_go (Solver.$wnextLevel ww1 ww2 ww3))
                         xs } }) -}
-bf7b3e74488b04e4cc72ce7a8d092241
+c63b11f3f9cc4080a436f5210df30c62
   nextStepDF1 :: [Sudoku.Board]
   {- Strictness: x -}
-30d92a059d2f54f527399d7e2e51637e
+edebc6b0fedc7f0731f09cc68707f9a6
   nextStepDF_go :: [[Sudoku.Board]] -> [Sudoku.Board]
   {- Arity: 1, Strictness: <S,1*U> -}
-45106777718da7869fcc0b031caa290b
+c68a570883a0e56830eb2349c7c87487
   solution ::
     [Sudoku.Board] -> GHC.Base.Maybe (Sudoku.Board, [Sudoku.Board])
   {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
@@ -225,7 +223,7 @@ bf7b3e74488b04e4cc72ce7a8d092241
                         -> GHC.Base.Just
                              @ (Sudoku.Board, [Sudoku.Board])
                              (ww, xs) } } }) -}
-73f852d91f4db7e433086881d81ca9df
+ae6bcddc365609215529b0efc521c004
   solve ::
     [Sudoku.Board] -> GHC.Base.Maybe (Sudoku.Board, [Sudoku.Board])
   {- Arity: 1, Strictness: <S,1*U> -}
