@@ -1,6 +1,7 @@
 module Parser where
 
-import Sudoku
+import Sudoku.Entry
+import Sudoku.Board
 
 import Text.Parsec
 import Text.Parsec.Pos
@@ -72,9 +73,11 @@ boardParser' :: Parser (Maybe Board)
 boardParser' = do
   b <- boardParser
   case b of
-    Just (Board n rows _) ->  (Just . Board n rows)
-                          <$> many constraintParser
-    Nothing               ->  return Nothing
+    Just board -> do
+      cs <- many constraintParser
+      return . Just . addConstraints cs $ board
+    Nothing    -> do
+      return Nothing
 
 -- Parse a description of a Sudoku board and perform some validation
 -- to check that the board is square, it's size has an integer square root
@@ -98,7 +101,7 @@ partial_boardParser
          then fail invalidSqrtError
          else return $ foldr (\(row, col, entry) acc
                                -> updateEntry acc row col entry)
-                             (uniformBoard box_s Sudoku.Empty)
+                             (emptyBoard box_s)
                              entries
 
 -- Parse a tuple containing the row and column indices and the entry.
@@ -123,13 +126,12 @@ full_boardParser
            rowLen  = and . map ((==n) . length) $ board
            bounded = and . map (and . map (lte n)) $ board
            lte :: Int -> Entry -> Bool
-           lte n Sudoku.Empty = True
+           lte n Sudoku.Entry.Empty = True
            lte n (Full i)     = i <= n && i > 0
-
 
        if sqrt_n * sqrt_n /= n             then fail invalidSqrtError
        else if not bounded                 then fail invalidEntryError
-       else if rowLen && length board == n then return $ Board sqrt_n board []
+       else if rowLen && length board == n then return $ fromList board
        else                                     fail invalidSizeError
 
 -- Parse a row of the Sudoku board.
@@ -148,7 +150,7 @@ fullParser = Full . fromIntegral <$> integer lexer
 
 -- Parse an entry that is empty.
 emptyParser :: Parser Entry
-emptyParser = Sudoku.Empty <$ dot lexer
+emptyParser = Sudoku.Entry.Empty <$ dot lexer
 
 -- Parse a constraint.
 constraintParser :: Parser Constraint

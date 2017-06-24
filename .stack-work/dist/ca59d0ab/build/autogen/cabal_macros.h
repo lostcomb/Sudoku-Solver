@@ -21,6 +21,13 @@
   (major1) == 4 && (major2) <  9 || \
   (major1) == 4 && (major2) == 9 && (minor) <= 1)
 
+/* package matrix-0.3.5.0 */
+#define VERSION_matrix "0.3.5.0"
+#define MIN_VERSION_matrix(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  3 || \
+  (major1) == 0 && (major2) == 3 && (minor) <= 5)
+
 /* package parsec-3.1.11 */
 #define VERSION_parsec "3.1.11"
 #define MIN_VERSION_parsec(major1,major2,minor) (\

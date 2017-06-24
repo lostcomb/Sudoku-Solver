@@ -29,12 +29,12 @@ version :: Version
 version = Version [0,1,0,0] []
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 
-bindir     = "C:\\Users\\Julian\\Dropbox\\Projects\\sudoku-solver\\.stack-work\\install\\5264c238\\bin"
-libdir     = "C:\\Users\\Julian\\Dropbox\\Projects\\sudoku-solver\\.stack-work\\install\\5264c238\\lib\\x86_64-windows-ghc-8.0.2\\sudoku-solver-0.1.0.0"
-dynlibdir  = "C:\\Users\\Julian\\Dropbox\\Projects\\sudoku-solver\\.stack-work\\install\\5264c238\\lib\\x86_64-windows-ghc-8.0.2"
-datadir    = "C:\\Users\\Julian\\Dropbox\\Projects\\sudoku-solver\\.stack-work\\install\\5264c238\\share\\x86_64-windows-ghc-8.0.2\\sudoku-solver-0.1.0.0"
-libexecdir = "C:\\Users\\Julian\\Dropbox\\Projects\\sudoku-solver\\.stack-work\\install\\5264c238\\libexec"
-sysconfdir = "C:\\Users\\Julian\\Dropbox\\Projects\\sudoku-solver\\.stack-work\\install\\5264c238\\etc"
+bindir     = "C:\\Users\\Julian\\Dropbox\\Projects\\Sudoku Solver\\.stack-work\\install\\5264c238\\bin"
+libdir     = "C:\\Users\\Julian\\Dropbox\\Projects\\Sudoku Solver\\.stack-work\\install\\5264c238\\lib\\x86_64-windows-ghc-8.0.2\\sudoku-solver-0.1.0.0"
+dynlibdir  = "C:\\Users\\Julian\\Dropbox\\Projects\\Sudoku Solver\\.stack-work\\install\\5264c238\\lib\\x86_64-windows-ghc-8.0.2"
+datadir    = "C:\\Users\\Julian\\Dropbox\\Projects\\Sudoku Solver\\.stack-work\\install\\5264c238\\share\\x86_64-windows-ghc-8.0.2\\sudoku-solver-0.1.0.0"
+libexecdir = "C:\\Users\\Julian\\Dropbox\\Projects\\Sudoku Solver\\.stack-work\\install\\5264c238\\libexec"
+sysconfdir = "C:\\Users\\Julian\\Dropbox\\Projects\\Sudoku Solver\\.stack-work\\install\\5264c238\\etc"
 
 getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: IO FilePath
 getBinDir = catchIO (getEnv "sudoku_solver_bindir") (\_ -> return bindir)

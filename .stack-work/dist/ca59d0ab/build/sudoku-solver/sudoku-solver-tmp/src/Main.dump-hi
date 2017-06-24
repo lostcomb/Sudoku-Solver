@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-23 16:57:19.9756105 UTC
+2017-06-24 23:39:49.4615047 UTC
 
 interface main@main:Main 8002
-  interface hash: 6e733e514b079b3a511f16f867d69ba6
-  ABI hash: 3fcd191fd03d4418a3cddfdc303ca0f6
-  export-list hash: 3f2f169d92065124ad5362e28b0dc14c
+  interface hash: a1af9ffef29897ca42a7786143ff11c2
+  ABI hash: cfeb6671f397c25a249aefa18f37e482
+  export-list hash: dcfb2955456709298ef985ee0d79f6b2
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: dfb50c2b24fb21f661fd3989a6dc602c
   sig of: Nothing
@@ -17,7 +17,7 @@ exports:
   Main.getChar'
   Main.main
   Main.prompt
-module dependencies: Parser Solver Sudoku
+module dependencies: Parser Solver Sudoku Sudoku.Board Sudoku.Entry
 package dependencies: Win32-2.3.1.1@Win32-2.3.1.1
                       ansi-terminal-0.6.3.1@ansi-terminal-0.6.3.1-CdiTOvx5ZEQ2RerUYIP05k
                       array-0.5.1.1@array-0.5.1.1 base-4.9.1.0
@@ -26,10 +26,14 @@ package dependencies: Win32-2.3.1.1@Win32-2.3.1.1
                       bytestring-0.10.8.1@bytestring-0.10.8.1
                       containers-0.5.7.1@containers-0.5.7.1
                       deepseq-1.4.2.0@deepseq-1.4.2.0 ghc-prim-0.5.0.0
-                      integer-gmp-1.0.0.1 mtl-2.2.1@mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6
+                      integer-gmp-1.0.0.1 loop-0.3.0@loop-0.3.0-4tGn4RSY02pFTwJ5L4CYRr
+                      matrix-0.3.5.0@matrix-0.3.5.0-eFZR6K8Lax4OrNeuTQF4y
+                      mtl-2.2.1@mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6
                       parsec-3.1.11@parsec-3.1.11-113irVHGgd88sRnywByDNw
+                      primitive-0.6.1.0@primitive-0.6.1.0-6AbSTw9JXz141LE5p6LGH
                       text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR
                       transformers-0.5.2.0@transformers-0.5.2.0
+                      vector-0.11.0.0@vector-0.11.0.0-LMwQhhnXj8U3T5Bm1JFxG
 orphans: base-4.9.1.0:GHC.Base base-4.9.1.0:GHC.Float
          binary-0.8.3.0@binary-0.8.3.0:Data.Binary.Generic
          bytestring-0.10.8.1@bytestring-0.10.8.1:Data.ByteString.Builder
@@ -37,6 +41,7 @@ orphans: base-4.9.1.0:GHC.Base base-4.9.1.0:GHC.Float
          text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text.Lazy
          text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text.Show
          transformers-0.5.2.0@transformers-0.5.2.0:Control.Monad.Trans.Error
+         vector-0.11.0.0@vector-0.11.0.0-LMwQhhnXj8U3T5Bm1JFxG:Data.Vector.Fusion.Bundle
 family instance modules: base-4.9.1.0:Control.Applicative
                          base-4.9.1.0:Data.Complex base-4.9.1.0:Data.Either
                          base-4.9.1.0:Data.Functor.Const base-4.9.1.0:Data.Functor.Identity
@@ -50,8 +55,10 @@ family instance modules: base-4.9.1.0:Control.Applicative
                          containers-0.5.7.1@containers-0.5.7.1:Data.Map.Base
                          containers-0.5.7.1@containers-0.5.7.1:Data.Sequence
                          containers-0.5.7.1@containers-0.5.7.1:Data.Set.Base
+                         primitive-0.6.1.0@primitive-0.6.1.0-6AbSTw9JXz141LE5p6LGH:Control.Monad.Primitive
                          text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text
                          text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text.Lazy
+                         vector-0.11.0.0@vector-0.11.0.0-LMwQhhnXj8U3T5Bm1JFxG:Data.Vector
 import  -/  ansi-terminal-0.6.3.1@ansi-terminal-0.6.3.1-CdiTOvx5ZEQ2RerUYIP05k:System.Console.ANSI b786a4109b9fb8de05c5adb5035fae20
 import  -/  ansi-terminal-0.6.3.1@ansi-terminal-0.6.3.1-CdiTOvx5ZEQ2RerUYIP05k:System.Console.ANSI.Types 91eb16a9fa2802ce904da36fcb7fc448
 import  -/  ansi-terminal-0.6.3.1@ansi-terminal-0.6.3.1-CdiTOvx5ZEQ2RerUYIP05k:System.Console.ANSI.Windows a0db5b8fe09afb96e0926a48376a40b7
@@ -71,15 +78,16 @@ import  -/  base-4.9.1.0:System.Environment 438c0b0bc0f94461b9c946d062a7eab9
 import  -/  base-4.9.1.0:System.Exit c7285b50307ae5b742cc92ebeb7b2666
 import  -/  base-4.9.1.0:System.IO 5daf3f384209c11d9566e3409af8ec5d
 import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
-import  -/  Parser 7bf9faff85ed357836718916e943a908
-  exports: 9d0412e26f7b0e734668ebe1b69bff2d
-  parseBoard 36f3bebbc08a29ce416973017d9eb433
-import  -/  Solver 0640728bacba85336dec9748d497e800
-  exports: e00029da8439596fa29a3c8250e4570c
-  solve ae6bcddc365609215529b0efc521c004
-import  -/  Sudoku 3d78cb2e645a63c7a5e7b77025517271
-  exports: 810e2a39f259a133cdbcba4a6f2ace99
-  Board d66cc08bc62b834f8dc0cbb9b152d89a
+import  -/  Parser 1ab51553105a7467dfa640fe31582bab
+  exports: a21e3fd876db98bb3224588700835f6c
+  parseBoard 0f1a4703b84ae41427a72a5343f6a322
+import  -/  Solver 720e2f87b3e31f2d441595869977c447
+  exports: b9d5f2e927f48875b033dabeace49a79
+  solve 810f45a24836898dc6a848218dc5fdec
+import  -/  Sudoku 72d20ccc67d28a0846d2e137bec617ad
+  exports: cadf130518dc07acda288b3e48d0c14b
+import  -/  Sudoku.Board b994a6c9cd3b200b6cfc83651e0a821e
+  Board 43bd58eab58ea2c9a991cc5975f42ee2
 addDependentFile "C:\Users\Julian\AppData\Local\Programs\stack\x86_64-windows\ghc-8.0.2\lib\include\ghcversion.h"
 addDependentFile ".stack-work\dist\ca59d0ab\build\autogen\cabal_macros.h"
 d6831ef04cb9301b090dfae6f7bb7ec7
@@ -107,16 +115,16 @@ d6831ef04cb9301b090dfae6f7bb7ec7
                  (# ds1, GHC.Int.I32# (GHC.Prim.narrow32Int# ds2) #) })
                   `cast`
                 (Sym (GHC.Types.N:IO[0] (Foreign.C.Types.N:CInt[0]))) -}
-beba83df961d86e13696d5d94404755f
-  displaySolutions :: [Sudoku.Board] -> GHC.Types.IO ()
+dac780ca81e0de538a96352d8b5f827f
+  displaySolutions :: [Sudoku.Board.Board] -> GHC.Types.IO ()
   {- Arity: 2, Strictness: <S,1*U><S,U>,
      Unfolding: InlineRule (0, True, True)
                 Main.displaySolutions1
                   `cast`
-                (<[Sudoku.Board]>_R ->_R Sym (GHC.Types.N:IO[0] <()>_R)) -}
-5b4851000104928cc46c1000a77c9e12
+                (<[Sudoku.Board.Board]>_R ->_R Sym (GHC.Types.N:IO[0] <()>_R)) -}
+8be29d51bde37492f67dc31187c9da0e
   displaySolutions1 ::
-    [Sudoku.Board]
+    [Sudoku.Board.Board]
     -> GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
   {- Arity: 2, Strictness: <S,1*U><S,U> -}

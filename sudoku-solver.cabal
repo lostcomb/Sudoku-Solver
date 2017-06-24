@@ -19,7 +19,10 @@ executable sudoku-solver
   default-language:    Haskell2010
   build-depends:       base >= 4.7 && < 5,
                        parsec,
-                       ansi-terminal
+                       ansi-terminal,
+                       matrix
   other-modules:       Parser,
                        Solver,
-                       Sudoku
+                       Sudoku,
+                       Sudoku.Entry,
+                       Sudoku.Board
