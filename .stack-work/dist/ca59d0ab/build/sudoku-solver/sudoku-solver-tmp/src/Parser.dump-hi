@@ -1,9 +1,9 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-25 17:13:00.5700094 UTC
+2017-06-25 19:38:50.5067818 UTC
 
 interface main@main:Parser 8002
-  interface hash: b1c8eb65c58a341e18c8666d1d673e7e
+  interface hash: 85d20eba6565045626d2bb8cd9cdc070
   ABI hash: 1ab51553105a7467dfa640fe31582bab
   export-list hash: a21e3fd876db98bb3224588700835f6c
   orphan hash: 667c739a8929f4877419676bfd240c3d
@@ -105,8 +105,8 @@ import  -/  Sudoku.Board 4ebd9ce72fba7d1200cd249e35d9a5c5
   emptyBoard a912ee1b6acd185d5d839edab970ecd0
   fromList 748f22cfb9ade23e595a0bbf6fdd27c7
   updateEntry 70d94e065a513fb0002bcab816a8fe01
-import  -/  Sudoku.Entry 11cbc9d65f681efba5157b72ef244a0f
-  exports: fb6ea1eab072e0d4518f55a8e342bb23
+import  -/  Sudoku.Entry ec1e60a87e57bdbd5ee6b21899a0d7e0
+  exports: c42f3cadca3a7d225534ecc812f6988c
   Empty f5614a831015ca0b87e351a0c52f11e3
   Entry 6089eb51599d3a84243e1c09c3c0188b
   Full 0f7826996cab01aa97e15dcc6295260c

@@ -1,9 +1,9 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-25 16:49:44.0614437 UTC
+2017-06-25 19:36:43.7070522 UTC
 
 interface main@main:Sudoku.Board 8002
-  interface hash: 9d08be72e6209863ce9edbc204bf9e9c
+  interface hash: e3592eb869fff382a36820dce5b6fdaa
   ABI hash: 4ebd9ce72fba7d1200cd249e35d9a5c5
   export-list hash: 0af7e44c421fb125ffc82345651781f6
   orphan hash: 5ddd8a19e2c56283d52cadf895746c56
@@ -55,8 +55,8 @@ import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
 import  -/  base-4.9.1.0:Text.ParserCombinators.ReadPrec 5cc8ec62ab8aeda628247695b64f5e42
 import  -/  base-4.9.1.0:Text.Read.Lex a861691fe58d2d0a125f55a5ebadf631
 import  -/  ghc-prim-0.5.0.0:GHC.Classes 16d48e012d23eaef9bca91ccdd572c02
-import  -/  Sudoku.Entry 11cbc9d65f681efba5157b72ef244a0f
-  exports: fb6ea1eab072e0d4518f55a8e342bb23
+import  -/  Sudoku.Entry ec1e60a87e57bdbd5ee6b21899a0d7e0
+  exports: c42f3cadca3a7d225534ecc812f6988c
   Empty f5614a831015ca0b87e351a0c52f11e3
   Entry 6089eb51599d3a84243e1c09c3c0188b
   isFull 5734b1901f5c3a0fa4c29853eaba7d35

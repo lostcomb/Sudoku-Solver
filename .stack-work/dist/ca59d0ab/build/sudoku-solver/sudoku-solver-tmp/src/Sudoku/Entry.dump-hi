@@ -1,17 +1,18 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-24 23:02:39.8460939 UTC
+2017-06-25 19:36:42.9367718 UTC
 
 interface main@main:Sudoku.Entry 8002
-  interface hash: ea6ceb38df2f7ac2adf7c9b828c1c5be
-  ABI hash: 11cbc9d65f681efba5157b72ef244a0f
-  export-list hash: fb6ea1eab072e0d4518f55a8e342bb23
+  interface hash: 6d96bd93ffafcd9947167fe495e2bf2e
+  ABI hash: ec1e60a87e57bdbd5ee6b21899a0d7e0
+  export-list hash: c42f3cadca3a7d225534ecc812f6988c
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: f9aeb0478de38b613a0029d5902709c6
   sig of: Nothing
   used TH splices: False
   where
 exports:
+  Sudoku.Entry.extractValue
   Sudoku.Entry.isEmpty
   Sudoku.Entry.isFull
   Sudoku.Entry.Entry{Sudoku.Entry.Empty Sudoku.Entry.Full}
@@ -516,6 +517,14 @@ bd75bf90bbb51dd0306ff0f7f27494c2
                    -> GHC.Base.++ @ GHC.Types.Char Sudoku.Entry.$fShowEntry1 w1 }) -}
 6089eb51599d3a84243e1c09c3c0188b
   data Entry = Full GHC.Types.Int | Empty
+9ec6ef533194a6fa30ee1ddaed905e79
+  extractValue :: Sudoku.Entry.Entry -> GHC.Types.Int
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: Sudoku.Entry.Entry) ->
+                 case ds of wild {
+                   Sudoku.Entry.Full x -> x
+                   Sudoku.Entry.Empty -> Sudoku.Entry.$fEnumEntry2 }) -}
 e300e17572d4ee24d3d481fa66a3abcf
   isEmpty :: Sudoku.Entry.Entry -> GHC.Types.Bool
   {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,

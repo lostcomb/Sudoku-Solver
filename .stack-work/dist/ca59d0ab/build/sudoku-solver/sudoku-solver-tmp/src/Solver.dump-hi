@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-25 16:51:22.97239 UTC
+2017-06-25 19:38:51.5011887 UTC
 
 interface main@main:Solver 8002
-  interface hash: 2d63e8d64407a068e01324a0af87d83d
-  ABI hash: 720e2f87b3e31f2d441595869977c447
+  interface hash: cd333d2c2cf117c64687461ae773167e
+  ABI hash: 25d94f967533b6c4a2666d0f63fbb688
   export-list hash: b9d5f2e927f48875b033dabeace49a79
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 9d5d0e5951e43ac5c54d51d3e1285ccf
@@ -45,11 +45,11 @@ import  -/  base-4.9.1.0:Data.OldList c9282ee91951bdcbd918d2960562c007
 import  -/  base-4.9.1.0:GHC.Base 4caea1123ecf4b46e27cbccd6d279377
 import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
 import  -/  ghc-prim-0.5.0.0:GHC.Classes 16d48e012d23eaef9bca91ccdd572c02
-import  -/  Sudoku 72d20ccc67d28a0846d2e137bec617ad
-  exports: cadf130518dc07acda288b3e48d0c14b
+import  -/  Sudoku 0a9c68946acf0b864abcd719c991e866
+  exports: 6e9a59b38364cbc79ae4d983ad91f06e
   complete 0e790962fa4ee71ed8bc5384198d4f6f
-  emptyEntries 1c5e42f05efeb2270adc22c39f8cada8
-  validEntries ae6a0168d01d2de177f845f62750adc1
+  emptyEntries 37d57844eb0978150569dc8aec303dec
+  validEntries b0423c00d8dd6a1bf3e046ba33b7eb8f
 import  -/  Sudoku.Board 4ebd9ce72fba7d1200cd249e35d9a5c5
   Board 43bd58eab58ea2c9a991cc5975f42ee2
   updateEntry 70d94e065a513fb0002bcab816a8fe01
@@ -67,7 +67,7 @@ fc34009f402ef05eda146bbf36a21bc2
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
-17a7647b0e8c3e89e9b07ca2b8ceccc5
+f2c94ac7a856b2e8525218453f3c301c
   $wnextLevel ::
     GHC.Types.Int
     -> GHC.Prim.Int#
@@ -152,7 +152,7 @@ afb3f7eec37a392dc139f74acc597def
 9b8f2c4bbf90416050f055f0e699a349
   minimumLength2 :: t a
   {- Strictness: x -}
-412ef8f85b00643bae5a3182bb3a5f12
+2703ce8362d0a3e0b9e90b005c8d920b
   nextLevel :: Sudoku.Board.Board -> [[Sudoku.Board.Board]]
   {- Arity: 1,
      Strictness: <S(LS(S)LL),1*U(U(U),U(U),U(U,U,U,U,U,U(U,U,U)),U)>,
@@ -162,7 +162,7 @@ afb3f7eec37a392dc139f74acc597def
                  case w of ww { Sudoku.Board.Board ww1 ww2 ww3 ww4 ->
                  case ww2 of ww5 { GHC.Types.I# ww6 ->
                  Solver.$wnextLevel ww1 ww6 ww3 ww4 } }) -}
-a67c714919bc0538e2f295da3ca0177d
+a7309027a27dd6432e21bf28a1083b92
   nextStepBF :: [Sudoku.Board.Board] -> [Sudoku.Board.Board]
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: (\ (ds :: [Sudoku.Board.Board]) ->
@@ -182,7 +182,7 @@ a67c714919bc0538e2f295da3ca0177d
 693ef40074566652fcd3b6d134002a9b
   nextStepBF_go :: [[Sudoku.Board.Board]] -> [Sudoku.Board.Board]
   {- Arity: 1, Strictness: <S,1*U> -}
-1c4ee192deeeedee8f1de37498fea963
+f4b445b1e4b4fd5980a11dca4b88bb0b
   nextStepDF :: [Sudoku.Board.Board] -> [Sudoku.Board.Board]
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: (\ (ds :: [Sudoku.Board.Board]) ->

@@ -51,8 +51,14 @@ possibleValues board c = case c of
   where n              = (boxSize board) ^ 2
         getElem' (i,j) = getElem i j (mat board)
         uniqueC set    = filter ((flip notElem) set) [Full 1..Full n]
-        sumC s  set    = undefined -- Solve using dynamic programming.
+        sumC s  set
+          | diff > noRemaining * n = []
+          | noRemaining == 1       = [Full diff]
+          | otherwise              = filter ((flip notElem) set)
+                                            [Full 1..Full diff]
           where noRemaining = length . filter (==Empty) $ set
+                setSum      = sum set
+                diff        = s - extractValue setSum
 
 -- This function returns the coordinates of all empty entries in the
 -- Sudoku board.

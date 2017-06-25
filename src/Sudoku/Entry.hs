@@ -16,6 +16,12 @@ isEmpty :: Entry -> Bool
 isEmpty Empty = True
 isEmpty _     = False
 
+-- This function returns the value the specified Entry
+-- represents.
+extractValue :: Entry -> Int
+extractValue Empty    = 0
+extractValue (Full x) = x
+
 -- Print the correct character for each constructor.
 instance Show Entry where
   show (Full i) = show i

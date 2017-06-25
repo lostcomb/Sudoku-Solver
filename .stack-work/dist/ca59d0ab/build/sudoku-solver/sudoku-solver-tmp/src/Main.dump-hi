@@ -1,9 +1,9 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-25 17:19:14.5275869 UTC
+2017-06-25 19:38:51.9250545 UTC
 
 interface main@main:Main 8002
-  interface hash: a49a64e6f2fe1b2774dc8c7ea81d9d52
+  interface hash: 201e670ee2e8af690f64ebaf6ae11357
   ABI hash: fd879681efc1087578cfe9a9f70d109e
   export-list hash: 8044b52ec0e04edbaae5a627b3bb40c9
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
@@ -91,11 +91,11 @@ import  -/  ghc-prim-0.5.0.0:GHC.Types 89f8de4f08018c9177c98d979eae0e45
 import  -/  Parser 1ab51553105a7467dfa640fe31582bab
   exports: a21e3fd876db98bb3224588700835f6c
   parseBoard 0f1a4703b84ae41427a72a5343f6a322
-import  -/  Solver 720e2f87b3e31f2d441595869977c447
+import  -/  Solver 25d94f967533b6c4a2666d0f63fbb688
   exports: b9d5f2e927f48875b033dabeace49a79
   solve 810f45a24836898dc6a848218dc5fdec
-import  -/  Sudoku 72d20ccc67d28a0846d2e137bec617ad
-  exports: cadf130518dc07acda288b3e48d0c14b
+import  -/  Sudoku 0a9c68946acf0b864abcd719c991e866
+  exports: 6e9a59b38364cbc79ae4d983ad91f06e
 import  -/  Sudoku.Board 4ebd9ce72fba7d1200cd249e35d9a5c5
   Board 43bd58eab58ea2c9a991cc5975f42ee2
 import  -/  terminal-size-0.3.2.1@terminal-size-0.3.2.1-AmA6iayNwsc9qq56OTrDue:System.Console.Terminal.Common b71f31b4e98a7d174cb121b616253991
