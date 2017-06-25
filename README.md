@@ -10,7 +10,7 @@ Extra constraints can also be given. These can be either:
 
 * regions that should have unique values (the same constraints as
 applied to the rows, columns and boxes).
-* regions whose sum should equal a specified value.
+* regions whose sum should equal a specified value (these regions must also contain unique values).
 
 ## Compilation
 

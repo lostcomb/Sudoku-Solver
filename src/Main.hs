@@ -14,10 +14,6 @@ import System.Environment
 import System.Console.ANSI
 import System.Console.Terminal.Size
 
-{-TODO:
-  * Implement sum constraint possible values.
--}
-
 -- Main loop; asks for new Sudoku boards to solve.
 main :: IO ()
 main = do
