@@ -35,14 +35,16 @@ instance Show Board where
     where n        = boxSize board
           maxESize = length (show (n^2 - 1))
           boxWidth = maxESize * n + n
+          middle   = replicate (boxWidth + 1) '-'
+          end      = replicate boxWidth '-'
           lineStr  = concat
                    . intersperse "+"
-                   . replicate n
-                   $ replicate boxWidth '-'
+                   $ end : replicate (n - 2) middle ++ [end]
           showRow :: [Entry] -> String
           showRow row = concat . intersperse " | " $ chunkStrs
             where chunks    = chunk n row
-                  chunkStrs = map (concat . intersperse " " . map show) chunks
+                  chunkStrs = map (concat . intersperse " " . map showEntry)
+                                  chunks
           showEntry :: Entry -> String
           showEntry entry = replicate padNo ' ' ++ entryStr
             where entryStr = show entry
@@ -97,10 +99,11 @@ emptyBoard n
           }
 
 -- This function returns the default constraints for a Sudoku board.
--- i.e. the Row, Column and Box constraints.
+-- i.e. the Row, Column and Box constraints. n is the size of the
+-- boxes.
 defaultConstraints :: Int -> [Constraint]
-defaultConstraints n =  map Row [1..n]
-                     ++ map Column [1..n]
+defaultConstraints n =  map Row [1..n^2]
+                     ++ map Column [1..n^2]
                      ++ boxes
   where boxes = [ Box (rowStart, rowEnd, colStart, colEnd)
                 | (rowStart, rowEnd) <- boxIndices

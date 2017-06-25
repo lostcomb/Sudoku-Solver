@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-24 23:39:47.6022803 UTC
+2017-06-25 16:49:44.0614437 UTC
 
 interface main@main:Sudoku.Board 8002
-  interface hash: fffae2babee461ee6370f3f9b924f05a
-  ABI hash: b994a6c9cd3b200b6cfc83651e0a821e
+  interface hash: 9d08be72e6209863ce9edbc204bf9e9c
+  ABI hash: 4ebd9ce72fba7d1200cd249e35d9a5c5
   export-list hash: 0af7e44c421fb125ffc82345651781f6
   orphan hash: 5ddd8a19e2c56283d52cadf895746c56
   flag hash: f9aeb0478de38b613a0029d5902709c6
@@ -614,10 +614,13 @@ df6f5b4e73f918fe69177fc29dc7b4ce
 8816f81812123051f0e6da1871ca6528
   $wchunk :: GHC.Prim.Int# -> [a] -> (# [a], [[a]] #)
   {- Arity: 2, HasNoCafRefs, Strictness: <S,U><S,U>, Inline: [0] -}
-e4808450bf724da674fa91823a605d54
+690017587caccc88f0bd10916f5be5e4
   $wdefaultConstraints :: GHC.Prim.Int# -> [Sudoku.Board.Constraint]
   {- Arity: 1, HasNoCafRefs, Strictness: <S,U>, Inline: [0],
      Unfolding: (\ (ww :: GHC.Prim.Int#) ->
+                 let {
+                   y :: GHC.Prim.Int# = GHC.Prim.*# ww ww
+                 } in
                  let {
                    n :: [Sudoku.Board.Constraint]
                    = let {
@@ -654,8 +657,8 @@ e4808450bf724da674fa91823a605d54
                            = \ (ds :: [(GHC.Types.Int, GHC.Types.Int)]) ->
                              case ds of wild {
                                [] -> GHC.Types.[] @ Sudoku.Board.Constraint
-                               : y ys
-                               -> case y of wild1 { (,) rowStart rowEnd ->
+                               : y1 ys
+                               -> case y1 of wild1 { (,) rowStart rowEnd ->
                                   let {
                                     z :: [Sudoku.Board.Constraint] = go5 ys
                                   } in
@@ -666,8 +669,8 @@ e4808450bf724da674fa91823a605d54
                                     = \ (ds1 :: [(GHC.Types.Int, GHC.Types.Int)]) ->
                                       case ds1 of wild2 {
                                         [] -> z
-                                        : y1 ys1
-                                        -> case y1 of wild3 { (,) colStart colEnd ->
+                                        : y2 ys1
+                                        -> case y2 of wild3 { (,) colStart colEnd ->
                                            GHC.Types.:
                                              @ Sudoku.Board.Constraint
                                              (Sudoku.Board.Box (rowStart, rowEnd, colStart, colEnd))
@@ -679,7 +682,7 @@ e4808450bf724da674fa91823a605d54
                      } in
                      case GHC.Prim.tagToEnum#
                             @ GHC.Types.Bool
-                            (GHC.Prim.># 1# ww) of wild {
+                            (GHC.Prim.># 1# y) of wild {
                        GHC.Types.False
                        -> letrec {
                             go5 :: GHC.Prim.Int# -> [Sudoku.Board.Constraint]
@@ -690,7 +693,7 @@ e4808450bf724da674fa91823a605d54
                                 (Sudoku.Board.Column (GHC.Types.I# x))
                                 (case GHC.Prim.tagToEnum#
                                         @ GHC.Types.Bool
-                                        (GHC.Prim.==# x ww) of wild1 {
+                                        (GHC.Prim.==# x y) of wild1 {
                                    GHC.Types.False -> go5 (GHC.Prim.+# x 1#) GHC.Types.True -> n1 })
                           } in
                           go5 1#
@@ -698,7 +701,7 @@ e4808450bf724da674fa91823a605d54
                  } in
                  case GHC.Prim.tagToEnum#
                         @ GHC.Types.Bool
-                        (GHC.Prim.># 1# ww) of wild {
+                        (GHC.Prim.># 1# y) of wild {
                    GHC.Types.False
                    -> letrec {
                         go5 :: GHC.Prim.Int# -> [Sudoku.Board.Constraint]
@@ -709,12 +712,12 @@ e4808450bf724da674fa91823a605d54
                             (Sudoku.Board.Row (GHC.Types.I# x))
                             (case GHC.Prim.tagToEnum#
                                     @ GHC.Types.Bool
-                                    (GHC.Prim.==# x ww) of wild1 {
+                                    (GHC.Prim.==# x y) of wild1 {
                                GHC.Types.False -> go5 (GHC.Prim.+# x 1#) GHC.Types.True -> n })
                       } in
                       go5 1#
                    GHC.Types.True -> n }) -}
-cb457f0403662d6ad5eb43feeb103fcf
+6c4fb41d709178fe592e8d28c8705c87
   $wemptyBoard ::
     GHC.Types.Int
     -> (# GHC.Types.Int, GHC.Types.Int,
@@ -965,7 +968,7 @@ cb457f0403662d6ad5eb43feeb103fcf
                                               ipv5 #) } } } } }) of ds1 { (#,#) ipv1 ipv2 ->
                        ipv2 }) },
                     Sudoku.Board.defaultConstraints w #)) -}
-f8a4e4acb5367b51f59adad1ffbd59c3
+b183abcd4bfc1e9f239a20d3d6f4c8aa
   $wfromList ::
     [[Sudoku.Entry.Entry]]
     -> (# GHC.Types.Int, GHC.Types.Int,
@@ -1207,7 +1210,7 @@ d6d1bfb0180c640d98d3f7cb5d6ef70f
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Sudoku.Board.Board) ->
                  case ds of wild { Sudoku.Board.Board ds1 ds2 ds3 ds4 -> ds4 }) -}
-44025079ff7df273f286bca4b9b8742c
+c685c34a6a8bd3923ddb10169be53067
   defaultConstraints :: GHC.Types.Int -> [Sudoku.Board.Constraint]
   {- Arity: 1, HasNoCafRefs, Strictness: <S(S),1*U(U)>,
      Inline: INLINE[0],
@@ -1215,7 +1218,7 @@ d6d1bfb0180c640d98d3f7cb5d6ef70f
                 (\ (w :: GHC.Types.Int) ->
                  case w of ww { GHC.Types.I# ww1 ->
                  Sudoku.Board.$wdefaultConstraints ww1 }) -}
-5afc24068a008ebc7a3588c82b82b719
+a912ee1b6acd185d5d839edab970ecd0
   emptyBoard :: GHC.Types.Int -> Sudoku.Board.Board
   {- Arity: 1, Strictness: <L,U(U)>m, Inline: INLINE[0],
      Unfolding: InlineRule (1, True, False)
@@ -1234,7 +1237,7 @@ d6d1bfb0180c640d98d3f7cb5d6ef70f
 bbe32f9d75fb63c7c6641b601b4618fc
   emptyBoard2 :: GHC.Types.Int
   {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.I# 0#) -}
-153f576a89b67be98ab5f5439b5bfe4a
+748f22cfb9ade23e595a0bbf6fdd27c7
   fromList :: [[Sudoku.Entry.Entry]] -> Sudoku.Board.Board
   {- Arity: 1, Strictness: <L,U>m, Inline: INLINE[0],
      Unfolding: InlineRule (1, True, False)

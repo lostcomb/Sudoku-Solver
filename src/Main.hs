@@ -13,6 +13,11 @@ import Foreign.C.Types
 import System.Environment
 import System.Console.ANSI
 
+{-TODO:
+  * Fix clear line issue with error reporting.
+  * Implement sum constraint possible values.
+-}
+
 -- Main loop; asks for new Sudoku boards to solve.
 main :: IO ()
 main = do

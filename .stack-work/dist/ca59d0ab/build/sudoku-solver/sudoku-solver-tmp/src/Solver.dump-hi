@@ -1,9 +1,9 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-24 23:39:48.3299619 UTC
+2017-06-25 16:51:22.97239 UTC
 
 interface main@main:Solver 8002
-  interface hash: 5be636cb22f93deb4f81934aeb915a76
+  interface hash: 2d63e8d64407a068e01324a0af87d83d
   ABI hash: 720e2f87b3e31f2d441595869977c447
   export-list hash: b9d5f2e927f48875b033dabeace49a79
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
@@ -50,7 +50,7 @@ import  -/  Sudoku 72d20ccc67d28a0846d2e137bec617ad
   complete 0e790962fa4ee71ed8bc5384198d4f6f
   emptyEntries 1c5e42f05efeb2270adc22c39f8cada8
   validEntries ae6a0168d01d2de177f845f62750adc1
-import  -/  Sudoku.Board b994a6c9cd3b200b6cfc83651e0a821e
+import  -/  Sudoku.Board 4ebd9ce72fba7d1200cd249e35d9a5c5
   Board 43bd58eab58ea2c9a991cc5975f42ee2
   updateEntry 70d94e065a513fb0002bcab816a8fe01
 fc34009f402ef05eda146bbf36a21bc2

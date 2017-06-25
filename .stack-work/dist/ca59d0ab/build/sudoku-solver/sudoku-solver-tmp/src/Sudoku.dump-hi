@@ -1,9 +1,9 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-24 23:39:48.1246725 UTC
+2017-06-25 16:49:44.5366895 UTC
 
 interface main@main:Sudoku 8002
-  interface hash: 066f1fa532f6953007d1c8c31608bcd0
+  interface hash: 277d554ac761640cba8f8efa688ea15a
   ABI hash: 72d20ccc67d28a0846d2e137bec617ad
   export-list hash: cadf130518dc07acda288b3e48d0c14b
   orphan hash: f86519ac810174db7c532518013c7aed
@@ -59,7 +59,7 @@ import  -/  base-4.9.1.0:GHC.List d11eb227c1c6fbfd89bb781d72eaea0d
 import  -/  base-4.9.1.0:GHC.Real b88ae4a48c079652623073a5bbf5c9b0
 import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
 import  -/  ghc-prim-0.5.0.0:GHC.Classes 16d48e012d23eaef9bca91ccdd572c02
-import  -/  Sudoku.Board b994a6c9cd3b200b6cfc83651e0a821e
+import  -/  Sudoku.Board 4ebd9ce72fba7d1200cd249e35d9a5c5
   exports: 0af7e44c421fb125ffc82345651781f6
   Board 5d638fd64ab7761398eda74e33c31d8b
   Board 43bd58eab58ea2c9a991cc5975f42ee2
@@ -73,9 +73,9 @@ import  -/  Sudoku.Board b994a6c9cd3b200b6cfc83651e0a821e
   boxSize 87c5f654dfda4a06d980287efde34381
   chunk 991f0698a4bd80cb48647da172203a4e
   cs 677ee2428c213ccefb9032bb8ff7b2af
-  defaultConstraints 44025079ff7df273f286bca4b9b8742c
-  emptyBoard 5afc24068a008ebc7a3588c82b82b719
-  fromList 153f576a89b67be98ab5f5439b5bfe4a
+  defaultConstraints c685c34a6a8bd3923ddb10169be53067
+  emptyBoard a912ee1b6acd185d5d839edab970ecd0
+  fromList 748f22cfb9ade23e595a0bbf6fdd27c7
   mat 0f7f5b3167b7ab6b0b22a161699db89a
   noFull 25e269dea11f8f0e34ebc71c305bab48
   updateEntry 70d94e065a513fb0002bcab816a8fe01
