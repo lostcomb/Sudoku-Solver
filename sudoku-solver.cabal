@@ -20,6 +20,7 @@ executable sudoku-solver
   build-depends:       base >= 4.7 && < 5,
                        parsec,
                        ansi-terminal,
+                       terminal-size,
                        matrix
   other-modules:       Parser,
                        Solver,

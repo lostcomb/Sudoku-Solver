@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2017-06-25 16:21:19.6596807 UTC
+2017-06-25 17:19:14.5275869 UTC
 
 interface main@main:Main 8002
-  interface hash: a1af9ffef29897ca42a7786143ff11c2
-  ABI hash: cfeb6671f397c25a249aefa18f37e482
-  export-list hash: dcfb2955456709298ef985ee0d79f6b2
+  interface hash: a49a64e6f2fe1b2774dc8c7ea81d9d52
+  ABI hash: fd879681efc1087578cfe9a9f70d109e
+  export-list hash: 8044b52ec0e04edbaae5a627b3bb40c9
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: dfb50c2b24fb21f661fd3989a6dc602c
   sig of: Nothing
@@ -13,6 +13,7 @@ interface main@main:Main 8002
   where
 exports:
   Main.c_getch
+  Main.clearInput
   Main.displaySolutions
   Main.getChar'
   Main.main
@@ -25,14 +26,17 @@ package dependencies: Win32-2.3.1.1@Win32-2.3.1.1
                       binary-0.8.3.0@binary-0.8.3.0
                       bytestring-0.10.8.1@bytestring-0.10.8.1
                       containers-0.5.7.1@containers-0.5.7.1
-                      deepseq-1.4.2.0@deepseq-1.4.2.0 ghc-prim-0.5.0.0
+                      deepseq-1.4.2.0@deepseq-1.4.2.0 directory-1.3.0.0@directory-1.3.0.0
+                      filepath-1.4.1.1@filepath-1.4.1.1 ghc-prim-0.5.0.0
                       integer-gmp-1.0.0.1 loop-0.3.0@loop-0.3.0-4tGn4RSY02pFTwJ5L4CYRr
                       matrix-0.3.5.0@matrix-0.3.5.0-eFZR6K8Lax4OrNeuTQF4y
                       mtl-2.2.1@mtl-2.2.1-BLKBelFsPB3BoFeSWSOYj6
                       parsec-3.1.11@parsec-3.1.11-113irVHGgd88sRnywByDNw
                       primitive-0.6.1.0@primitive-0.6.1.0-6AbSTw9JXz141LE5p6LGH
+                      process-1.4.3.0@process-1.4.3.0
+                      terminal-size-0.3.2.1@terminal-size-0.3.2.1-AmA6iayNwsc9qq56OTrDue
                       text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR
-                      transformers-0.5.2.0@transformers-0.5.2.0
+                      time-1.6.0.1@time-1.6.0.1 transformers-0.5.2.0@transformers-0.5.2.0
                       vector-0.11.0.0@vector-0.11.0.0-LMwQhhnXj8U3T5Bm1JFxG
 orphans: base-4.9.1.0:GHC.Base base-4.9.1.0:GHC.Float
          binary-0.8.3.0@binary-0.8.3.0:Data.Binary.Generic
@@ -40,6 +44,9 @@ orphans: base-4.9.1.0:GHC.Base base-4.9.1.0:GHC.Float
          text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text
          text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text.Lazy
          text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text.Show
+         time-1.6.0.1@time-1.6.0.1:Data.Time.Calendar.Gregorian
+         time-1.6.0.1@time-1.6.0.1:Data.Time.Format.Parse
+         time-1.6.0.1@time-1.6.0.1:Data.Time.LocalTime.LocalTime
          transformers-0.5.2.0@transformers-0.5.2.0:Control.Monad.Trans.Error
          vector-0.11.0.0@vector-0.11.0.0-LMwQhhnXj8U3T5Bm1JFxG:Data.Vector.Fusion.Bundle
 family instance modules: base-4.9.1.0:Control.Applicative
@@ -56,6 +63,7 @@ family instance modules: base-4.9.1.0:Control.Applicative
                          containers-0.5.7.1@containers-0.5.7.1:Data.Sequence
                          containers-0.5.7.1@containers-0.5.7.1:Data.Set.Base
                          primitive-0.6.1.0@primitive-0.6.1.0-6AbSTw9JXz141LE5p6LGH:Control.Monad.Primitive
+                         terminal-size-0.3.2.1@terminal-size-0.3.2.1-AmA6iayNwsc9qq56OTrDue:System.Console.Terminal.Common
                          text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text
                          text-1.2.2.1@text-1.2.2.1-Ji7hMs2U4BkBwavd4taEVR:Data.Text.Lazy
                          vector-0.11.0.0@vector-0.11.0.0-LMwQhhnXj8U3T5Bm1JFxG:Data.Vector
@@ -72,6 +80,8 @@ import  -/  base-4.9.1.0:GHC.Char dc348eccabc798659394eb810444f8d4
 import  -/  base-4.9.1.0:GHC.Enum 3beb5abd88e2173130728ffba8194381
 import  -/  base-4.9.1.0:GHC.IO.Handle cb8bbcf28331624bf008e1abd21fcddd
 import  -/  base-4.9.1.0:GHC.IO.Handle.FD 13bd8641d665b1ca96fbeeb8bdfa3638
+import  -/  base-4.9.1.0:GHC.Num 38b8aac8807c096c7f3ca3c1eff02939
+import  -/  base-4.9.1.0:GHC.Real b88ae4a48c079652623073a5bbf5c9b0
 import  -/  base-4.9.1.0:GHC.Show eca5834daba3b6a2bbbe64ab52056707
 import  -/  base-4.9.1.0:Prelude 74b3e204395920329f6de9d97206abe9
 import  -/  base-4.9.1.0:System.Environment 438c0b0bc0f94461b9c946d062a7eab9
@@ -86,8 +96,10 @@ import  -/  Solver 720e2f87b3e31f2d441595869977c447
   solve 810f45a24836898dc6a848218dc5fdec
 import  -/  Sudoku 72d20ccc67d28a0846d2e137bec617ad
   exports: cadf130518dc07acda288b3e48d0c14b
-import  -/  Sudoku.Board b994a6c9cd3b200b6cfc83651e0a821e
+import  -/  Sudoku.Board 4ebd9ce72fba7d1200cd249e35d9a5c5
   Board 43bd58eab58ea2c9a991cc5975f42ee2
+import  -/  terminal-size-0.3.2.1@terminal-size-0.3.2.1-AmA6iayNwsc9qq56OTrDue:System.Console.Terminal.Common b71f31b4e98a7d174cb121b616253991
+import  -/  terminal-size-0.3.2.1@terminal-size-0.3.2.1-AmA6iayNwsc9qq56OTrDue:System.Console.Terminal.Size 06706ef9dadfd378e52bb5a459ce8e75
 addDependentFile "C:\Users\Julian\AppData\Local\Programs\stack\x86_64-windows\ghc-8.0.2\lib\include\ghcversion.h"
 addDependentFile ".stack-work\dist\ca59d0ab\build\autogen\cabal_macros.h"
 d6831ef04cb9301b090dfae6f7bb7ec7
@@ -102,6 +114,18 @@ d6831ef04cb9301b090dfae6f7bb7ec7
   $trModule2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS "main"#) -}
+ff3c862ed1c7ca7182082d65b531037d
+  $wloop ::
+    GHC.Prim.Int#
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 2, Strictness: <S,U><S,U>, Inline: [0] -}
+363cf443e3b6d2e13ad544bdb2f09cf1
+  $wloop1 ::
+    GHC.Prim.Int#
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 2, Strictness: <S,U><S,U>, Inline: [0] -}
 778ef16b41170bc806bf811bd94faf7f
   c_getch :: GHC.Types.IO Foreign.C.Types.CInt
   {- Arity: 1, HasNoCafRefs, Strictness: <S,U>,
@@ -115,6 +139,51 @@ d6831ef04cb9301b090dfae6f7bb7ec7
                  (# ds1, GHC.Int.I32# (GHC.Prim.narrow32Int# ds2) #) })
                   `cast`
                 (Sym (GHC.Types.N:IO[0] (Foreign.C.Types.N:CInt[0]))) -}
+ca4649f87c3665d79440fcee618124d0
+  clearInput :: GHC.Base.String -> GHC.Types.IO ()
+  {- Arity: 2, Strictness: <L,1*U><S,U>,
+     Unfolding: InlineRule (0, True, True)
+                Main.clearInput1
+                  `cast`
+                (<GHC.Base.String>_R ->_R Sym (GHC.Types.N:IO[0] <()>_R)) -}
+8c50dab91152d09ad4f8a23bb8f629fa
+  clearInput1 ::
+    GHC.Base.String
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 2, Strictness: <L,1*U><S,U>,
+     Unfolding: (\ (str :: GHC.Base.String)
+                   (eta :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                 case System.Console.Terminal.Windows.size1
+                        @ GHC.Integer.Type.Integer
+                        GHC.Real.$fIntegralInteger
+                        eta of ds1 { (#,#) ipv ipv1 ->
+                 case ipv1 of wild {
+                   GHC.Base.Nothing -> (# ipv, GHC.Tuple.() #)
+                   GHC.Base.Just window
+                   -> case Main.clearInput2 of wild1 { GHC.Types.I# x ->
+                      case GHC.List.$wlenAcc @ GHC.Types.Char str 0# of ww2 { DEFAULT ->
+                      case window of wild2 { System.Console.Terminal.Common.Window ds2 ds3 ->
+                      case GHC.Integer.Type.doubleFromInteger ds3 of wild3 { DEFAULT ->
+                      case GHC.Prim./##
+                             (GHC.Prim.int2Double# (GHC.Prim.+# x ww2))
+                             wild3 of wild4 { DEFAULT ->
+                      let {
+                        n :: GHC.Prim.Int# = GHC.Prim.double2Int# wild4
+                      } in
+                      case GHC.Prim.tagToEnum#
+                             @ GHC.Types.Bool
+                             (GHC.Prim.<## (GHC.Prim.int2Double# n) wild4) of wild5 {
+                        GHC.Types.False -> Main.$wloop1 n ipv
+                        GHC.Types.True
+                        -> Main.$wloop (GHC.Prim.+# n 1#) ipv } } } } } } } }) -}
+c2aea542080062631c9f91524476c5a7
+  clearInput2 :: GHC.Types.Int
+  {- Unfolding: (case GHC.List.$wlenAcc
+                        @ GHC.Types.Char
+                        Main.prompt
+                        0# of ww2 { DEFAULT ->
+                 GHC.Types.I# ww2 }) -}
 dac780ca81e0de538a96352d8b5f827f
   displaySolutions :: [Sudoku.Board.Board] -> GHC.Types.IO ()
   {- Arity: 2, Strictness: <S,1*U><S,U>,

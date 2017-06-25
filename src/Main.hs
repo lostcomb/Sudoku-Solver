@@ -12,9 +12,9 @@ import Control.Monad
 import Foreign.C.Types
 import System.Environment
 import System.Console.ANSI
+import System.Console.Terminal.Size
 
 {-TODO:
-  * Fix clear line issue with error reporting.
   * Implement sum constraint possible values.
 -}
 
@@ -28,14 +28,28 @@ main = do
     boardStr <- getLine
     case parseBoard boardStr of
       (Left  error_ops   ) -> do
-        clearLine
-        cursorUpLine 1
+        clearInput boardStr
         putStr prompt
         sequence_ error_ops
       (Right Nothing     ) -> do
         exitSuccess
       (Right (Just board)) -> do
         displaySolutions [board]
+
+-- This function clears the input string so that the error
+-- message can be displayed in its place.
+clearInput :: String -> IO ()
+clearInput str = do
+  s <- size
+  return ()
+  case s of
+    Just window -> do
+      let noLines = ceiling $ fromIntegral (length prompt + length str)
+                            / fromIntegral (width window)
+      replicateM_ noLines $ do
+        clearLine
+        cursorUp 1
+    Nothing     -> return ()
 
 -- Allows the user to ask for more solutions.
 displaySolutions :: [Board] -> IO ()
